@@ -1,7 +1,7 @@
 #!/bin/bash
 # Run after Terraform + Ansible (last stage of 02-config-ansible). Fails loudly on drift from the plan.
 set -euo pipefail
-R=${AWS_REGION:-us-east-1}; C=${CLUSTER:-shopnow-dev}
+R=${AWS_REGION:-ap-southeast-2}; C=${CLUSTER:-shopnow-dev}
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 
 [ "$(aws eks describe-cluster --name "$C" --region "$R" --query cluster.status --output text)" = ACTIVE ] \

@@ -1,6 +1,6 @@
 variable "region" {
   type    = string
-  default = "us-east-1"
+  default = "ap-southeast-2"
 }
 
 variable "env" {
@@ -11,13 +11,13 @@ variable "env" {
 variable "cluster_version" {
   description = "Must be in EKS STANDARD support (extended support costs 6x). Check: aws eks describe-cluster-versions"
   type        = string
-  default     = "1.33"
+  default     = "1.36"
 }
 
 variable "node_capacity" {
   description = "SPOT (cheap) or ON_DEMAND (fallback)"
   type        = string
-  default     = "SPOT"
+  default     = "ON_DEMAND"
 }
 
 variable "node_desired" {
@@ -32,7 +32,7 @@ variable "vpc_cidr" {
 
 variable "azs" {
   type    = list(string)
-  default = ["us-east-1a", "us-east-1b"]
+  default = ["ap-southeast-2a", "ap-southeast-2b"]
 }
 
 variable "key_name" {

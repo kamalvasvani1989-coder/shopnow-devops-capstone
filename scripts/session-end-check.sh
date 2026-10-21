@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run after 01-infra-terraform ACTION=destroy. Everything below should be empty except Jenkins.
-R=${AWS_REGION:-us-east-1}
+R=${AWS_REGION:-ap-southeast-2}
 echo "== EKS clusters (expect none)";            aws eks list-clusters --region $R --query clusters --output text
 echo "== Classic LBs (expect none)";             aws elb describe-load-balancers --region $R --query 'LoadBalancerDescriptions[].LoadBalancerName' --output text
 echo "== ALB/NLBs (expect none)";                aws elbv2 describe-load-balancers --region $R --query 'LoadBalancers[].LoadBalancerName' --output text

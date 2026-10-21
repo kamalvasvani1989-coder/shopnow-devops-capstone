@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Destroy if cluster exists') {
       steps { script {
-        def up = sh(script: 'aws eks describe-cluster --name shopnow-dev --region us-east-1 >/dev/null 2>&1', returnStatus: true) == 0
+        def up = sh(script: 'aws eks describe-cluster --name shopnow-dev --region ap-southeast-2 >/dev/null 2>&1', returnStatus: true) == 0
         if (up) {
           build job: '01-infra-terraform', parameters: [
             string(name: 'ACTION', value: 'destroy'),
@@ -20,7 +20,7 @@ pipeline {
       steps { sh '''
         T=$(curl -sX PUT http://169.254.169.254/latest/api/token -H "X-aws-ec2-metadata-token-ttl-seconds: 60")
         ID=$(curl -s -H "X-aws-ec2-metadata-token: $T" http://169.254.169.254/latest/meta-data/instance-id)
-        aws ec2 stop-instances --instance-ids "$ID" --region us-east-1
+        aws ec2 stop-instances --instance-ids "$ID" --region ap-southeast-2
       ''' }
     }
   }

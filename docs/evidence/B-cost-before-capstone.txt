@@ -1,0 +1,10 @@
+---------------------------------------------------------------------
+|                          GetCostAndUsage                          |
++---------------------------------------------------+---------------+
+|  EC2 - Other                                      |  2.2366346199 |
+|  Amazon Elastic Compute Cloud - Compute           |  3.5311547796 |
+|  Amazon Elastic Container Service for Kubernetes  |  13.519551389 |
+|  Amazon Elastic Load Balancing                    |  7.9398091962 |
+|  Amazon Virtual Private Cloud                     |  5.87414724   |
+|  AmazonCloudWatch                                 |  0.2390248747 |
++---------------------------------------------------+---------------+

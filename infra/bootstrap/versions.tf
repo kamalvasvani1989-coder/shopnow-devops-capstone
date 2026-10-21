@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     bucket       = "shopnow-tfstate-<ACCOUNT_ID>"
     key          = "bootstrap/terraform.tfstate"
-    region       = "us-east-1"
+    region       = "ap-southeast-2"
     encrypt      = true
     use_lockfile = true
   }

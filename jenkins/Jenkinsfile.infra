@@ -10,7 +10,7 @@ pipeline {
   environment {
     TF_IN_AUTOMATION = 'true'
     TF_INPUT         = '0'
-    AWS_REGION       = 'us-east-1'
+    AWS_REGION       = 'ap-southeast-2'
   }
   stages {
     stage('Guard') {

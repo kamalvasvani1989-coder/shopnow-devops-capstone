@@ -255,7 +255,7 @@
           },
           "statistic": "Maximum",
           "period": "21600",
-          "region": "us-east-1",
+          "region": "ap-southeast-2",
           "matchExact": true,
           "queryMode": "Metrics",
           "metricQueryType": 0,

@@ -5,7 +5,7 @@ pipeline {
   triggers { githubPush() }
   options { timestamps(); disableConcurrentBuilds(); buildDiscarder(logRotator(numToKeepStr: '15')) }
   environment {
-    AWS_REGION = 'us-east-1'
+    AWS_REGION = 'ap-southeast-2'
     CLUSTER    = 'shopnow-dev'
     SERVICES   = 'backend frontend admin'
   }
