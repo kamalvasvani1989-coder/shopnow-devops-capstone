@@ -1,0 +1,6 @@
+git version 2.56.0.windows.2
+aws-cli/2.38.3 Python/3.14.6 Windows/11 exe/AMD64
+Client Version: v1.37.1
+Kustomize Version: v5.8.1
+gh version 2.102.1 (2026-10-20)
+https://github.com/cli/cli/releases/tag/v2.102.1

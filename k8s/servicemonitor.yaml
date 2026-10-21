@@ -1,0 +1,7 @@
+# Requires kube-prometheus-stack (installed by Ansible) - Prometheus scrapes backend /metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata: { name: backend, namespace: shopnow }
+spec:
+  selector: { matchLabels: { app: backend } }
+  endpoints: [{ port: http, path: /metrics, interval: 30s }]

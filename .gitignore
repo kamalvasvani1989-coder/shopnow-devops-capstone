@@ -1,0 +1,21 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+*.tfvars
+!infra/platform/envs/*.tfvars
+crash.log
+tf-outputs.json
+# Secrets
+*.pem
+*.key
+.env
+.env.*
+# Node
+node_modules/
+build/
+# OS / editor
+.DS_Store
+Thumbs.db

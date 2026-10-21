@@ -1,0 +1,65 @@
+# kube-prometheus-stack values. Rendered by Ansible (role k8s_addons) - Jinja fills IPs and the Slack webhook.
+# Cost settings: no persistent volumes, short retention, small requests.
+
+grafana:
+  persistence: { enabled: false }
+  serviceAccount: { name: kps-grafana }      # matches the EKS Pod Identity association in Terraform
+  additionalDataSources:
+    - name: CloudWatch
+      type: cloudwatch
+      uid: cloudwatch                          # referenced by dashboards/shopnow.json
+      jsonData: { authType: default, defaultRegion: us-east-1 }
+  sidecar:
+    dashboards: { enabled: true, searchNamespace: ALL }
+  resources: { requests: { cpu: 50m, memory: 128Mi }, limits: { memory: 256Mi } }
+
+prometheus:
+  prometheusSpec:
+    retention: 2d
+    resources: { requests: { cpu: 200m, memory: 512Mi }, limits: { memory: 1Gi } }
+    serviceMonitorSelectorNilUsesHelmValues: false   # pick up k8s/servicemonitor.yaml
+    ruleSelectorNilUsesHelmValues: false             # pick up monitoring/alert-rules.yaml
+    additionalScrapeConfigs:
+      - job_name: jenkins
+        metrics_path: /prometheus/
+        static_configs:
+          - targets: ["{{ jenkins_private_ip }}:8080"]
+      - job_name: ec2-node-exporter
+        static_configs:
+          - targets:
+              - "{{ jenkins_private_ip }}:9100"
+{% if tools_private_ip %}
+              - "{{ tools_private_ip }}:9100"
+{% endif %}
+
+alertmanager:
+  alertmanagerSpec:
+    resources: { requests: { cpu: 20m, memory: 64Mi }, limits: { memory: 128Mi } }
+  config:
+    route:
+      receiver: slack
+      group_by: [alertname, namespace]
+      group_wait: 30s
+      repeat_interval: 4h
+      routes:
+        - matchers: ['alertname = "Watchdog"']
+          receiver: "null"
+        - matchers: ['alertname = "InfoInhibitor"']
+          receiver: "null"
+    receivers:
+      - name: "null"
+      - name: slack
+        slack_configs:
+          - api_url: "{{ lookup('env', 'SLACK_WEBHOOK') }}"
+            channel: "#shopnow-alerts"
+            send_resolved: true
+{% raw %}
+            title: '[{{ .Status | toUpper }}] {{ .CommonLabels.alertname }}'
+            text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ "\n" }}{{ end }}'
+{% endraw %}
+
+# Small cluster: skip control-plane components EKS does not expose
+kubeControllerManager: { enabled: false }
+kubeScheduler: { enabled: false }
+kubeEtcd: { enabled: false }
+kubeProxy: { enabled: false }

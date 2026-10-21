@@ -1,0 +1,37 @@
+- name: Python Kubernetes + AWS clients (for kubernetes.core / amazon.aws modules)
+  ansible.builtin.apt: { name: [python3-kubernetes, python3-boto3], state: present }
+
+- name: AWS CLI v2
+  ansible.builtin.shell: |
+    curl -sSo /tmp/awscli.zip https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    unzip -qo /tmp/awscli.zip -d /tmp && /tmp/aws/install --update
+  args: { creates: /usr/local/bin/aws }
+
+- name: kubectl matching the cluster minor version
+  ansible.builtin.shell: |
+    V=$(curl -fsSL https://dl.k8s.io/release/stable-{{ k8s_minor }}.txt)
+    curl -fsSLo /usr/local/bin/kubectl https://dl.k8s.io/release/$V/bin/linux/amd64/kubectl
+    chmod 0755 /usr/local/bin/kubectl
+  args: { creates: /usr/local/bin/kubectl }
+
+- name: Build tools (Jenkins host only)
+  when: install_build_tools | default(false)
+  block:
+    - name: Helm 3
+      ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      args: { creates: /usr/local/bin/helm }
+
+    - name: Terraform
+      ansible.builtin.unarchive:
+        src: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
+        dest: /usr/local/bin
+        remote_src: true
+        creates: /usr/local/bin/terraform
+
+    # Optional image scanner: pass -e trivy_version=X.Y.Z with a release you have checked.
+    # The pipeline skips the scan stage if trivy is absent (ECR scan-on-push still runs).
+    - name: Trivy (optional)
+      when: trivy_version is defined
+      ansible.builtin.shell: |
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v{{ trivy_version }}
+      args: { creates: /usr/local/bin/trivy }

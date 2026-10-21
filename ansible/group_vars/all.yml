@@ -1,0 +1,8 @@
+# Keep k8s_minor equal to the EKS cluster_version in infra/platform (kubectl must be within 1 minor)
+k8s_minor: "1.33"
+terraform_version: "1.13.4"
+node_exporter_version: "1.9.1"
+timezone: Asia/Kolkata
+# Pin chart versions once the first install works (helm search repo <chart> --versions)
+metrics_server_chart_version: ""
+kps_chart_version: ""

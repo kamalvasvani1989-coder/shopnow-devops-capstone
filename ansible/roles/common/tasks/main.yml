@@ -1,0 +1,25 @@
+- name: Upgrade packages (security baseline)
+  ansible.builtin.apt: { upgrade: safe, update_cache: true, cache_valid_time: 3600 }
+
+- name: Baseline packages
+  ansible.builtin.apt:
+    name: [unattended-upgrades, chrony, jq, curl, unzip, ca-certificates]
+    state: present
+
+- name: Timezone
+  community.general.timezone: { name: "{{ timezone }}" }
+
+- name: Enable unattended security upgrades
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+    mode: "0644"
+
+- name: Disable SSH password authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: PasswordAuthentication no
+  notify: restart ssh

@@ -1,0 +1,10 @@
+- name: Install Docker
+  ansible.builtin.apt: { name: docker.io, state: present, update_cache: true }
+
+- name: Docker running at boot
+  ansible.builtin.service: { name: docker, state: started, enabled: true }
+
+- name: Allow users to run Docker
+  ansible.builtin.user: { name: "{{ item }}", groups: docker, append: true }
+  loop: "{{ docker_users | default([]) }}"
+  notify: restart jenkins if present

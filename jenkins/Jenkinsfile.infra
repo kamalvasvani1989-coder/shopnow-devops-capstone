@@ -1,0 +1,55 @@
+// Job: 01-infra-terraform  (Pipeline from SCM, script path: jenkins/Jenkinsfile.infra)
+pipeline {
+  agent any
+  parameters {
+    choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action')
+    choice(name: 'ENV', choices: ['dev', 'prod'], description: 'prod = plan only, never apply')
+    booleanParam(name: 'AUTO_APPROVE', defaultValue: false, description: 'Skip the manual approval step')
+  }
+  options { timestamps(); disableConcurrentBuilds(); timeout(time: 60, unit: 'MINUTES') }
+  environment {
+    TF_IN_AUTOMATION = 'true'
+    TF_INPUT         = '0'
+    AWS_REGION       = 'us-east-1'
+  }
+  stages {
+    stage('Guard') {
+      steps { script {
+        if (params.ENV == 'prod' && params.ACTION != 'plan') { error('prod is plan-only in this project (budget)') }
+      } }
+    }
+    stage('Init + validate') {
+      steps { dir('infra/platform') {
+        sh "terraform init -no-color && terraform workspace select -or-create ${params.ENV} && terraform fmt -check -recursive && terraform validate -no-color"
+      } }
+    }
+    stage('Plan') {
+      when { expression { params.ACTION != 'destroy' } }
+      steps { dir('infra/platform') { sh "terraform plan -no-color -var-file=envs/${params.ENV}.tfvars -out=tfplan" } }
+    }
+    stage('Approve') {
+      when { expression { params.ACTION != 'plan' && !params.AUTO_APPROVE } }
+      steps { timeout(time: 15, unit: 'MINUTES') { input message: "Run terraform ${params.ACTION} on ${params.ENV}?" } }
+    }
+    stage('Apply') {
+      when { expression { params.ACTION == 'apply' } }
+      steps { dir('infra/platform') {
+        sh 'terraform apply -no-color tfplan && terraform output -json > ../../tf-outputs.json'
+      } }
+    }
+    stage('Destroy') {
+      when { expression { params.ACTION == 'destroy' } }
+      steps {
+        sh "bash tests/pre-destroy.sh shopnow-${params.ENV} || true"   // removes K8s load balancers first
+        dir('infra/platform') { sh "terraform destroy -no-color -auto-approve -var-file=envs/${params.ENV}.tfvars" }
+      }
+    }
+  }
+  post {
+    success {
+      archiveArtifacts artifacts: 'tf-outputs.json', allowEmptyArchive: true
+      script { if (params.ACTION == 'apply') { build job: '02-config-ansible', wait: false } }
+    }
+    failure { slackSend color: 'danger', message: "01-infra-terraform ${params.ACTION} (${params.ENV}) FAILED: ${env.BUILD_URL}" }
+  }
+}

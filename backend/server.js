@@ -9,6 +9,10 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
+
+// Prometheus metrics at /metrics (request rate, status codes, latency)
+const promBundle = require('express-prom-bundle');
+app.use(promBundle({ includeMethod: true, includeStatusCode: true, promClient: { collectDefaultMetrics: {} } }));
 const PORT = process.env.PORT || 5000;
 
 // Middleware - CORS configuration AFTER app is created

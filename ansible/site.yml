@@ -1,0 +1,21 @@
+# Run by Jenkins job 02-config-ansible after Terraform apply.
+- name: Configure tools EC2 (over SSH via VPC peering)
+  hosts: role_tools
+  gather_facts: false
+  become: true
+  vars:
+    docker_users: [ubuntu]
+  pre_tasks:
+    - name: Wait for a freshly booted instance
+      ansible.builtin.wait_for_connection: { timeout: 300 }
+    - name: Gather facts
+      ansible.builtin.setup:
+  roles: [common, docker, cli_tools, node_exporter]
+
+# EKS managed nodes are immutable (replaced, not patched), so they are configured
+# through the Kubernetes API: namespaces, secrets, DaemonSets, Helm add-ons.
+- name: Configure EKS cluster add-ons and monitoring
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles: [k8s_addons]

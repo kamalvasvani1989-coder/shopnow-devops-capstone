@@ -1,0 +1,28 @@
+// Job: 99-nightly-destroy  - safety net: tears down EKS every night and stops Jenkins itself.
+// Team rule: never stop the Jenkins EC2 by hand while the cluster exists.
+pipeline {
+  agent any
+  triggers { cron('TZ=Asia/Kolkata\nH 23 * * *') }
+  options { timestamps(); disableConcurrentBuilds() }
+  stages {
+    stage('Destroy if cluster exists') {
+      steps { script {
+        def up = sh(script: 'aws eks describe-cluster --name shopnow-dev --region us-east-1 >/dev/null 2>&1', returnStatus: true) == 0
+        if (up) {
+          build job: '01-infra-terraform', parameters: [
+            string(name: 'ACTION', value: 'destroy'),
+            string(name: 'ENV', value: 'dev'),
+            booleanParam(name: 'AUTO_APPROVE', value: true)]
+        } else { echo 'No cluster running - nothing to destroy.' }
+      } }
+    }
+    stage('Stop Jenkins itself') {
+      steps { sh '''
+        T=$(curl -sX PUT http://169.254.169.254/latest/api/token -H "X-aws-ec2-metadata-token-ttl-seconds: 60")
+        ID=$(curl -s -H "X-aws-ec2-metadata-token: $T" http://169.254.169.254/latest/meta-data/instance-id)
+        aws ec2 stop-instances --instance-ids "$ID" --region us-east-1
+      ''' }
+    }
+  }
+  post { failure { slackSend color: 'danger', message: "NIGHTLY DESTROY FAILED - check AWS now: ${env.BUILD_URL}" } }
+}

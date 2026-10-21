@@ -1,0 +1,3 @@
+- name: restart jenkins if present
+  ansible.builtin.service: { name: jenkins, state: restarted }
+  when: "'jenkins' in (docker_users | default([]))"

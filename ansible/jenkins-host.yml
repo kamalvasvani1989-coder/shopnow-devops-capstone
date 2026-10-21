@@ -1,0 +1,17 @@
+# One-off configuration of the Jenkins EC2 itself. Run over SSH on the Jenkins box:
+#   sudo ansible-galaxy collection install community.general
+#   sudo ansible-playbook -i localhost, -c local ~/ansible/jenkins-host.yml
+- name: Configure Jenkins host
+  hosts: localhost
+  connection: local
+  become: true
+  vars:
+    docker_users: [jenkins, ubuntu]
+    install_build_tools: true      # helm + terraform (+ optional trivy) on Jenkins only
+  roles: [common, docker, cli_tools, node_exporter]
+  post_tasks:
+    - name: Ansible collections for the jenkins user (used by 02-config-ansible)
+      become_user: jenkins
+      ansible.builtin.command: ansible-galaxy collection install amazon.aws kubernetes.core community.general
+      register: galaxy
+      changed_when: "'was installed successfully' in galaxy.stdout"

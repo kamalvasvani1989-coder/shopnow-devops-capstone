@@ -1,0 +1,11 @@
+# Dynamic inventory: finds the tools EC2 by tag - no hard-coded IPs.
+plugin: amazon.aws.aws_ec2
+regions: [us-east-1]
+filters:
+  tag:Project: shopnow
+  tag:Role: tools
+  instance-state-name: running
+hostnames: [private-ip-address]   # reached from Jenkins through VPC peering
+keyed_groups:
+  - key: tags.Role
+    prefix: role                  # creates group "role_tools"

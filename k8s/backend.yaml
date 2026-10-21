@@ -1,0 +1,43 @@
+# __REGISTRY__ and __TAG__ are replaced by the Jenkins pipeline (sed) before kubectl apply.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shopnow
+  labels: { app: backend }
+spec:
+  # No replicas field: the HPA owns the replica count (a fixed value would reset it on every deploy).
+  selector: { matchLabels: { app: backend } }
+  strategy: { type: RollingUpdate, rollingUpdate: { maxUnavailable: 0, maxSurge: 1 } }
+  template:
+    metadata: { labels: { app: backend } }
+    spec:
+      containers:
+        - name: backend
+          image: __REGISTRY__/shopnow-backend:__TAG__
+          ports: [{ name: http, containerPort: 5000 }]
+          env:
+            - name: MONGODB_URI
+              valueFrom: { secretKeyRef: { name: mongo, key: MONGODB_URI } }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          readinessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service          # name is hard-coded in the nginx configs - do not rename
+  namespace: shopnow
+  labels: { app: backend }
+spec:
+  selector: { app: backend }
+  ports: [{ name: http, port: 5000, targetPort: http }]

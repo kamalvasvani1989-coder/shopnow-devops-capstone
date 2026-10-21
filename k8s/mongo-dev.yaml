@@ -1,0 +1,28 @@
+# FALLBACK ONLY if you are not using MongoDB Atlas. Data is lost on every pod restart / cluster teardown.
+# Use with: kubectl apply -f k8s/mongo-dev.yaml
+# and set the Jenkins credential mongodb-uri to: mongodb://mongo:27017/shopnow
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: mongo, namespace: shopnow, labels: { app: mongo } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: mongo } }
+  template:
+    metadata: { labels: { app: mongo } }
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:7
+          ports: [{ containerPort: 27017 }]
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { memory: 512Mi }
+          volumeMounts: [{ name: data, mountPath: /data/db }]
+      volumes: [{ name: data, emptyDir: {} }]
+---
+apiVersion: v1
+kind: Service
+metadata: { name: mongo, namespace: shopnow }
+spec:
+  selector: { app: mongo }
+  ports: [{ port: 27017, targetPort: 27017 }]

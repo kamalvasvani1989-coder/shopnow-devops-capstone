@@ -1,0 +1,73 @@
+- name: Namespaces
+  kubernetes.core.k8s:
+    state: present
+    definition: { apiVersion: v1, kind: Namespace, metadata: { name: "{{ item }}" } }
+  loop: [shopnow, monitoring]
+
+- name: MongoDB connection secret (value from Jenkins credential mongodb-uri)
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata: { name: mongo, namespace: shopnow }
+      type: Opaque
+      stringData: { MONGODB_URI: "{{ lookup('env', 'MONGODB_URI') }}" }
+  no_log: true
+
+- name: Helm repositories
+  kubernetes.core.helm_repository: { name: "{{ item.name }}", repo_url: "{{ item.url }}" }
+  loop:
+    - { name: metrics-server, url: "https://kubernetes-sigs.github.io/metrics-server/" }
+    - { name: prometheus-community, url: "https://prometheus-community.github.io/helm-charts" }
+
+- name: metrics-server (needed by the HPA)
+  kubernetes.core.helm:
+    name: metrics-server
+    chart_ref: metrics-server/metrics-server
+    chart_version: "{{ metrics_server_chart_version | default(omit, true) }}"
+    release_namespace: kube-system
+    wait: true
+
+- name: Render kube-prometheus-stack values (IPs + secrets filled in here, never committed)
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/../monitoring/kps-values.yaml.j2"
+    dest: /tmp/kps-values.yaml
+    mode: "0600"
+  vars:
+    jenkins_private_ip: "{{ lookup('pipe', \"hostname -I | cut -d' ' -f1\") }}"
+    tools_private_ip: "{{ hostvars[groups['role_tools'][0]].private_ip_address if (groups['role_tools'] | default([])) else '' }}"
+  no_log: true
+
+- name: Dashboards as ConfigMaps (picked up by the Grafana sidecar)
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: "dashboard-{{ item | basename | splitext | first | lower | regex_replace('[^a-z0-9-]', '-') }}"
+        namespace: monitoring
+        labels: { grafana_dashboard: "1" }
+      data: "{{ {(item | basename): lookup('file', item)} }}"
+  loop: "{{ query('fileglob', playbook_dir ~ '/../monitoring/dashboards/*.json') }}"
+
+- name: kube-prometheus-stack (Prometheus, Alertmanager, Grafana)
+  kubernetes.core.helm:
+    name: kps
+    chart_ref: prometheus-community/kube-prometheus-stack
+    chart_version: "{{ kps_chart_version | default(omit, true) }}"
+    release_namespace: monitoring
+    values_files: [/tmp/kps-values.yaml]
+    values:
+      grafana: { adminPassword: "{{ lookup('env', 'GRAFANA_ADMIN_PASSWORD') }}" }
+    wait: true
+    timeout: 15m0s
+
+- name: Project alert rules (PrometheusRule)
+  kubernetes.core.k8s:
+    state: present
+    src: "{{ playbook_dir }}/../monitoring/alert-rules.yaml"
+
+- name: Remove rendered values file (contains the Slack webhook)
+  ansible.builtin.file: { path: /tmp/kps-values.yaml, state: absent }

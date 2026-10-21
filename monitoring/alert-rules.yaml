@@ -1,0 +1,53 @@
+# Project-specific alerts. kube-prometheus-stack already ships the generic cluster alerts.
+# Applied as-is by Ansible (src:, not template:), so the {{ }} below are Prometheus templates.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: shopnow-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: shopnow
+      rules:
+        - alert: BackendDown
+          expr: sum(kube_deployment_status_replicas_available{namespace="shopnow",deployment="backend"}) == 0
+          for: 1m
+          labels: { severity: critical }
+          annotations: { summary: "ShopNow backend has no available pods" }
+
+        - alert: HighErrorRate
+          expr: |
+            sum(rate(http_request_duration_seconds_count{namespace="shopnow",status_code=~"5.."}[5m]))
+              / sum(rate(http_request_duration_seconds_count{namespace="shopnow"}[5m])) > 0.05
+          for: 5m
+          labels: { severity: warning }
+          annotations: { summary: "More than 5% of API requests are failing" }
+
+        - alert: PodRestartingOften
+          expr: increase(kube_pod_container_status_restarts_total{namespace="shopnow"}[15m]) > 3
+          labels: { severity: warning }
+          annotations: { summary: "{{ $labels.pod }} restarted more than 3 times in 15 minutes" }
+
+        - alert: NodeHighCPU
+          expr: 100 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100 > 85
+          for: 10m
+          labels: { severity: warning }
+          annotations: { summary: "{{ $labels.instance }} CPU above 85% for 10 minutes" }
+
+        - alert: NodeLowMemory
+          expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.10
+          for: 5m
+          labels: { severity: warning }
+          annotations: { summary: "{{ $labels.instance }} has under 10% memory free" }
+
+        - alert: JenkinsDown
+          expr: up{job="jenkins"} == 0
+          for: 2m
+          labels: { severity: critical }
+          annotations: { summary: "Prometheus cannot reach Jenkins" }
+
+        # Verify the metric name at http://<jenkins>:8080/prometheus/ - it varies between plugin versions.
+        - alert: JenkinsBuildFailed
+          expr: increase(default_jenkins_builds_failed_build_count[15m]) > 0
+          labels: { severity: warning }
+          annotations: { summary: "Jenkins job {{ $labels.jenkins_job }} failed" }

@@ -1,0 +1,2 @@
+# Copy to terraform.tfvars (git-ignored) and fill in each member's public IP (https://checkip.amazonaws.com)
+team_cidrs = ["203.0.113.10/32", "203.0.113.11/32", "203.0.113.12/32", "203.0.113.13/32"]
