@@ -22,7 +22,7 @@ variable "node_capacity" {
 
 variable "node_desired" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "vpc_cidr" {
@@ -48,4 +48,10 @@ variable "admin_principal_arns" {
 
 locals {
   name = "shopnow-${var.env}"
+}
+
+variable "node_instance_types" {
+  description = "Must be Free Tier-eligible on the free plan (describe-instance-types --filters free-tier-eligible=true)"
+  type        = list(string)
+  default     = ["m7i-flex.large"]
 }

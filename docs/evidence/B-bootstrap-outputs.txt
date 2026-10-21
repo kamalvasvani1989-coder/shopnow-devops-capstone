@@ -1,0 +1,8 @@
+ecr_repos = {
+  "shopnow-admin" = "926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin"
+  "shopnow-backend" = "926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend"
+  "shopnow-frontend" = "926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend"
+}
+jenkins_instance_id = "i-04366852fb160fb5d"
+jenkins_private_ip = "172.31.10.250"
+jenkins_url = "http://13.236.183.59:8080"

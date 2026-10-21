@@ -3,9 +3,9 @@ terraform {
   required_providers {
     aws = { source = "hashicorp/aws", version = "~> 5.95" }
   }
-  # Replace <ACCOUNT_ID>. Each Terraform workspace (dev/prod) gets its own state under env:/<workspace>/
+  # Replace 926375049914. Each Terraform workspace (dev/prod) gets its own state under env:/<workspace>/
   backend "s3" {
-    bucket       = "shopnow-tfstate-<ACCOUNT_ID>"
+    bucket       = "shopnow-tfstate-926375049914"
     key          = "platform/terraform.tfstate"
     region       = "ap-southeast-2"
     encrypt      = true

@@ -7,7 +7,7 @@ ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 [ "$(aws eks describe-cluster --name "$C" --region "$R" --query cluster.status --output text)" = ACTIVE ] \
   && echo "PASS cluster $C ACTIVE"
 READY=$(kubectl get nodes --no-headers | grep -c ' Ready ' || true)
-[ "$READY" -ge 2 ] && echo "PASS $READY nodes Ready" || { echo "FAIL only $READY nodes Ready"; exit 1; }
+[ "$READY" -ge 1 ] && echo "PASS $READY nodes Ready" || { echo "FAIL only $READY nodes Ready"; exit 1; }
 kubectl -n kube-system rollout status deploy/coredns --timeout=60s >/dev/null && echo "PASS coredns"
 kubectl top nodes >/dev/null && echo "PASS metrics-server (kubectl top works)"
 kubectl -n monitoring get pods --no-headers | grep -v -E 'Running|Completed' && { echo "FAIL monitoring pods not running"; exit 1; } || echo "PASS monitoring pods running"

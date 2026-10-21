@@ -1,0 +1,8 @@
+active
+openjdk version "21.0.12.1" 2026-08-18
+ansible [core 2.16.3]
+               total        used        free      shared  buff/cache   available
+Mem:           3.7Gi       1.1Gi       1.0Gi       2.9Mi       1.9Gi       2.6Gi
+Swap:          2.0Gi          0B       2.0Gi
+ii  jenkins        2.580.1      all          Jenkins is the leading open source automation server supported by a large and growing community of developers, testers, designers and other people interested in continuous integration, continuous delivery and modern software delivery practices. Built on the Java Virtual Machine (JVM), it provides more than 2,000 plugins that extend Jenkins to automate with practically any technology software delivery teams use. In 2022, Jenkins reached 300,000 known installations making it the most widely deployed automation server.
+Jenkins login page HTTP 403

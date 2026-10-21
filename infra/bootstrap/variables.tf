@@ -16,7 +16,7 @@ variable "key_name" {
 
 variable "jenkins_instance_type" {
   type    = string
-  default = "t3.medium"
+  default = "c7i-flex.large"
 }
 
 variable "project_vpc_cidr" {

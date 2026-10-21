@@ -26,9 +26,9 @@ module "eks" {
   eks_managed_node_groups = {
     workers = {
       capacity_type              = var.node_capacity
-      instance_types             = ["t3.medium", "t3a.medium"]
-      min_size                   = 2
-      max_size                   = 3
+      instance_types             = var.node_instance_types
+      min_size                   = 1
+      max_size                   = 2
       desired_size               = var.node_desired
       use_custom_launch_template = false
       disk_size                  = 20
