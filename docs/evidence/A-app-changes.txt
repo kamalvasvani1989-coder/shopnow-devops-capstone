@@ -1,0 +1,8 @@
+ admin/Dockerfile          |  37 ++++--------
+ admin/nginx/default.conf  |   9 +++
+ backend/Dockerfile        |  27 ++-------
+ backend/package-lock.json | 147 +++++++++++++++++++++++++++++++++++++++++++++-
+ backend/package.json      |   6 +-
+ backend/server.js         |   4 ++
+ frontend/Dockerfile       |  46 ++++-----------
+ 7 files changed, 189 insertions(+), 87 deletions(-)
