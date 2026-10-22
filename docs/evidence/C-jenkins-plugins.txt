@@ -1,0 +1,13 @@
+git                    5.11.0
+github                 1.47.0
+workflow-aggregator    608.v67378e9d3db_1
+credentials-binding    728.v902a_273b_8947
+timestamper            1.30
+docker-workflow        653.v2f2c08eff0ec
+kubernetes-cli         1.375.v8001982544ba
+pipeline-aws           767.v48d5c10b_1899
+ansible                635.v34b_48e979c86
+prometheus             860.v532442b_44e9a_
+slack                  795.v4b_9705b_e6d47
+ws-cleanup             0.49
+pipeline-stage-view    2.41

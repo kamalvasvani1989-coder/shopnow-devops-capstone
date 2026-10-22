@@ -1,0 +1,8 @@
+Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2
+aws-cli/2.38.3 Python/3.14.6 Linux/7.0.0-1014-aws exe/x86_64.ubuntu.24
+Client Version: v1.36.5
+v3.22.1+gd6c1a0e
+Terraform v1.13.4
+uid=111(jenkins) gid=113(jenkins) groups=113(jenkins),114(docker)
+active
+active

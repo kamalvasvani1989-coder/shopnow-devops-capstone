@@ -1,0 +1,83 @@
+
+PLAY [Configure Jenkins host] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [common : Upgrade packages (security baseline)] ***************************
+changed: [localhost]
+
+TASK [common : Baseline packages] **********************************************
+ok: [localhost]
+
+TASK [common : Timezone] *******************************************************
+changed: [localhost]
+
+TASK [common : Enable unattended security upgrades] ****************************
+ok: [localhost]
+
+TASK [common : Disable SSH password authentication] ****************************
+changed: [localhost]
+
+TASK [docker : Install Docker] *************************************************
+changed: [localhost]
+
+TASK [docker : Docker running at boot] *****************************************
+ok: [localhost]
+
+TASK [docker : Allow users to run Docker] **************************************
+changed: [localhost] => (item=jenkins)
+changed: [localhost] => (item=ubuntu)
+
+TASK [cli_tools : Python Kubernetes + AWS clients (for kubernetes.core / amazon.aws modules)] ***
+changed: [localhost]
+
+TASK [cli_tools : AWS CLI v2] **************************************************
+changed: [localhost]
+
+TASK [cli_tools : kubectl matching the cluster minor version] ******************
+changed: [localhost]
+
+TASK [cli_tools : Helm 3] ******************************************************
+changed: [localhost]
+
+TASK [cli_tools : Terraform] ***************************************************
+changed: [localhost]
+
+TASK [cli_tools : Trivy (optional)] ********************************************
+skipping: [localhost]
+
+TASK [node_exporter : node_exporter system user] *******************************
+changed: [localhost]
+
+TASK [node_exporter : Download node_exporter 1.9.1] ****************************
+changed: [localhost]
+
+TASK [node_exporter : Install binary] ******************************************
+changed: [localhost]
+
+TASK [node_exporter : systemd unit] ********************************************
+changed: [localhost]
+
+TASK [node_exporter : Enable node_exporter] ************************************
+changed: [localhost]
+
+RUNNING HANDLER [common : restart ssh] *****************************************
+changed: [localhost]
+
+RUNNING HANDLER [docker : restart jenkins if present] **************************
+changed: [localhost]
+
+RUNNING HANDLER [node_exporter : restart node_exporter] ************************
+changed: [localhost]
+
+TASK [Ansible collections for the jenkins user (used by 02-config-ansible)] ****
+ok: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=23   changed=18   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
+[WARNING]: Module remote_tmp /var/lib/jenkins/.ansible/tmp did not exist and
+was created with a mode of 0700, this may cause issues when running as another
+user. To avoid this, create the remote_tmp dir with the correct permissions
+manually
