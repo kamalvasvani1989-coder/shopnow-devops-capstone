@@ -1,0 +1,677 @@
+Started by user Kamal Admin
+Obtained Jenkinsfile from git https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/03-shopnow-cicd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-pat
+Cloning the remote Git repository
+Cloning repository https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git init /var/lib/jenkins/workspace/03-shopnow-cicd # timeout=10
+Fetching upstream changes from https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_ASKPASS to set credentials GitHub fine-grained token (shopnow repo)
+ > git fetch --tags --force --progress -- https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 2cfa19b38ab368b24cb6fbd679dcc37ee6eeda09 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 2cfa19b38ab368b24cb6fbd679dcc37ee6eeda09 # timeout=10
+Commit message: "Sprint 1 evidence: Jenkins tools, plugins, security, credentials, Slack, Atlas"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Setup)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-10-22T06:27:47.050Z] + aws sts get-caller-identity --query Account --output text
+[Pipeline] sh
+[2026-10-22T06:27:49.304Z] + aws eks describe-cluster --name shopnow-dev
+[Pipeline] echo
+[2026-10-22T06:27:50.264Z] TAG=2cfa19b-1 CLUSTER_UP=false
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Unit tests)
+[Pipeline] parallel
+[Pipeline] { (Branch: frontend)
+[Pipeline] { (Branch: admin)
+[Pipeline] { (Branch: backend)
+[Pipeline] stage
+[Pipeline] { (frontend)
+[Pipeline] stage
+[Pipeline] { (admin)
+[Pipeline] stage
+[Pipeline] { (backend)
+[Pipeline] sh
+[Pipeline] sh
+[Pipeline] sh
+[2026-10-22T06:27:51.089Z] + id -u
+[2026-10-22T06:27:51.089Z] + id -g
+[2026-10-22T06:27:51.089Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/frontend:/app -w /app node:20-alpine sh -c npm ci --no-audit && CI=true npm test -- --watchAll=false --passWithNoTests
+[2026-10-22T06:27:51.089Z] Unable to find image 'node:20-alpine' locally
+[2026-10-22T06:27:51.135Z] + id -u
+[2026-10-22T06:27:51.135Z] + id -g
+[2026-10-22T06:27:51.135Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/admin:/app -w /app node:20-alpine sh -c npm ci --no-audit && CI=true npm test -- --watchAll=false --passWithNoTests
+[2026-10-22T06:27:51.135Z] Unable to find image 'node:20-alpine' locally
+[2026-10-22T06:27:51.170Z] + id -u
+[2026-10-22T06:27:51.170Z] + id -g
+[2026-10-22T06:27:51.170Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/backend:/app -w /app node:20-alpine sh -c npm ci --no-audit && node --check server.js && npm run test --if-present
+[2026-10-22T06:27:51.170Z] Unable to find image 'node:20-alpine' locally
+[2026-10-22T06:27:52.952Z] 20-alpine: Pulling from library/node
+[2026-10-22T06:27:52.998Z] 20-alpine: Pulling from library/node
+[2026-10-22T06:27:53.035Z] 20-alpine: Pulling from library/node
+[2026-10-22T06:27:53.504Z] 4feea04c1543: Pulling fs layer
+[2026-10-22T06:27:53.504Z] fff4e2c1b189: Pulling fs layer
+[2026-10-22T06:27:53.504Z] b2cbbfe903b0: Pulling fs layer
+[2026-10-22T06:27:53.504Z] 6a0ac1617861: Pulling fs layer
+[2026-10-22T06:27:53.586Z] fff4e2c1b189: Pulling fs layer
+[2026-10-22T06:27:53.586Z] 4feea04c1543: Pulling fs layer
+[2026-10-22T06:27:53.586Z] b2cbbfe903b0: Pulling fs layer
+[2026-10-22T06:27:53.586Z] 6a0ac1617861: Pulling fs layer
+[2026-10-22T06:27:53.910Z] fff4e2c1b189: Pulling fs layer
+[2026-10-22T06:27:53.910Z] 6a0ac1617861: Pulling fs layer
+[2026-10-22T06:27:53.910Z] b2cbbfe903b0: Pulling fs layer
+[2026-10-22T06:27:53.910Z] 4feea04c1543: Pulling fs layer
+[2026-10-22T06:27:54.068Z] 6a0ac1617861: Download complete
+[2026-10-22T06:27:54.138Z] 6a0ac1617861: Download complete
+[2026-10-22T06:27:54.138Z] fff4e2c1b189: Download complete
+[2026-10-22T06:27:54.138Z] b2cbbfe903b0: Download complete
+[2026-10-22T06:27:54.161Z] 6a0ac1617861: Download complete
+[2026-10-22T06:27:54.161Z] fff4e2c1b189: Download complete
+[2026-10-22T06:27:54.161Z] b2cbbfe903b0: Download complete
+[2026-10-22T06:27:54.161Z] 4feea04c1543: Download complete
+[2026-10-22T06:27:54.161Z] 6a0ac1617861: Pull complete
+[2026-10-22T06:27:54.342Z] fff4e2c1b189: Download complete
+[2026-10-22T06:27:54.342Z] b2cbbfe903b0: Download complete
+[2026-10-22T06:27:54.342Z] 4feea04c1543: Download complete
+[2026-10-22T06:27:54.342Z] 6a0ac1617861: Pull complete
+[2026-10-22T06:27:54.389Z] 4feea04c1543: Download complete
+[2026-10-22T06:27:54.389Z] 6a0ac1617861: Pull complete
+[2026-10-22T06:27:54.593Z] 0f92261bcd1c: Download complete
+[2026-10-22T06:27:54.640Z] 0f92261bcd1c: Download complete
+[2026-10-22T06:27:54.727Z] 0f92261bcd1c: Download complete
+[2026-10-22T06:27:54.864Z] 14f8540414db: Download complete
+[2026-10-22T06:27:54.900Z] 14f8540414db: Download complete
+[2026-10-22T06:27:55.012Z] 14f8540414db: Download complete
+[2026-10-22T06:27:56.847Z] fff4e2c1b189: Pull complete
+[2026-10-22T06:27:56.847Z] b2cbbfe903b0: Pull complete
+[2026-10-22T06:27:56.847Z] 4feea04c1543: Pull complete
+[2026-10-22T06:27:56.847Z] Digest: sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-10-22T06:27:56.847Z] Status: Downloaded newer image for node:20-alpine
+[2026-10-22T06:27:56.948Z] 4feea04c1543: Pull complete
+[2026-10-22T06:27:56.948Z] fff4e2c1b189: Pull complete
+[2026-10-22T06:27:56.948Z] b2cbbfe903b0: Pull complete
+[2026-10-22T06:27:56.948Z] b2cbbfe903b0: Pull complete
+[2026-10-22T06:27:56.949Z] 4feea04c1543: Pull complete
+[2026-10-22T06:27:56.949Z] fff4e2c1b189: Pull complete
+[2026-10-22T06:27:56.949Z] Digest: sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-10-22T06:27:56.949Z] Status: Downloaded newer image for node:20-alpine
+[2026-10-22T06:27:57.513Z] Digest: sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+[2026-10-22T06:27:57.513Z] Status: Downloaded newer image for node:20-alpine
+[2026-10-22T06:28:03.439Z] npm warn deprecated prom-client@15.1.3: prom-client has been replaced by @prometheus-io/client
+[2026-10-22T06:28:03.439Z] 
+[2026-10-22T06:28:03.439Z] added 141 packages in 5s
+[2026-10-22T06:28:03.439Z] 
+[2026-10-22T06:28:03.439Z] 20 packages are looking for funding
+[2026-10-22T06:28:03.439Z]   run `npm fund` for details
+[2026-10-22T06:28:03.439Z] npm notice
+[2026-10-22T06:28:03.439Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:28:03.439Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:28:03.439Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:28:03.439Z] npm notice
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[2026-10-22T06:28:11.631Z] npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-22T06:28:11.631Z] npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-22T06:28:11.631Z] npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-22T06:28:11.631Z] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-22T06:28:11.631Z] npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-22T06:28:11.631Z] npm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-22T06:28:12.183Z] npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-22T06:28:12.183Z] npm warn deprecated
+[2026-10-22T06:28:12.183Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-22T06:28:12.294Z] npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-22T06:28:12.294Z] npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-22T06:28:12.294Z] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-22T06:28:12.294Z] npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-22T06:28:12.294Z] npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-22T06:28:12.294Z] npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-22T06:28:12.294Z] npm warn deprecated
+[2026-10-22T06:28:12.294Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-22T06:28:12.548Z] npm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-22T06:28:13.498Z] npm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-22T06:28:15.366Z] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-22T06:28:15.500Z] npm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-22T06:28:15.500Z] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-22T06:28:15.500Z] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-22T06:28:15.923Z] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-22T06:28:16.847Z] npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-22T06:28:17.271Z] npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-22T06:28:17.760Z] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-22T06:28:18.615Z] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-22T06:28:19.658Z] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-22T06:28:19.658Z] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-22T06:28:19.960Z] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-22T06:28:19.960Z] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-22T06:28:20.573Z] npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-22T06:28:20.573Z] npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-22T06:28:20.573Z] npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-22T06:28:20.573Z] npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-22T06:28:20.573Z] npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-22T06:28:21.853Z] npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-22T06:28:21.853Z] npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-22T06:28:21.853Z] npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-22T06:28:21.853Z] npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-22T06:28:21.853Z] npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-22T06:28:22.437Z] npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-22T06:28:22.437Z] npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-22T06:28:22.688Z] npm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-22T06:28:23.741Z] npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-22T06:28:23.741Z] npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-22T06:28:23.741Z] npm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-22T06:28:26.853Z] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-22T06:28:27.867Z] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-22T06:28:31.005Z] 
+[2026-10-22T06:28:31.006Z] added 1324 packages in 32s
+[2026-10-22T06:28:31.006Z] 
+[2026-10-22T06:28:31.006Z] 270 packages are looking for funding
+[2026-10-22T06:28:31.006Z]   run `npm fund` for details
+[2026-10-22T06:28:31.006Z] npm notice
+[2026-10-22T06:28:31.006Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:28:31.006Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:28:31.006Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:28:31.006Z] npm notice
+[2026-10-22T06:28:31.006Z] 
+[2026-10-22T06:28:31.006Z] > shopnow-frontend@1.0.0 test
+[2026-10-22T06:28:31.006Z] > react-scripts test --watchAll=false --passWithNoTests
+[2026-10-22T06:28:31.006Z] 
+[2026-10-22T06:28:31.560Z] No tests found, exiting with code 0
+[2026-10-22T06:28:32.057Z] 
+[2026-10-22T06:28:32.057Z] added 1324 packages in 33s
+[2026-10-22T06:28:32.057Z] 
+[2026-10-22T06:28:32.057Z] 270 packages are looking for funding
+[2026-10-22T06:28:32.057Z]   run `npm fund` for details
+[2026-10-22T06:28:32.057Z] npm notice
+[2026-10-22T06:28:32.057Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:28:32.057Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:28:32.057Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:28:32.057Z] npm notice
+[2026-10-22T06:28:32.057Z] 
+[2026-10-22T06:28:32.057Z] > shopnow-admin@1.0.0 test
+[2026-10-22T06:28:32.057Z] > react-scripts test --watchAll=false --passWithNoTests
+[2026-10-22T06:28:32.057Z] 
+[Pipeline] }
+[2026-10-22T06:28:32.969Z] No tests found, exiting with code 0
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build images)
+[Pipeline] sh
+[2026-10-22T06:28:33.706Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:2cfa19b-1 ./backend
+[2026-10-22T06:28:33.706Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-22T06:28:33.706Z]             Install the buildx component to build images with BuildKit:
+[2026-10-22T06:28:33.706Z]             https://docs.docker.com/go/buildx/
+[2026-10-22T06:28:33.706Z] 
+[2026-10-22T06:28:33.706Z] Sending build context to Docker daemon  84.48kB[2026-10-22T06:28:33.706Z] 
+[2026-10-22T06:28:33.706Z] Step 1/11 : FROM node:20-alpine
+[2026-10-22T06:28:33.957Z]  ---> fb4cd12c85ee
+[2026-10-22T06:28:33.957Z] Step 2/11 : WORKDIR /app
+[2026-10-22T06:28:33.957Z]  ---> Running in f062e3eb01c2
+[2026-10-22T06:28:34.508Z]  ---> Removed intermediate container f062e3eb01c2
+[2026-10-22T06:28:34.508Z]  ---> 86bcb1c31096
+[2026-10-22T06:28:34.508Z] Step 3/11 : COPY package*.json ./
+[2026-10-22T06:28:34.759Z]  ---> dd55a186346b
+[2026-10-22T06:28:34.759Z] Step 4/11 : RUN npm ci --omit=dev --no-audit
+[2026-10-22T06:28:35.011Z]  ---> Running in 78cea80e0ad1
+[2026-10-22T06:28:36.873Z] [91mnpm warn deprecated prom-client@15.1.3: prom-client has been replaced by @prometheus-io/client
+[2026-10-22T06:28:37.424Z] [0m
+[2026-10-22T06:28:37.424Z] added 112 packages in 2s
+[2026-10-22T06:28:37.424Z] 
+[2026-10-22T06:28:37.424Z] 16 packages are looking for funding
+[2026-10-22T06:28:37.424Z]   run `npm fund` for details
+[2026-10-22T06:28:37.424Z] [91mnpm notice
+[2026-10-22T06:28:37.424Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:28:37.424Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:28:37.424Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:28:37.424Z] npm notice
+[2026-10-22T06:28:39.287Z] [0m ---> Removed intermediate container 78cea80e0ad1
+[2026-10-22T06:28:39.287Z]  ---> b7a7643f887c
+[2026-10-22T06:28:39.287Z] Step 5/11 : COPY . .
+[2026-10-22T06:28:39.287Z]  ---> 0db3ffbd462b
+[2026-10-22T06:28:39.287Z] Step 6/11 : RUN addgroup -S appgroup && adduser -S appuser -G appgroup && chown -R appuser:appgroup /app
+[2026-10-22T06:28:39.538Z]  ---> Running in 24ddd52f2428
+[2026-10-22T06:28:51.640Z]  ---> Removed intermediate container 24ddd52f2428
+[2026-10-22T06:28:51.640Z]  ---> 8bbedf0748bb
+[2026-10-22T06:28:51.640Z] Step 7/11 : USER appuser
+[2026-10-22T06:28:51.640Z]  ---> Running in aa83bf8e27d0
+[2026-10-22T06:28:51.640Z]  ---> Removed intermediate container aa83bf8e27d0
+[2026-10-22T06:28:51.640Z]  ---> a101495ffec2
+[2026-10-22T06:28:51.640Z] Step 8/11 : ENV NODE_ENV=production PORT=5000
+[2026-10-22T06:28:51.640Z]  ---> Running in 7c4307471d3c
+[2026-10-22T06:28:51.640Z]  ---> Removed intermediate container 7c4307471d3c
+[2026-10-22T06:28:51.640Z]  ---> e4e5be418628
+[2026-10-22T06:28:51.640Z] Step 9/11 : EXPOSE 5000
+[2026-10-22T06:28:51.640Z]  ---> Running in ea23b4b9c886
+[2026-10-22T06:28:51.640Z]  ---> Removed intermediate container ea23b4b9c886
+[2026-10-22T06:28:51.640Z]  ---> cdd2c2006e3e
+[2026-10-22T06:28:51.640Z] Step 10/11 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1:${PORT}/api/health || exit 1
+[2026-10-22T06:28:51.640Z]  ---> Running in 964b7da5aaa1
+[2026-10-22T06:28:51.640Z]  ---> Removed intermediate container 964b7da5aaa1
+[2026-10-22T06:28:51.640Z]  ---> cb08a98cbb7f
+[2026-10-22T06:28:51.640Z] Step 11/11 : CMD ["node", "server.js"]
+[2026-10-22T06:28:51.640Z]  ---> Running in 49f06b3162e4
+[2026-10-22T06:28:52.191Z]  ---> Removed intermediate container 49f06b3162e4
+[2026-10-22T06:28:52.191Z]  ---> 9dbc662b1363
+[2026-10-22T06:28:52.191Z] Successfully built 9dbc662b1363
+[2026-10-22T06:28:52.191Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:2cfa19b-1
+[2026-10-22T06:28:52.191Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:2cfa19b-1 ./frontend
+[2026-10-22T06:28:52.191Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-22T06:28:52.191Z]             Install the buildx component to build images with BuildKit:
+[2026-10-22T06:28:52.191Z]             https://docs.docker.com/go/buildx/
+[2026-10-22T06:28:52.191Z] 
+[2026-10-22T06:28:52.191Z] Sending build context to Docker daemon  713.7kB[2026-10-22T06:28:52.191Z] 
+[2026-10-22T06:28:52.191Z] Step 1/15 : FROM node:20-alpine AS builder
+[2026-10-22T06:28:52.191Z]  ---> fb4cd12c85ee
+[2026-10-22T06:28:52.191Z] Step 2/15 : WORKDIR /app
+[2026-10-22T06:28:52.192Z]  ---> Using cache
+[2026-10-22T06:28:52.192Z]  ---> 86bcb1c31096
+[2026-10-22T06:28:52.192Z] Step 3/15 : COPY package*.json ./
+[2026-10-22T06:28:52.743Z]  ---> 4bc3e6bc0003
+[2026-10-22T06:28:52.743Z] Step 4/15 : RUN npm ci --no-audit
+[2026-10-22T06:28:52.743Z]  ---> Running in 608049fe8842
+[2026-10-22T06:28:57.949Z] [91mnpm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-22T06:28:57.949Z] [0m[91mnpm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-22T06:28:57.949Z] [0m[91mnpm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-22T06:28:58.200Z] [0m[91mnpm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-22T06:28:58.200Z] [0m[91mnpm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-22T06:28:58.450Z] [0m[91mnpm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-22T06:28:58.450Z] [0m[91mnpm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-22T06:28:58.450Z] npm warn deprecated
+[2026-10-22T06:28:58.450Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-22T06:28:59.363Z] [0m[91mnpm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-22T06:28:59.914Z] [0m[91mnpm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-22T06:29:00.165Z] [0m[91mnpm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-22T06:29:00.716Z] [0m[91mnpm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-22T06:29:01.628Z] [0m[91mnpm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-22T06:29:02.541Z] [0m[91mnpm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-22T06:29:02.541Z] [0m[91mnpm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-22T06:29:02.541Z] [0m[91mnpm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-22T06:29:02.792Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-22T06:29:03.043Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-22T06:29:03.045Z] npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-22T06:29:03.046Z] npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-22T06:29:03.046Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-22T06:29:04.390Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-22T06:29:04.390Z] [0m[91mnpm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-22T06:29:06.253Z] [0m[91mnpm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-22T06:29:08.738Z] [0m
+[2026-10-22T06:29:08.738Z] added 1324 packages in 16s
+[2026-10-22T06:29:08.738Z] 
+[2026-10-22T06:29:08.738Z] 270 packages are looking for funding
+[2026-10-22T06:29:08.738Z]   run `npm fund` for details
+[2026-10-22T06:29:08.738Z] [91mnpm notice
+[2026-10-22T06:29:08.738Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:29:08.738Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:29:08.738Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:29:08.738Z] npm notice
+[2026-10-22T06:29:26.700Z] [0m ---> Removed intermediate container 608049fe8842
+[2026-10-22T06:29:26.700Z]  ---> 05244eb2aae2
+[2026-10-22T06:29:26.700Z] Step 5/15 : COPY . .
+[2026-10-22T06:29:28.561Z]  ---> 32277e98b1ba
+[2026-10-22T06:29:28.561Z] Step 6/15 : ARG PUBLIC_URL=/
+[2026-10-22T06:29:28.561Z]  ---> Running in 5aa25197575d
+[2026-10-22T06:29:30.424Z]  ---> Removed intermediate container 5aa25197575d
+[2026-10-22T06:29:30.424Z]  ---> b29824744b0a
+[2026-10-22T06:29:30.424Z] Step 7/15 : ARG REACT_APP_API_BASE_URL=/api
+[2026-10-22T06:29:30.424Z]  ---> Running in 30a866fd02c9
+[2026-10-22T06:29:32.286Z]  ---> Removed intermediate container 30a866fd02c9
+[2026-10-22T06:29:32.286Z]  ---> 8b2868d3839d
+[2026-10-22T06:29:32.286Z] Step 8/15 : ENV PUBLIC_URL=$PUBLIC_URL REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+[2026-10-22T06:29:32.286Z]  ---> Running in e7328fa9a3e2
+[2026-10-22T06:29:34.148Z]  ---> Removed intermediate container e7328fa9a3e2
+[2026-10-22T06:29:34.148Z]  ---> 87742f592de7
+[2026-10-22T06:29:34.148Z] Step 9/15 : RUN npm run build
+[2026-10-22T06:29:34.148Z]  ---> Running in 7fb6991e4e70
+[2026-10-22T06:29:34.399Z] 
+[2026-10-22T06:29:34.399Z] > shopnow-frontend@1.0.0 build
+[2026-10-22T06:29:34.399Z] > react-scripts build
+[2026-10-22T06:29:34.399Z] 
+[2026-10-22T06:29:34.950Z] [91m[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[2026-10-22T06:29:35.501Z] [0mCreating an optimized production build...
+[2026-10-22T06:29:35.752Z] [91mBrowserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+[2026-10-22T06:29:35.752Z]   npx update-browserslist-db@latest
+[2026-10-22T06:29:35.752Z]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[2026-10-22T06:29:47.850Z] [0m[91m[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[2026-10-22T06:29:47.850Z] [0m[91mBrowserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+[2026-10-22T06:29:47.850Z]   npx update-browserslist-db@latest
+[2026-10-22T06:29:47.850Z]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[2026-10-22T06:29:48.100Z] [0mCompiled successfully.
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z] File sizes after gzip:
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z]   50.85 kB  build/static/js/main.81ebd8d9.js
+[2026-10-22T06:29:48.101Z]   104 B     build/static/css/main.cf890fdb.css
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z] The project was built assuming it is hosted at /.
+[2026-10-22T06:29:48.101Z] You can control this with the homepage field in your package.json.
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z] The build folder is ready to be deployed.
+[2026-10-22T06:29:48.101Z] You may serve it with a static server:
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z]   npm install -g serve
+[2026-10-22T06:29:48.101Z]   serve -s build
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z] Find out more about deployment here:
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:48.101Z]   https://cra.link/deployment
+[2026-10-22T06:29:48.101Z] 
+[2026-10-22T06:29:50.584Z]  ---> Removed intermediate container 7fb6991e4e70
+[2026-10-22T06:29:50.584Z]  ---> 9623bb8af431
+[2026-10-22T06:29:50.584Z] Step 10/15 : FROM nginx:1.27-alpine
+[2026-10-22T06:29:53.068Z] 1.27-alpine: Pulling from library/nginx
+[2026-10-22T06:29:53.068Z] d7e507024086: Pulling fs layer
+[2026-10-22T06:29:53.068Z] f18232174bc9: Pulling fs layer
+[2026-10-22T06:29:53.068Z] 61ca4f733c80: Pulling fs layer
+[2026-10-22T06:29:53.068Z] b464cfdf2a63: Pulling fs layer
+[2026-10-22T06:29:53.068Z] 39c2ddfd6010: Pulling fs layer
+[2026-10-22T06:29:53.068Z] 197eb75867ef: Pulling fs layer
+[2026-10-22T06:29:53.068Z] 34a64644b756: Pulling fs layer
+[2026-10-22T06:29:53.068Z] 81bd8ed7ec67: Pulling fs layer
+[2026-10-22T06:29:53.619Z] 81bd8ed7ec67: Download complete
+[2026-10-22T06:29:53.619Z] f18232174bc9: Download complete
+[2026-10-22T06:29:53.870Z] 197eb75867ef: Download complete
+[2026-10-22T06:29:53.870Z] 34a64644b756: Download complete
+[2026-10-22T06:29:53.870Z] d7e507024086: Download complete
+[2026-10-22T06:29:53.870Z] 61ca4f733c80: Download complete
+[2026-10-22T06:29:53.870Z] b464cfdf2a63: Download complete
+[2026-10-22T06:29:53.870Z] 39c2ddfd6010: Download complete
+[2026-10-22T06:29:54.120Z] f18232174bc9: Pull complete
+[2026-10-22T06:29:54.371Z] d7e507024086: Pull complete
+[2026-10-22T06:29:54.371Z] 61ca4f733c80: Pull complete
+[2026-10-22T06:29:54.371Z] b464cfdf2a63: Pull complete
+[2026-10-22T06:29:54.371Z] 2a84448aca9c: Download complete
+[2026-10-22T06:29:54.371Z] 9261b9aff737: Download complete
+[2026-10-22T06:29:54.371Z] 81bd8ed7ec67: Pull complete
+[2026-10-22T06:29:54.371Z] 197eb75867ef: Pull complete
+[2026-10-22T06:29:54.371Z] 34a64644b756: Pull complete
+[2026-10-22T06:29:54.622Z] 39c2ddfd6010: Pull complete
+[2026-10-22T06:29:54.622Z] Digest: sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+[2026-10-22T06:29:54.622Z] Status: Downloaded newer image for nginx:1.27-alpine
+[2026-10-22T06:29:54.622Z]  ---> 65645c7bb6a0
+[2026-10-22T06:29:54.622Z] Step 11/15 : COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+[2026-10-22T06:29:55.172Z]  ---> dbcb00866f6d
+[2026-10-22T06:29:55.172Z] Step 12/15 : COPY --from=builder /app/build /usr/share/nginx/html
+[2026-10-22T06:29:55.423Z]  ---> 98acf47284d0
+[2026-10-22T06:29:55.423Z] Step 13/15 : EXPOSE 80
+[2026-10-22T06:29:55.423Z]  ---> Running in 9feb68bfb37d
+[2026-10-22T06:29:55.674Z]  ---> Removed intermediate container 9feb68bfb37d
+[2026-10-22T06:29:55.674Z]  ---> 00f3fdfdfd11
+[2026-10-22T06:29:55.674Z] Step 14/15 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1/health || exit 1
+[2026-10-22T06:29:55.674Z]  ---> Running in 08b9107b1559
+[2026-10-22T06:29:55.924Z]  ---> Removed intermediate container 08b9107b1559
+[2026-10-22T06:29:55.924Z]  ---> 122697ce9b0a
+[2026-10-22T06:29:55.924Z] Step 15/15 : CMD ["nginx", "-g", "daemon off;"]
+[2026-10-22T06:29:55.924Z]  ---> Running in 4f4649da5a5b
+[2026-10-22T06:29:56.175Z]  ---> Removed intermediate container 4f4649da5a5b
+[2026-10-22T06:29:56.175Z]  ---> 1be68ad740d9
+[2026-10-22T06:29:56.175Z] Successfully built 1be68ad740d9
+[2026-10-22T06:29:56.175Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:2cfa19b-1
+[2026-10-22T06:29:56.175Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:2cfa19b-1 ./admin
+[2026-10-22T06:29:56.175Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-22T06:29:56.175Z]             Install the buildx component to build images with BuildKit:
+[2026-10-22T06:29:56.175Z]             https://docs.docker.com/go/buildx/
+[2026-10-22T06:29:56.175Z] 
+[2026-10-22T06:29:56.175Z] Sending build context to Docker daemon  710.7kB[2026-10-22T06:29:56.175Z] 
+[2026-10-22T06:29:56.175Z] Step 1/15 : FROM node:20-alpine AS builder
+[2026-10-22T06:29:56.175Z]  ---> fb4cd12c85ee
+[2026-10-22T06:29:56.175Z] Step 2/15 : WORKDIR /app
+[2026-10-22T06:29:56.175Z]  ---> Using cache
+[2026-10-22T06:29:56.175Z]  ---> 86bcb1c31096
+[2026-10-22T06:29:56.175Z] Step 3/15 : COPY package*.json ./
+[2026-10-22T06:29:56.726Z]  ---> 4fcf0598be43
+[2026-10-22T06:29:56.726Z] Step 4/15 : RUN npm ci --no-audit
+[2026-10-22T06:29:56.726Z]  ---> Running in 425831e95078
+[2026-10-22T06:30:01.921Z] [91mnpm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-22T06:30:01.921Z] [0m[91mnpm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-22T06:30:01.921Z] [0m[91mnpm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-22T06:30:01.921Z] [0m[91mnpm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-22T06:30:02.172Z] [0m[91mnpm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-22T06:30:02.423Z] [0m[91mnpm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-22T06:30:02.423Z] npm warn deprecated
+[2026-10-22T06:30:02.423Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-22T06:30:02.977Z] [0m[91mnpm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-22T06:30:03.228Z] [0m[91mnpm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-22T06:30:04.140Z] [0m[91mnpm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-22T06:30:04.140Z] [0m[91mnpm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-22T06:30:04.690Z] [0m[91mnpm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-22T06:30:05.602Z] [0m[91mnpm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-22T06:30:05.852Z] [0m[91mnpm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-22T06:30:06.103Z] [0m[91mnpm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-22T06:30:06.103Z] [0m[91mnpm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-22T06:30:06.654Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-22T06:30:06.654Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-22T06:30:06.654Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-22T06:30:06.654Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-22T06:30:06.654Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-22T06:30:07.565Z] [0m[91mnpm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-22T06:30:07.816Z] [0m[91mnpm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-22T06:30:09.678Z] [0m[91mnpm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-22T06:30:11.540Z] [0m
+[2026-10-22T06:30:11.540Z] added 1324 packages in 15s
+[2026-10-22T06:30:11.540Z] 
+[2026-10-22T06:30:11.540Z] 270 packages are looking for funding
+[2026-10-22T06:30:11.540Z]   run `npm fund` for details
+[2026-10-22T06:30:11.540Z] [91mnpm notice
+[2026-10-22T06:30:11.540Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-22T06:30:11.540Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-22T06:30:11.540Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-22T06:30:11.540Z] npm notice
+[2026-10-22T06:30:37.949Z] [0m ---> Removed intermediate container 425831e95078
+[2026-10-22T06:30:37.949Z]  ---> 5ed1ed9322ed
+[2026-10-22T06:30:37.949Z] Step 5/15 : COPY . .
+[2026-10-22T06:30:40.432Z]  ---> 2ef50262b135
+[2026-10-22T06:30:40.432Z] Step 6/15 : ARG PUBLIC_URL=/
+[2026-10-22T06:30:40.432Z]  ---> Running in 359b9bb3164f
+[2026-10-22T06:30:42.917Z]  ---> Removed intermediate container 359b9bb3164f
+[2026-10-22T06:30:42.917Z]  ---> be6511bdb386
+[2026-10-22T06:30:42.917Z] Step 7/15 : ARG REACT_APP_API_BASE_URL=/api
+[2026-10-22T06:30:42.917Z]  ---> Running in 6b59a073f2a6
+[2026-10-22T06:30:44.779Z]  ---> Removed intermediate container 6b59a073f2a6
+[2026-10-22T06:30:44.780Z]  ---> 9d6f45d324d9
+[2026-10-22T06:30:44.780Z] Step 8/15 : ENV PUBLIC_URL=$PUBLIC_URL REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+[2026-10-22T06:30:44.780Z]  ---> Running in c4add4cf4270
+[2026-10-22T06:30:47.263Z]  ---> Removed intermediate container c4add4cf4270
+[2026-10-22T06:30:47.263Z]  ---> 9809c113585b
+[2026-10-22T06:30:47.263Z] Step 9/15 : RUN npm run build
+[2026-10-22T06:30:47.263Z]  ---> Running in 00e9fbaf6b2a
+[2026-10-22T06:30:47.263Z] 
+[2026-10-22T06:30:47.263Z] > shopnow-admin@1.0.0 build
+[2026-10-22T06:30:47.263Z] > react-scripts build
+[2026-10-22T06:30:47.263Z] 
+[2026-10-22T06:30:47.814Z] [91m[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[2026-10-22T06:30:48.365Z] [0mCreating an optimized production build...
+[2026-10-22T06:30:48.365Z] [91mBrowserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+[2026-10-22T06:30:48.365Z]   npx update-browserslist-db@latest
+[2026-10-22T06:30:48.365Z]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[2026-10-22T06:31:03.128Z] [0m[91m[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[2026-10-22T06:31:03.128Z] [0m[91mBrowserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+[2026-10-22T06:31:03.128Z]   npx update-browserslist-db@latest
+[2026-10-22T06:31:03.128Z]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[2026-10-22T06:31:03.128Z] [0mCompiled successfully.
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z] File sizes after gzip:
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z]   49.56 kB  build/static/js/main.aa21d9fb.js
+[2026-10-22T06:31:03.128Z]   104 B     build/static/css/main.cf890fdb.css
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z] The project was built assuming it is hosted at /.
+[2026-10-22T06:31:03.128Z] You can control this with the homepage field in your package.json.
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z] The build folder is ready to be deployed.
+[2026-10-22T06:31:03.128Z] You may serve it with a static server:
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z]   npm install -g serve
+[2026-10-22T06:31:03.128Z]   serve -s build
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z] Find out more about deployment here:
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:03.128Z]   https://cra.link/deployment
+[2026-10-22T06:31:03.128Z] 
+[2026-10-22T06:31:04.040Z]  ---> Removed intermediate container 00e9fbaf6b2a
+[2026-10-22T06:31:04.040Z]  ---> d6efc78ffbb2
+[2026-10-22T06:31:04.040Z] Step 10/15 : FROM nginx:1.27-alpine
+[2026-10-22T06:31:04.040Z]  ---> 65645c7bb6a0
+[2026-10-22T06:31:04.040Z] Step 11/15 : COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+[2026-10-22T06:31:04.040Z]  ---> 5809c1859617
+[2026-10-22T06:31:04.040Z] Step 12/15 : COPY --from=builder /app/build /usr/share/nginx/html
+[2026-10-22T06:31:04.290Z]  ---> 6fbd9757ca48
+[2026-10-22T06:31:04.290Z] Step 13/15 : EXPOSE 80
+[2026-10-22T06:31:04.290Z]  ---> Running in b936ec351474
+[2026-10-22T06:31:04.541Z]  ---> Removed intermediate container b936ec351474
+[2026-10-22T06:31:04.541Z]  ---> f1097f8e6afc
+[2026-10-22T06:31:04.541Z] Step 14/15 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1/health || exit 1
+[2026-10-22T06:31:04.791Z]  ---> Running in 9a11c6d3fd73
+[2026-10-22T06:31:04.791Z]  ---> Removed intermediate container 9a11c6d3fd73
+[2026-10-22T06:31:04.791Z]  ---> 55f092e3b538
+[2026-10-22T06:31:04.791Z] Step 15/15 : CMD ["nginx", "-g", "daemon off;"]
+[2026-10-22T06:31:05.042Z]  ---> Running in 26ae11c5af72
+[2026-10-22T06:31:05.042Z]  ---> Removed intermediate container 26ae11c5af72
+[2026-10-22T06:31:05.042Z]  ---> 7d41455d538e
+[2026-10-22T06:31:05.292Z] Successfully built 7d41455d538e
+[2026-10-22T06:31:05.292Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:2cfa19b-1
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Scan images)
+[Pipeline] sh
+[2026-10-22T06:31:05.703Z] + command -v trivy
+[2026-10-22T06:31:05.703Z] + echo trivy not installed - skipping scan (ECR scan-on-push still runs)
+[2026-10-22T06:31:05.703Z] trivy not installed - skipping scan (ECR scan-on-push still runs)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to ECR)
+[Pipeline] sh
+[2026-10-22T06:31:06.091Z] + aws ecr get-login-password --region ap-southeast-2
+[2026-10-22T06:31:06.091Z] + docker login --username AWS --password-stdin 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com
+[2026-10-22T06:31:07.006Z] 
+[2026-10-22T06:31:07.006Z] WARNING! Your credentials are stored unencrypted in '/var/lib/jenkins/.docker/config.json'.
+[2026-10-22T06:31:07.006Z] Configure a credential helper to remove this warning. See
+[2026-10-22T06:31:07.006Z] https://docs.docker.com/go/credential-store/
+[2026-10-22T06:31:07.006Z] 
+[2026-10-22T06:31:07.006Z] Login Succeeded
+[2026-10-22T06:31:07.006Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:2cfa19b-1
+[2026-10-22T06:31:07.006Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend]
+[2026-10-22T06:31:07.006Z] 5655f3a562e1: Waiting
+[2026-10-22T06:31:07.006Z] e93d5aa98728: Waiting
+[2026-10-22T06:31:07.006Z] f3f18345ddcb: Waiting
+[2026-10-22T06:31:07.006Z] 00cc2e087650: Waiting
+[2026-10-22T06:31:07.006Z] 2f63c4d6a4a3: Waiting
+[2026-10-22T06:31:07.006Z] 4feea04c1543: Waiting
+[2026-10-22T06:31:07.006Z] b2cbbfe903b0: Waiting
+[2026-10-22T06:31:07.259Z] 5655f3a562e1: Pushed
+[2026-10-22T06:31:07.259Z] f3f18345ddcb: Pushed
+[2026-10-22T06:31:07.259Z] fff4e2c1b189: Pushed
+[2026-10-22T06:31:07.259Z] 2f63c4d6a4a3: Pushed
+[2026-10-22T06:31:07.259Z] 6a0ac1617861: Pushed
+[2026-10-22T06:31:07.259Z] b2cbbfe903b0: Pushed
+[2026-10-22T06:31:07.510Z] e93d5aa98728: Pushed
+[2026-10-22T06:31:07.510Z] 00cc2e087650: Pushed
+[2026-10-22T06:31:08.061Z] 4feea04c1543: Pushed
+[2026-10-22T06:31:08.311Z] 2cfa19b-1: digest: sha256:9dbc662b1363654b801f070e46a455f7fdc380cc990f89228c50b98e925bd095 size: 2274
+[2026-10-22T06:31:08.311Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:2cfa19b-1
+[2026-10-22T06:31:08.311Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend]
+[2026-10-22T06:31:08.311Z] d7e507024086: Waiting
+[2026-10-22T06:31:08.311Z] 24c31498ae5b: Waiting
+[2026-10-22T06:31:08.562Z] 7cbaac84da92: Pushed
+[2026-10-22T06:31:08.562Z] f18232174bc9: Pushed
+[2026-10-22T06:31:08.562Z] 61ca4f733c80: Pushed
+[2026-10-22T06:31:08.562Z] b464cfdf2a63: Pushed
+[2026-10-22T06:31:08.562Z] d7e507024086: Pushed
+[2026-10-22T06:31:08.562Z] 81bd8ed7ec67: Pushed
+[2026-10-22T06:31:08.562Z] 34a64644b756: Pushed
+[2026-10-22T06:31:08.562Z] 24c31498ae5b: Pushed
+[2026-10-22T06:31:08.562Z] 197eb75867ef: Pushed
+[2026-10-22T06:31:08.812Z] 39c2ddfd6010: Pushed
+[2026-10-22T06:31:09.063Z] 2cfa19b-1: digest: sha256:1be68ad740d917b3332768d11eeb091eb18f680ac5cc07615c7d2aba3f0f8609 size: 2484
+[2026-10-22T06:31:09.063Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:2cfa19b-1
+[2026-10-22T06:31:09.063Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin]
+[2026-10-22T06:31:09.314Z] 197eb75867ef: Pushed
+[2026-10-22T06:31:09.564Z] 81bd8ed7ec67: Pushed
+[2026-10-22T06:31:09.564Z] f18232174bc9: Pushed
+[2026-10-22T06:31:09.564Z] d7e507024086: Pushed
+[2026-10-22T06:31:09.564Z] 34a64644b756: Pushed
+[2026-10-22T06:31:09.564Z] 404bbf8c2d62: Pushed
+[2026-10-22T06:31:09.564Z] e54d0ea17530: Pushed
+[2026-10-22T06:31:09.564Z] b464cfdf2a63: Pushed
+[2026-10-22T06:31:09.564Z] 61ca4f733c80: Pushed
+[2026-10-22T06:31:09.815Z] 39c2ddfd6010: Pushed
+[2026-10-22T06:31:10.065Z] 2cfa19b-1: digest: sha256:7d41455d538ec43c6dce37c5d25a8aa07ad60bbf246a50c04606820a727b3485 size: 2484
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to EKS)
+Stage "Deploy to EKS" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Smoke test)
+Stage "Smoke test" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-10-22T06:31:10.958Z] + docker image prune -af --filter until=24h
+[2026-10-22T06:31:10.958Z] Total reclaimed space: 0B
+[Pipeline] cleanWs
+[2026-10-22T06:31:11.030Z] [WS-CLEANUP] Deleting project workspace...
+[2026-10-22T06:31:11.034Z] [WS-CLEANUP] Deferred wipeout is used...
+[2026-10-22T06:31:11.060Z] [WS-CLEANUP] done
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-10-22T06:31:11.171Z] Cluster down: images pushed, deploy skipped
+[Pipeline] slackSend
+[2026-10-22T06:31:11.211Z] Slack Send Pipeline step running, values are - baseUrl: <empty>, teamDomain: kamal-vuln-scanner, channel: #shopnow-builds, color: good, botUser: true, tokenCredentialId: slack-bot-token, notifyCommitters: false, iconEmoji: <empty>, username: <empty>, timestamp: <empty>
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: UNSTABLE
