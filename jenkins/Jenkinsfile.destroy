@@ -2,7 +2,7 @@
 // Team rule: never stop the Jenkins EC2 by hand while the cluster exists.
 pipeline {
   agent any
-  triggers { cron('TZ=Asia/Kolkata\nH 23 * * *') }
+  triggers { cron('TZ=Asia/Kolkata\n0 21 * * *') }
   options { timestamps(); disableConcurrentBuilds() }
   stages {
     stage('Destroy if cluster exists') {

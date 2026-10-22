@@ -7,7 +7,7 @@ The full step-by-step plan (cost table, team split, every sprint, troubleshootin
 
 ## The one rule
 The EKS cluster exists only while someone is working. It is created by Jenkins at the start of a
-session and destroyed at the end (and automatically at 23:00 IST by `99-nightly-destroy`).
+session and destroyed at the end (and automatically at 21:00 IST by `99-nightly-destroy`).
 Following this keeps the project at roughly **$20 of the $30** budget.
 
 ## What changed vs the original repo
