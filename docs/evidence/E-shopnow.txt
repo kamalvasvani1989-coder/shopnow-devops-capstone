@@ -1,0 +1,20 @@
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                                                                         SELECTOR
+deployment.apps/admin      1/1     1            1           6m54s   admin        926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:2cfa19b-1      app=admin
+deployment.apps/backend    2/2     2            2           6m56s   backend      926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:2cfa19b-1    app=backend
+deployment.apps/frontend   2/2     2            2           6m55s   frontend     926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:2cfa19b-1   app=frontend
+
+NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP                                                                   PORT(S)        AGE     SELECTOR
+service/admin             ClusterIP      172.20.106.87    <none>                                                                        80/TCP         6m54s   app=admin
+service/backend-service   ClusterIP      172.20.122.147   <none>                                                                        5000/TCP       6m56s   app=backend
+service/frontend          LoadBalancer   172.20.233.157   a0535404c0ae84e7bbd44ff69db4fd10-401165993.ap-southeast-2.elb.amazonaws.com   80:31101/TCP   6m55s   app=frontend
+
+NAME                                           REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/backend    Deployment/backend    cpu: 5%/60%   2         5         2          6m52s
+horizontalpodautoscaler.autoscaling/frontend   Deployment/frontend   cpu: 2%/60%   2         4         2          6m52s
+
+NAME                           READY   STATUS    RESTARTS   AGE     IP           NODE                                            NOMINATED NODE   READINESS GATES
+pod/admin-7cb69d5d6c-4gcrk     1/1     Running   0          6m55s   10.0.1.71    ip-10-0-1-103.ap-southeast-2.compute.internal   <none>           <none>
+pod/backend-55b957487-g755l    1/1     Running   0          6m57s   10.0.1.137   ip-10-0-1-103.ap-southeast-2.compute.internal   <none>           <none>
+pod/backend-55b957487-vv6dx    1/1     Running   0          6m38s   10.0.1.51    ip-10-0-1-103.ap-southeast-2.compute.internal   <none>           <none>
+pod/frontend-87898c694-45k2j   1/1     Running   0          6m56s   10.0.1.36    ip-10-0-1-103.ap-southeast-2.compute.internal   <none>           <none>
+pod/frontend-87898c694-qgbw5   1/1     Running   0          6m38s   10.0.1.37    ip-10-0-1-103.ap-southeast-2.compute.internal   <none>           <none>

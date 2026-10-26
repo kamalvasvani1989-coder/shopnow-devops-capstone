@@ -1,0 +1,5 @@
+NAME       IMAGE
+admin      926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:54a4068-8
+backend    926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:54a4068-8
+frontend   926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:54a4068-8
+54a4068 Fix: invoice downloads as PDF (html2pdf.js) instead of HTML

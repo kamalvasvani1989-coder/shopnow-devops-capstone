@@ -1,0 +1,3 @@
+    Image:          926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:54a4068-8
+    Liveness:   http-get http://:http/api/health delay=20s timeout=1s period=15s successThreshold=1 failureThreshold=3
+    Readiness:  http-get http://:http/api/health delay=5s timeout=1s period=10s successThreshold=1 failureThreshold=3
