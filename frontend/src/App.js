@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import html2pdf from 'html2pdf.js';
 import { Search, ShoppingCart, User, Plus, Minus, Star, Filter, Menu, X, Download } from 'lucide-react';
 
 const ShopNowApp = () => {
@@ -217,16 +218,19 @@ const ShopNowApp = () => {
       </html>
     `;
 
-    // Create a blob and download
-    const blob = new Blob([invoiceHTML], { type: 'text/html' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `ShopNow_Invoice_${invoiceNumber}.html`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    // Render the invoice HTML into a real PDF file and download it
+    const container = document.createElement('div');
+    container.innerHTML = invoiceHTML;
+    html2pdf()
+      .set({
+        margin: 10,
+        filename: `ShopNow_Invoice_${invoiceNumber}.pdf`,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      })
+      .from(container)
+      .save();
   };
 
   const handleCheckout = async () => {
