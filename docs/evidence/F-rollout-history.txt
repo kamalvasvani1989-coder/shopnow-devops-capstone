@@ -1,0 +1,11 @@
+deployment.apps/backend 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+5         <none>
+6         <none>
+
+NAME                       READY   STATUS    RESTARTS   AGE
+backend-5dc77f47f5-4w7pm   1/1     Running   0          10m
+backend-5dc77f47f5-9xzsz   1/1     Running   0          10m
