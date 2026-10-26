@@ -8,7 +8,8 @@ module "eks" {
   subnet_ids                               = module.vpc.public_subnets
   cluster_endpoint_public_access           = true
   authentication_mode                      = "API"
-  enable_cluster_creator_admin_permissions = true # the Jenkins role becomes cluster admin
+  enable_cluster_creator_admin_permissions = true  # the Jenkins role becomes cluster admin
+  enable_irsa                              = false # free-plan SCP denies iam:CreateOpenIDConnectProvider; pods use EKS Pod Identity instead
 
   # ---- cost switches
   create_kms_key              = false
