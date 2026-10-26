@@ -23,7 +23,7 @@ spec:
             requests: { cpu: 100m, memory: 128Mi }
             limits: { cpu: 500m, memory: 256Mi }
           readinessProbe:
-            httpGet: { path: /api/health, port: http }
+            httpGet: { path: /api/broken, port: http }
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
