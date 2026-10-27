@@ -11,7 +11,7 @@ grafana:
       jsonData: { authType: default, defaultRegion: ap-southeast-2 }
   sidecar:
     dashboards: { enabled: true, searchNamespace: ALL }
-  resources: { requests: { cpu: 50m, memory: 128Mi }, limits: { memory: 256Mi } }
+  resources: { requests: { cpu: 50m, memory: 192Mi }, limits: { memory: 512Mi } }
 
 prometheus:
   prometheusSpec:
