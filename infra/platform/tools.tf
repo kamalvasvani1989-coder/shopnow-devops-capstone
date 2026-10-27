@@ -21,11 +21,11 @@ resource "aws_security_group" "tools" {
     cidr_blocks = [data.aws_vpc.default.cidr_block]
   }
   ingress {
-    description     = "node_exporter from EKS nodes/pods (Prometheus)"
-    from_port       = 9100
-    to_port         = 9100
-    protocol        = "tcp"
-    security_groups = [module.eks.node_security_group_id]
+    description = "node_exporter from inside the project VPC (Prometheus pods)"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
   }
   egress {
     from_port   = 0
