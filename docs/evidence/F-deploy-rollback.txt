@@ -1,0 +1,460 @@
+Started by GitHub push by kamalvasvani1989-coder
+Obtained Jenkinsfile from git https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/03-shopnow-cicd
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-pat
+Cloning the remote Git repository
+Cloning repository https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git init /var/lib/jenkins/workspace/03-shopnow-cicd # timeout=10
+Fetching upstream changes from https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_ASKPASS to set credentials GitHub fine-grained token (shopnow repo)
+ > git fetch --tags --force --progress -- https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 4cf934c7bb52628b4da696f8be55ff9b00452126 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4cf934c7bb52628b4da696f8be55ff9b00452126 # timeout=10
+Commit message: "TEST T05: break backend readiness probe (expect automatic rollback)"
+ > git rev-list --no-walk db9004c5056b87d9797117796667a10b81cf06f2 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Setup)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-10-26T12:28:28.042Z] + aws sts get-caller-identity --query Account --output text
+[Pipeline] sh
+[2026-10-26T12:28:28.869Z] + aws eks describe-cluster --name shopnow-dev
+[Pipeline] echo
+[2026-10-26T12:28:29.433Z] TAG=4cf934c-11 CLUSTER_UP=true
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Unit tests)
+[Pipeline] parallel
+[Pipeline] { (Branch: frontend)
+[Pipeline] { (Branch: admin)
+[Pipeline] { (Branch: backend)
+[Pipeline] stage
+[Pipeline] { (frontend)
+[Pipeline] stage
+[Pipeline] { (admin)
+[Pipeline] stage
+[Pipeline] { (backend)
+[Pipeline] sh
+[Pipeline] sh
+[Pipeline] sh
+[2026-10-26T12:28:29.869Z] + id -u
+[2026-10-26T12:28:29.869Z] + id -g
+[2026-10-26T12:28:29.869Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/frontend:/app -w /app node:20-alpine sh -c npm ci --no-audit && CI=true npm test -- --watchAll=false --passWithNoTests
+[2026-10-26T12:28:29.889Z] + id -u
+[2026-10-26T12:28:29.889Z] + id -g
+[2026-10-26T12:28:29.889Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/admin:/app -w /app node:20-alpine sh -c npm ci --no-audit && CI=true npm test -- --watchAll=false --passWithNoTests
+[2026-10-26T12:28:29.908Z] + id -u
+[2026-10-26T12:28:29.908Z] + id -g
+[2026-10-26T12:28:29.908Z] + docker run --rm -u 111:113 -e HOME=/tmp -v /var/lib/jenkins/workspace/03-shopnow-cicd/backend:/app -w /app node:20-alpine sh -c npm ci --no-audit && node --check server.js && npm run test --if-present
+[2026-10-26T12:28:34.033Z] npm warn deprecated prom-client@15.1.3: prom-client has been replaced by @prometheus-io/client
+[2026-10-26T12:28:34.955Z] 
+[2026-10-26T12:28:34.955Z] added 141 packages in 5s
+[2026-10-26T12:28:34.955Z] 
+[2026-10-26T12:28:34.955Z] 20 packages are looking for funding
+[2026-10-26T12:28:34.955Z]   run `npm fund` for details
+[2026-10-26T12:28:34.955Z] npm notice
+[2026-10-26T12:28:34.955Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-26T12:28:34.955Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-26T12:28:34.955Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-26T12:28:34.955Z] npm notice
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[2026-10-26T12:28:39.747Z] npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-26T12:28:39.997Z] npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-26T12:28:39.997Z] npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-26T12:28:40.248Z] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-26T12:28:40.249Z] npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-26T12:28:40.799Z] npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-26T12:28:40.799Z] npm warn deprecated
+[2026-10-26T12:28:40.799Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-26T12:28:41.710Z] npm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-26T12:28:41.996Z] npm warn deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+[2026-10-26T12:28:41.996Z] npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+[2026-10-26T12:28:41.996Z] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[2026-10-26T12:28:41.996Z] npm warn deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+[2026-10-26T12:28:41.996Z] npm warn deprecated rollup-plugin-terser@7.0.2: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
+[2026-10-26T12:28:41.996Z] npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+[2026-10-26T12:28:41.996Z] npm warn deprecated
+[2026-10-26T12:28:41.996Z] npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+[2026-10-26T12:28:43.055Z] npm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-26T12:28:43.055Z] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-26T12:28:43.621Z] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-26T12:28:43.876Z] npm warn deprecated workbox-cacheable-response@6.6.0: workbox-background-sync@6.6.0
+[2026-10-26T12:28:43.876Z] npm warn deprecated workbox-google-analytics@6.6.0: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+[2026-10-26T12:28:43.876Z] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[2026-10-26T12:28:44.428Z] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[2026-10-26T12:28:44.536Z] npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-26T12:28:45.339Z] npm warn deprecated domexception@2.0.1: Use your platform's native DOMException instead
+[2026-10-26T12:28:45.941Z] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-26T12:28:46.682Z] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[2026-10-26T12:28:46.855Z] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-26T12:28:47.106Z] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-26T12:28:47.233Z] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[2026-10-26T12:28:47.484Z] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[2026-10-26T12:28:48.022Z] npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-26T12:28:48.022Z] npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-26T12:28:48.022Z] npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-26T12:28:48.272Z] npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-26T12:28:48.272Z] npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-26T12:28:48.272Z] npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-26T12:28:48.395Z] npm warn deprecated @babel/plugin-proposal-private-methods@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
+[2026-10-26T12:28:48.395Z] npm warn deprecated @babel/plugin-proposal-numeric-separator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
+[2026-10-26T12:28:48.395Z] npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+[2026-10-26T12:28:48.395Z] npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+[2026-10-26T12:28:48.395Z] npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+[2026-10-26T12:28:48.945Z] npm warn deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+[2026-10-26T12:28:49.869Z] npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-26T12:28:50.119Z] npm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-26T12:28:50.190Z] npm warn deprecated @babel/plugin-proposal-private-property-in-object@7.21.11: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
+[2026-10-26T12:28:50.190Z] npm warn deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+[2026-10-26T12:28:53.360Z] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-26T12:28:53.475Z] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[2026-10-26T12:28:56.598Z] npm notice
+[2026-10-26T12:28:56.598Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-26T12:28:56.598Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-26T12:28:56.598Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-26T12:28:56.598Z] npm notice
+[2026-10-26T12:28:56.598Z] 
+[2026-10-26T12:28:56.598Z] added 1324 packages in 26s
+[2026-10-26T12:28:56.598Z] 
+[2026-10-26T12:28:56.598Z] 270 packages are looking for funding
+[2026-10-26T12:28:56.598Z]   run `npm fund` for details
+[2026-10-26T12:28:56.598Z] 
+[2026-10-26T12:28:56.598Z] > shopnow-admin@1.0.0 test
+[2026-10-26T12:28:56.598Z] > react-scripts test --watchAll=false --passWithNoTests
+[2026-10-26T12:28:56.598Z] 
+[2026-10-26T12:28:56.747Z] 
+[2026-10-26T12:28:56.747Z] added 1342 packages in 26s
+[2026-10-26T12:28:56.747Z] 
+[2026-10-26T12:28:56.747Z] 271 packages are looking for funding
+[2026-10-26T12:28:56.747Z]   run `npm fund` for details
+[2026-10-26T12:28:56.747Z] npm notice
+[2026-10-26T12:28:56.747Z] npm notice New major version of npm available! 10.8.2 -> 12.2.1
+[2026-10-26T12:28:56.747Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+[2026-10-26T12:28:56.747Z] npm notice To update run: npm install -g npm@12.2.1
+[2026-10-26T12:28:56.747Z] npm notice
+[2026-10-26T12:28:56.747Z] 
+[2026-10-26T12:28:56.747Z] > shopnow-frontend@1.0.0 test
+[2026-10-26T12:28:56.747Z] > react-scripts test --watchAll=false --passWithNoTests
+[2026-10-26T12:28:56.747Z] 
+[2026-10-26T12:28:57.148Z] No tests found, exiting with code 0
+[2026-10-26T12:28:57.660Z] No tests found, exiting with code 0
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build images)
+[Pipeline] sh
+[2026-10-26T12:29:00.085Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:4cf934c-11 ./backend
+[2026-10-26T12:29:00.085Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-26T12:29:00.085Z]             Install the buildx component to build images with BuildKit:
+[2026-10-26T12:29:00.085Z]             https://docs.docker.com/go/buildx/
+[2026-10-26T12:29:00.085Z] 
+[2026-10-26T12:29:00.085Z] Sending build context to Docker daemon  84.48kB[2026-10-26T12:29:00.085Z] 
+[2026-10-26T12:29:00.085Z] Step 1/11 : FROM node:20-alpine
+[2026-10-26T12:29:00.085Z]  ---> fb4cd12c85ee
+[2026-10-26T12:29:00.085Z] Step 2/11 : WORKDIR /app
+[2026-10-26T12:29:00.085Z]  ---> Using cache
+[2026-10-26T12:29:00.085Z]  ---> 5e4d20ef485f
+[2026-10-26T12:29:00.085Z] Step 3/11 : COPY package*.json ./
+[2026-10-26T12:29:00.085Z]  ---> Using cache
+[2026-10-26T12:29:00.085Z]  ---> 0e6bc81aac0c
+[2026-10-26T12:29:00.085Z] Step 4/11 : RUN npm ci --omit=dev --no-audit
+[2026-10-26T12:29:00.085Z]  ---> Using cache
+[2026-10-26T12:29:00.085Z]  ---> 19ae557ab193
+[2026-10-26T12:29:00.086Z] Step 5/11 : COPY . .
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 08b6334d8125
+[2026-10-26T12:29:00.086Z] Step 6/11 : RUN addgroup -S appgroup && adduser -S appuser -G appgroup && chown -R appuser:appgroup /app
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 65ebe9565f5c
+[2026-10-26T12:29:00.086Z] Step 7/11 : USER appuser
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> ec18588ecc9e
+[2026-10-26T12:29:00.086Z] Step 8/11 : ENV NODE_ENV=production PORT=5000
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> fd6db39c58ac
+[2026-10-26T12:29:00.086Z] Step 9/11 : EXPOSE 5000
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> d573576c4f7d
+[2026-10-26T12:29:00.086Z] Step 10/11 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1:${PORT}/api/health || exit 1
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 5dc60745d85b
+[2026-10-26T12:29:00.086Z] Step 11/11 : CMD ["node", "server.js"]
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 5639fad14811
+[2026-10-26T12:29:00.086Z] Successfully built 5639fad14811
+[2026-10-26T12:29:00.086Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:4cf934c-11
+[2026-10-26T12:29:00.086Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:4cf934c-11 ./frontend
+[2026-10-26T12:29:00.086Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-26T12:29:00.086Z]             Install the buildx component to build images with BuildKit:
+[2026-10-26T12:29:00.086Z]             https://docs.docker.com/go/buildx/
+[2026-10-26T12:29:00.086Z] 
+[2026-10-26T12:29:00.086Z] Sending build context to Docker daemon    703kB[2026-10-26T12:29:00.086Z] 
+[2026-10-26T12:29:00.086Z] Step 1/15 : FROM node:20-alpine AS builder
+[2026-10-26T12:29:00.086Z]  ---> fb4cd12c85ee
+[2026-10-26T12:29:00.086Z] Step 2/15 : WORKDIR /app
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 5e4d20ef485f
+[2026-10-26T12:29:00.086Z] Step 3/15 : COPY package*.json ./
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 5bbf3f5b41b9
+[2026-10-26T12:29:00.086Z] Step 4/15 : RUN npm ci --no-audit
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> c49bd078ae8a
+[2026-10-26T12:29:00.086Z] Step 5/15 : COPY . .
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 1342b1db51b3
+[2026-10-26T12:29:00.086Z] Step 6/15 : ARG PUBLIC_URL=/
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 7663327df2ef
+[2026-10-26T12:29:00.086Z] Step 7/15 : ARG REACT_APP_API_BASE_URL=/api
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 0ae96f366622
+[2026-10-26T12:29:00.086Z] Step 8/15 : ENV PUBLIC_URL=$PUBLIC_URL REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> c04feb46773f
+[2026-10-26T12:29:00.086Z] Step 9/15 : RUN npm run build
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> 0b4a93c368e0
+[2026-10-26T12:29:00.086Z] Step 10/15 : FROM nginx:1.27-alpine
+[2026-10-26T12:29:00.086Z]  ---> 65645c7bb6a0
+[2026-10-26T12:29:00.086Z] Step 11/15 : COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.086Z]  ---> e9e6e94cfd33
+[2026-10-26T12:29:00.086Z] Step 12/15 : COPY --from=builder /app/build /usr/share/nginx/html
+[2026-10-26T12:29:00.086Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 0bd799e70264
+[2026-10-26T12:29:00.336Z] Step 13/15 : EXPOSE 80
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 0280f1c26064
+[2026-10-26T12:29:00.336Z] Step 14/15 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1/health || exit 1
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 09703221bcee
+[2026-10-26T12:29:00.336Z] Step 15/15 : CMD ["nginx", "-g", "daemon off;"]
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> c40c369f434b
+[2026-10-26T12:29:00.336Z] Successfully built c40c369f434b
+[2026-10-26T12:29:00.336Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:4cf934c-11
+[2026-10-26T12:29:00.336Z] + docker build -t 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:4cf934c-11 ./admin
+[2026-10-26T12:29:00.336Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-26T12:29:00.336Z]             Install the buildx component to build images with BuildKit:
+[2026-10-26T12:29:00.336Z]             https://docs.docker.com/go/buildx/
+[2026-10-26T12:29:00.336Z] 
+[2026-10-26T12:29:00.336Z] Sending build context to Docker daemon  710.7kB[2026-10-26T12:29:00.336Z] 
+[2026-10-26T12:29:00.336Z] Step 1/15 : FROM node:20-alpine AS builder
+[2026-10-26T12:29:00.336Z]  ---> fb4cd12c85ee
+[2026-10-26T12:29:00.336Z] Step 2/15 : WORKDIR /app
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 5e4d20ef485f
+[2026-10-26T12:29:00.336Z] Step 3/15 : COPY package*.json ./
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 720d59934ad2
+[2026-10-26T12:29:00.336Z] Step 4/15 : RUN npm ci --no-audit
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 575b58b03c14
+[2026-10-26T12:29:00.336Z] Step 5/15 : COPY . .
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> bbd704b5f31d
+[2026-10-26T12:29:00.336Z] Step 6/15 : ARG PUBLIC_URL=/
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> a9c2844708db
+[2026-10-26T12:29:00.336Z] Step 7/15 : ARG REACT_APP_API_BASE_URL=/api
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> ce505ef21977
+[2026-10-26T12:29:00.336Z] Step 8/15 : ENV PUBLIC_URL=$PUBLIC_URL REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 6794c34d1eb1
+[2026-10-26T12:29:00.336Z] Step 9/15 : RUN npm run build
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 978ebe140ab0
+[2026-10-26T12:29:00.336Z] Step 10/15 : FROM nginx:1.27-alpine
+[2026-10-26T12:29:00.336Z]  ---> 65645c7bb6a0
+[2026-10-26T12:29:00.336Z] Step 11/15 : COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 65fb061614a9
+[2026-10-26T12:29:00.336Z] Step 12/15 : COPY --from=builder /app/build /usr/share/nginx/html
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> c65a5e0add2b
+[2026-10-26T12:29:00.336Z] Step 13/15 : EXPOSE 80
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 6db294a3f49b
+[2026-10-26T12:29:00.336Z] Step 14/15 : HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=3   CMD wget -qO- http://127.0.0.1/health || exit 1
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 6c5cc81d34cf
+[2026-10-26T12:29:00.336Z] Step 15/15 : CMD ["nginx", "-g", "daemon off;"]
+[2026-10-26T12:29:00.336Z]  ---> Using cache
+[2026-10-26T12:29:00.336Z]  ---> 8c73ea1b874e
+[2026-10-26T12:29:00.336Z] Successfully built 8c73ea1b874e
+[2026-10-26T12:29:00.336Z] Successfully tagged 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:4cf934c-11
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Scan images)
+[Pipeline] sh
+[2026-10-26T12:29:00.660Z] + command -v trivy
+[2026-10-26T12:29:00.660Z] + echo trivy not installed - skipping scan (ECR scan-on-push still runs)
+[2026-10-26T12:29:00.660Z] trivy not installed - skipping scan (ECR scan-on-push still runs)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to ECR)
+[Pipeline] sh
+[2026-10-26T12:29:01.013Z] + aws ecr get-login-password --region ap-southeast-2
+[2026-10-26T12:29:01.013Z] + docker login --username AWS --password-stdin 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com
+[2026-10-26T12:29:01.566Z] 
+[2026-10-26T12:29:01.566Z] WARNING! Your credentials are stored unencrypted in '/var/lib/jenkins/.docker/config.json'.
+[2026-10-26T12:29:01.566Z] Configure a credential helper to remove this warning. See
+[2026-10-26T12:29:01.566Z] https://docs.docker.com/go/credential-store/
+[2026-10-26T12:29:01.566Z] 
+[2026-10-26T12:29:01.566Z] Login Succeeded
+[2026-10-26T12:29:01.566Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend:4cf934c-11
+[2026-10-26T12:29:01.566Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-backend]
+[2026-10-26T12:29:01.566Z] fff4e2c1b189: Layer already exists
+[2026-10-26T12:29:01.566Z] 6a0ac1617861: Layer already exists
+[2026-10-26T12:29:01.566Z] a4f129aca33c: Layer already exists
+[2026-10-26T12:29:01.566Z] 70b9e1066629: Layer already exists
+[2026-10-26T12:29:01.566Z] b2cbbfe903b0: Layer already exists
+[2026-10-26T12:29:01.566Z] a3046b6978a7: Layer already exists
+[2026-10-26T12:29:01.566Z] e7819b935826: Layer already exists
+[2026-10-26T12:29:01.566Z] b97165997626: Layer already exists
+[2026-10-26T12:29:01.566Z] 4feea04c1543: Layer already exists
+[2026-10-26T12:29:01.566Z] 4cf934c-11: digest: sha256:5639fad14811baf0999a6d4d44301d6c215bcc495ad86920df9a008805c189c5 size: 2274
+[2026-10-26T12:29:01.566Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend:4cf934c-11
+[2026-10-26T12:29:01.566Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-frontend]
+[2026-10-26T12:29:01.816Z] 5536396edb2e: Layer already exists
+[2026-10-26T12:29:01.816Z] b464cfdf2a63: Layer already exists
+[2026-10-26T12:29:01.816Z] 39c2ddfd6010: Layer already exists
+[2026-10-26T12:29:01.816Z] 197eb75867ef: Layer already exists
+[2026-10-26T12:29:01.816Z] af01398f289a: Layer already exists
+[2026-10-26T12:29:01.816Z] d7e507024086: Layer already exists
+[2026-10-26T12:29:01.816Z] f18232174bc9: Layer already exists
+[2026-10-26T12:29:01.816Z] 61ca4f733c80: Layer already exists
+[2026-10-26T12:29:01.816Z] 81bd8ed7ec67: Layer already exists
+[2026-10-26T12:29:01.816Z] 34a64644b756: Layer already exists
+[2026-10-26T12:29:01.816Z] 4cf934c-11: digest: sha256:c40c369f434b221b12f2527778d98062226a1d52d3141d6afb3266448cc0f41c size: 2484
+[2026-10-26T12:29:01.816Z] + docker push 926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin:4cf934c-11
+[2026-10-26T12:29:01.816Z] The push refers to repository [926375049914.dkr.ecr.ap-southeast-2.amazonaws.com/shopnow-admin]
+[2026-10-26T12:29:02.067Z] 39c2ddfd6010: Layer already exists
+[2026-10-26T12:29:02.067Z] 81bd8ed7ec67: Layer already exists
+[2026-10-26T12:29:02.067Z] 197eb75867ef: Layer already exists
+[2026-10-26T12:29:02.067Z] 34a64644b756: Layer already exists
+[2026-10-26T12:29:02.067Z] 15b32209ba02: Layer already exists
+[2026-10-26T12:29:02.067Z] b464cfdf2a63: Layer already exists
+[2026-10-26T12:29:02.067Z] 61ca4f733c80: Layer already exists
+[2026-10-26T12:29:02.067Z] 82b1a3b854d0: Layer already exists
+[2026-10-26T12:29:02.067Z] d7e507024086: Layer already exists
+[2026-10-26T12:29:02.067Z] f18232174bc9: Layer already exists
+[2026-10-26T12:29:02.067Z] 4cf934c-11: digest: sha256:8c73ea1b874ef1abeb3fbc14df5fc233d5ca1d34742a0aa8cd10080496070054 size: 2484
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to EKS)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] sh
+[2026-10-26T12:29:02.506Z] + aws eks update-kubeconfig --name shopnow-dev --region ap-southeast-2
+[2026-10-26T12:29:03.056Z] Updated context arn:aws:eks:ap-southeast-2:926375049914:cluster/shopnow-dev in /var/lib/jenkins/.kube/config
+[2026-10-26T12:29:03.056Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g -e s|__TAG__|4cf934c-11|g k8s/namespace.yaml
+[2026-10-26T12:29:03.056Z] + kubectl apply -f -
+[2026-10-26T12:29:04.400Z] namespace/shopnow unchanged
+[2026-10-26T12:29:04.400Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g -e s|__TAG__|4cf934c-11|g k8s/backend.yaml
+[2026-10-26T12:29:04.400Z] + kubectl apply -f -
+[2026-10-26T12:29:05.743Z] deployment.apps/backend configured
+[2026-10-26T12:29:05.743Z] service/backend-service unchanged
+[2026-10-26T12:29:05.743Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g+  -e s|__TAG__|4cf934c-11|g k8s/frontend.yaml
+[2026-10-26T12:29:05.743Z] kubectl apply -f -
+[2026-10-26T12:29:06.654Z] deployment.apps/frontend configured
+[2026-10-26T12:29:06.654Z] service/frontend unchanged
+[2026-10-26T12:29:06.654Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g -e+  s|__TAG__|4cf934c-11|g k8s/admin.yaml
+[2026-10-26T12:29:06.654Z] kubectl apply -f -
+[2026-10-26T12:29:07.997Z] deployment.apps/admin configured
+[2026-10-26T12:29:07.997Z] service/admin unchanged
+[2026-10-26T12:29:07.997Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g -e s|__TAG__|4cf934c-11|g k8s/hpa.yaml
+[2026-10-26T12:29:07.997Z] + kubectl apply -f -
+[2026-10-26T12:29:09.340Z] horizontalpodautoscaler.autoscaling/backend unchanged
+[2026-10-26T12:29:09.340Z] horizontalpodautoscaler.autoscaling/frontend unchanged
+[2026-10-26T12:29:09.340Z] + sed -e s|__REGISTRY__|926375049914.dkr.ecr.ap-southeast-2.amazonaws.com|g -e s|__TAG__|4cf934c-11|g k8s/servicemonitor.yaml+ 
+[2026-10-26T12:29:09.340Z] kubectl apply -f -
+[2026-10-26T12:29:10.684Z] servicemonitor.monitoring.coreos.com/backend unchanged
+[2026-10-26T12:29:10.684Z] + kubectl -n shopnow rollout status deploy/backend --timeout=180s
+[2026-10-26T12:29:11.234Z] Waiting for deployment "backend" rollout to finish: 1 out of 2 new replicas have been updated...
+[2026-10-26T12:32:17.481Z] error: timed out waiting for the condition
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Smoke test)
+Stage "Smoke test" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
+[2026-10-26T12:32:17.987Z] + docker image prune -af --filter until=24h
+[2026-10-26T12:32:17.987Z] Total reclaimed space: 0B
+[Pipeline] cleanWs
+[2026-10-26T12:32:18.016Z] [WS-CLEANUP] Deleting project workspace...
+[2026-10-26T12:32:18.016Z] [WS-CLEANUP] Deferred wipeout is used...
+[2026-10-26T12:32:18.027Z] [WS-CLEANUP] done
+[Pipeline] sh
+[2026-10-26T12:32:18.336Z] + [ true = true ]
+[2026-10-26T12:32:18.336Z] + kubectl -n shopnow rollout undo deploy/backend
+[2026-10-26T12:32:19.253Z] Warning: resource deployments/backend was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+[2026-10-26T12:32:19.253Z] deployment.apps/backend rolled back
+[2026-10-26T12:32:19.253Z] + kubectl -n shopnow rollout undo deploy/frontend
+[2026-10-26T12:32:20.164Z] Warning: resource deployments/frontend was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+[2026-10-26T12:32:20.164Z] deployment.apps/frontend rolled back
+[2026-10-26T12:32:20.164Z] + kubectl -n shopnow rollout undo deploy/admin
+[2026-10-26T12:32:20.714Z] Warning: resource deployments/admin was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+[2026-10-26T12:32:20.714Z] deployment.apps/admin rolled back
+[Pipeline] slackSend
+[2026-10-26T12:32:20.756Z] Slack Send Pipeline step running, values are - baseUrl: <empty>, teamDomain: kamal-vuln-scanner, channel: #shopnow-builds, color: danger, botUser: true, tokenCredentialId: slack-bot-token, notifyCommitters: false, iconEmoji: <empty>, username: <empty>, timestamp: <empty>
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 1
+Finished: FAILURE

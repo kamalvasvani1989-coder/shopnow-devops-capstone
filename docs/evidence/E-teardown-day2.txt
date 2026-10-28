@@ -1,0 +1,9 @@
+== EKS clusters (expect none)
+== Classic LBs (expect none)
+== ALB/NLBs (expect none)
+== NAT gateways (expect none)
+== Unattached EBS volumes (expect none)
+== Unassociated Elastic IPs (expect none)
+== Running instances (expect only shopnow-jenkins, and stop it next)
+
+Stop Jenkins: aws ec2 stop-instances --instance-ids <jenkins-id>   then post 'Cluster down at HH:MM'

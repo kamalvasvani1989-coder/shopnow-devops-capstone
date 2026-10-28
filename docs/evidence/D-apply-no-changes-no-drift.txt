@@ -1,0 +1,182 @@
+Started by user Kamal Admin
+Obtained jenkins/Jenkinsfile.infra from git https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/01-infra-terraform
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-pat
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/01-infra-terraform/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git # timeout=10
+Fetching upstream changes from https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_ASKPASS to set credentials GitHub fine-grained token (shopnow repo)
+ > git fetch --tags --force --progress -- https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b4b3a290071649f302122ff2adefb6f8e664fee5 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b4b3a290071649f302122ff2adefb6f8e664fee5 # timeout=10
+Commit message: "Disable IRSA (OIDC provider denied by free-plan SCP); Pod Identity used instead"
+ > git rev-list --no-walk 76ebc9e1cddd340d360f65f722f09d4705e15012 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-10-26T11:30:59.567Z] Timeout set to expire in 1 hr 0 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Guard)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Init + validate)
+[Pipeline] dir
+[2026-10-26T11:30:59.731Z] Running in /var/lib/jenkins/workspace/01-infra-terraform/infra/platform
+[Pipeline] {
+[Pipeline] sh
+[2026-10-26T11:31:00.010Z] + terraform init -no-color
+[2026-10-26T11:31:00.010Z] Initializing the backend...
+[2026-10-26T11:31:00.560Z] Initializing modules...
+[2026-10-26T11:31:00.811Z] Initializing provider plugins...
+[2026-10-26T11:31:00.811Z] - Reusing previous version of hashicorp/tls from the dependency lock file
+[2026-10-26T11:31:00.811Z] - Reusing previous version of hashicorp/time from the dependency lock file
+[2026-10-26T11:31:00.811Z] - Reusing previous version of hashicorp/cloudinit from the dependency lock file
+[2026-10-26T11:31:00.811Z] - Reusing previous version of hashicorp/null from the dependency lock file
+[2026-10-26T11:31:00.811Z] - Reusing previous version of hashicorp/aws from the dependency lock file
+[2026-10-26T11:31:00.811Z] - Using previously-installed hashicorp/tls v4.4.2
+[2026-10-26T11:31:00.811Z] - Using previously-installed hashicorp/time v0.14.2
+[2026-10-26T11:31:00.811Z] - Using previously-installed hashicorp/cloudinit v2.4.1
+[2026-10-26T11:31:00.811Z] - Using previously-installed hashicorp/null v3.3.2
+[2026-10-26T11:31:01.362Z] - Using previously-installed hashicorp/aws v5.100.0
+[2026-10-26T11:31:01.362Z] 
+[2026-10-26T11:31:01.362Z] Terraform has been successfully initialized!
+[2026-10-26T11:31:01.362Z] + terraform workspace select -or-create dev
+[2026-10-26T11:31:01.912Z] + terraform fmt -check -recursive
+[2026-10-26T11:31:01.912Z] + terraform validate -no-color
+[2026-10-26T11:31:05.141Z] Success! The configuration is valid.
+[2026-10-26T11:31:05.141Z] 
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Plan)
+[Pipeline] dir
+[2026-10-26T11:31:05.242Z] Running in /var/lib/jenkins/workspace/01-infra-terraform/infra/platform
+[Pipeline] {
+[Pipeline] sh
+[2026-10-26T11:31:05.525Z] + terraform plan -no-color -var-file=envs/dev.tfvars -out=tfplan
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_caller_identity.current[0]: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_caller_identity.current: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_partition.current: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_partition.current[0]: Reading...
+[2026-10-26T11:31:08.756Z] data.aws_vpc.default: Reading...
+[2026-10-26T11:31:08.756Z] module.vpc.aws_vpc.this[0]: Refreshing state... [id=vpc-00f68c4f0e8599f1d]
+[2026-10-26T11:31:08.756Z] aws_iam_role.grafana: Refreshing state... [id=shopnow-dev-grafana]
+[2026-10-26T11:31:08.756Z] data.aws_ami.ubuntu: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296]
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_partition.current: Read complete after 0s [id=aws]
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799]
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role.this[0]: Refreshing state... [id=workers-eks-node-group-20261026110820830500000003]
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_caller_identity.current[0]: Read complete after 0s [id=926375049914]
+[2026-10-26T11:31:08.756Z] module.eks.aws_iam_role.this[0]: Refreshing state... [id=shopnow-dev-cluster-20261026110820827000000001]
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_iam_session_context.current[0]: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.module.eks_managed_node_group["workers"].data.aws_caller_identity.current: Read complete after 0s [id=926375049914]
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_iam_policy_document.custom[0]: Reading...
+[2026-10-26T11:31:08.756Z] module.eks.data.aws_iam_policy_document.custom[0]: Read complete after 0s [id=513122117]
+[2026-10-26T11:31:08.756Z] module.eks.aws_iam_policy.custom[0]: Refreshing state... [id=arn:aws:iam::926375049914:policy/shopnow-dev-cluster-20261026110820828900000002]
+[2026-10-26T11:31:08.756Z] data.aws_ami.ubuntu: Read complete after 0s [id=ami-01e91e94accc42eec]
+[2026-10-26T11:31:09.006Z] data.aws_vpc.default: Read complete after 0s [id=vpc-0a9929739b7ca3a7a]
+[2026-10-26T11:31:09.006Z] data.aws_route_tables.default: Reading...
+[2026-10-26T11:31:09.006Z] data.aws_route_tables.default: Read complete after 0s [id=ap-southeast-2]
+[2026-10-26T11:31:09.006Z] module.vpc.aws_default_security_group.this[0]: Refreshing state... [id=sg-03d26eea38da90a87]
+[2026-10-26T11:31:09.006Z] module.vpc.aws_default_route_table.default[0]: Refreshing state... [id=rtb-0b2c2189363e6d48f]
+[2026-10-26T11:31:09.006Z] module.eks.aws_security_group.node[0]: Refreshing state... [id=sg-0e1c5e1bdd00ce4f8]
+[2026-10-26T11:31:09.006Z] module.vpc.aws_default_network_acl.this[0]: Refreshing state... [id=acl-035540c62fe55250b]
+[2026-10-26T11:31:09.006Z] aws_vpc_peering_connection.jenkins: Refreshing state... [id=pcx-0d9c62881864e4313]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group.cluster[0]: Refreshing state... [id=sg-081fbde356d565bdd]
+[2026-10-26T11:31:09.257Z] module.vpc.aws_subnet.public[0]: Refreshing state... [id=subnet-08a2292a554d8e8b9]
+[2026-10-26T11:31:09.257Z] module.vpc.aws_route_table.public[0]: Refreshing state... [id=rtb-0f66b32e6da02eab3]
+[2026-10-26T11:31:09.257Z] module.vpc.aws_internet_gateway.this[0]: Refreshing state... [id=igw-0ed4b16116fb53674]
+[2026-10-26T11:31:09.257Z] module.vpc.aws_subnet.public[1]: Refreshing state... [id=subnet-0b3fa1c4ea9b0c2ac]
+[2026-10-26T11:31:09.257Z] aws_route.default_to_project["rtb-064b953b18447dab9"]: Refreshing state... [id=r-rtb-064b953b18447dab9179966490]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Refreshing state... [id=sgrule-3269449615]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["egress_all"]: Refreshing state... [id=sgrule-2129762055]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Refreshing state... [id=sgrule-186526771]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Refreshing state... [id=sgrule-2334855701]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Refreshing state... [id=sgrule-486422509]
+[2026-10-26T11:31:09.257Z] module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Refreshing state... [id=sgrule-3336596570]
+[2026-10-26T11:31:09.510Z] module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Refreshing state... [id=sgrule-843503358]
+[2026-10-26T11:31:09.510Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Refreshing state... [id=sgrule-1719694432]
+[2026-10-26T11:31:09.510Z] module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Refreshing state... [id=sgrule-3585888379]
+[2026-10-26T11:31:09.510Z] module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Refreshing state... [id=sgrule-2722193297]
+[2026-10-26T11:31:09.510Z] aws_security_group.tools: Refreshing state... [id=sg-0ab644632b8dfc501]
+[2026-10-26T11:31:09.510Z] module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Refreshing state... [id=sgrule-385716876]
+[2026-10-26T11:31:09.510Z] module.vpc.aws_route.public_internet_gateway[0]: Refreshing state... [id=r-rtb-0f66b32e6da02eab31080289494]
+[2026-10-26T11:31:09.510Z] module.vpc.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-0542fa0f670e8a180]
+[2026-10-26T11:31:09.510Z] module.vpc.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-087d289b2c32bfaaa]
+[2026-10-26T11:31:09.510Z] aws_route.project_to_default: Refreshing state... [id=r-rtb-0f66b32e6da02eab33854007479]
+[2026-10-26T11:31:09.510Z] aws_instance.tools: Refreshing state... [id=i-07dcdb0778ee36d53]
+[2026-10-26T11:31:09.510Z] module.eks.data.aws_iam_session_context.current[0]: Read complete after 0s [id=arn:aws:sts::926375049914:assumed-role/shopnow-jenkins-role/i-04366852fb160fb5d]
+[2026-10-26T11:31:10.060Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Refreshing state... [id=shopnow-dev-cluster-20261026110820827000000001-2026102611082322050000000a]
+[2026-10-26T11:31:10.061Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Refreshing state... [id=shopnow-dev-cluster-20261026110820827000000001-20261026110823118800000008]
+[2026-10-26T11:31:10.061Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Refreshing state... [id=workers-eks-node-group-20261026110820830500000003-20261026110822826400000004]
+[2026-10-26T11:31:10.061Z] module.eks.aws_iam_role_policy_attachment.custom[0]: Refreshing state... [id=shopnow-dev-cluster-20261026110820827000000001-20261026110823123800000009]
+[2026-10-26T11:31:10.061Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Refreshing state... [id=workers-eks-node-group-20261026110820830500000003-20261026110822836200000005]
+[2026-10-26T11:31:10.061Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Refreshing state... [id=workers-eks-node-group-20261026110820830500000003-20261026110822893500000006]
+[2026-10-26T11:31:10.061Z] aws_iam_role_policy_attachment.grafana: Refreshing state... [id=shopnow-dev-grafana-20261026110822916600000007]
+[2026-10-26T11:31:10.311Z] module.eks.aws_eks_cluster.this[0]: Refreshing state... [id=shopnow-dev]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Reading...
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["coredns"]: Reading...
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Reading...
+[2026-10-26T11:31:10.562Z] module.eks.time_sleep.this[0]: Refreshing state... [id=2026-10-26T11:17:34Z]
+[2026-10-26T11:31:10.562Z] module.eks.aws_eks_access_entry.this["cluster_creator"]: Refreshing state... [id=shopnow-dev:arn:aws:iam::926375049914:role/shopnow-jenkins-role]
+[2026-10-26T11:31:10.562Z] module.eks.aws_eks_access_entry.this["member0"]: Refreshing state... [id=shopnow-dev:arn:aws:iam::926375049914:user/kamal-admin]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"]: Reading...
+[2026-10-26T11:31:10.562Z] module.eks.module.eks_managed_node_group["workers"].module.user_data.null_resource.validate_cluster_service_cidr: Refreshing state... [id=8586673707633468919]
+[2026-10-26T11:31:10.562Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Refreshing state... [id=shopnow-dev:workers-20261026111735017800000011]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["coredns"]: Read complete after 0s [id=coredns]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"]: Read complete after 0s [id=eks-pod-identity-agent]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Read complete after 1s [id=vpc-cni]
+[2026-10-26T11:31:10.562Z] module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Read complete after 1s [id=kube-proxy]
+[2026-10-26T11:31:10.562Z] module.eks.aws_eks_addon.before_compute["vpc-cni"]: Refreshing state... [id=shopnow-dev:vpc-cni]
+[2026-10-26T11:31:10.812Z] module.eks.aws_eks_addon.this["eks-pod-identity-agent"]: Refreshing state... [id=shopnow-dev:eks-pod-identity-agent]
+[2026-10-26T11:31:10.812Z] module.eks.aws_eks_addon.this["kube-proxy"]: Refreshing state... [id=shopnow-dev:kube-proxy]
+[2026-10-26T11:31:10.812Z] module.eks.aws_eks_addon.this["coredns"]: Refreshing state... [id=shopnow-dev:coredns]
+[2026-10-26T11:31:10.812Z] module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"]: Refreshing state... [id=shopnow-dev#arn:aws:iam::926375049914:role/shopnow-jenkins-role#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy]
+[2026-10-26T11:31:10.812Z] module.eks.aws_eks_access_policy_association.this["member0_admin"]: Refreshing state... [id=shopnow-dev#arn:aws:iam::926375049914:user/kamal-admin#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy]
+[2026-10-26T11:31:11.063Z] aws_eks_pod_identity_association.grafana: Refreshing state... [id=a-b9utlcm0h9tnlsyc6]
+[2026-10-26T11:31:11.313Z] 
+[2026-10-26T11:31:11.313Z] No changes. Your infrastructure matches the configuration.
+[2026-10-26T11:31:11.313Z] 
+[2026-10-26T11:31:11.313Z] Terraform has compared your real infrastructure against your configuration
+[2026-10-26T11:31:11.313Z] and found no differences, so no changes are needed.
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Approve)
+[Pipeline] timeout
+[2026-10-26T11:31:11.395Z] Timeout set to expire in 15 min
+[Pipeline] {
+[Pipeline] input
+[2026-10-26T11:31:11.455Z] Run terraform apply on dev?
+[2026-10-26T11:31:11.455Z] Proceed or Abort

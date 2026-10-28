@@ -1,0 +1,224 @@
+Started by upstream project "01-infra-terraform" build number 7
+originally caused by:
+ Started by user Kamal Admin
+Obtained jenkins/Jenkinsfile.config from git https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/02-config-ansible
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-pat
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/02-config-ansible/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git # timeout=10
+Fetching upstream changes from https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_ASKPASS to set credentials GitHub fine-grained token (shopnow repo)
+ > git fetch --tags --force --progress -- https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision d16787dfc951d90e4c769a12f1f9539adc081793 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f d16787dfc951d90e4c769a12f1f9539adc081793 # timeout=10
+Commit message: "Fix: allow node_exporter 9100 on tools EC2 from project VPC CIDR (nodes use EKS cluster SG)"
+ > git rev-list --no-walk 26126930f3103e7524990b6cb3bdaba2447790b5 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-10-27T15:07:11.169Z] Timeout set to expire in 40 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Kubeconfig)
+[Pipeline] sh
+[2026-10-27T15:07:11.517Z] + aws eks update-kubeconfig --name shopnow-dev --region ap-southeast-2
+[2026-10-27T15:07:12.068Z] Updated context arn:aws:eks:ap-southeast-2:926375049914:cluster/shopnow-dev in /var/lib/jenkins/.kube/config
+[2026-10-27T15:07:12.068Z] + kubectl get nodes -o wide
+[2026-10-27T15:07:12.982Z] NAME                                            STATUS   ROLES    AGE   VERSION               INTERNAL-IP   EXTERNAL-IP    OS-IMAGE                        KERNEL-VERSION                            CONTAINER-RUNTIME
+[2026-10-27T15:07:12.982Z] ip-10-0-1-210.ap-southeast-2.compute.internal   Ready    <none>   20m   v1.36.5-eks-39aca56   10.0.1.210    3.106.55.240   Amazon Linux 2023.12.20261021   6.18.54-121.166.amzn2023.x86_64 (amd64)   containerd://2.3.5+unknown
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Syntax check)
+[Pipeline] dir
+[2026-10-27T15:07:13.090Z] Running in /var/lib/jenkins/workspace/02-config-ansible/ansible
+[Pipeline] {
+[Pipeline] sh
+[2026-10-27T15:07:13.382Z] + ansible-inventory --graph
+[2026-10-27T15:07:14.727Z] @all:
+[2026-10-27T15:07:14.727Z]   |--@ungrouped:
+[2026-10-27T15:07:14.727Z]   |--@aws_ec2:
+[2026-10-27T15:07:14.727Z]   |  |--10.0.1.108
+[2026-10-27T15:07:14.727Z]   |--@role_tools:
+[2026-10-27T15:07:14.727Z]   |  |--10.0.1.108
+[2026-10-27T15:07:14.727Z] + ansible-playbook site.yml --syntax-check
+[2026-10-27T15:07:15.639Z] 
+[2026-10-27T15:07:15.639Z] playbook: site.yml
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Configure)
+[Pipeline] withCredentials
+[2026-10-27T15:07:15.835Z] Masking supported pattern matches of $SSH_KEY or $MONGODB_URI or $GRAFANA_ADMIN_PASSWORD or $SLACK_WEBHOOK
+[Pipeline] {
+[Pipeline] dir
+[2026-10-27T15:07:15.872Z] Running in /var/lib/jenkins/workspace/02-config-ansible/ansible
+[Pipeline] {
+[Pipeline] sh
+[2026-10-27T15:07:16.167Z] + ansible-playbook site.yml --private-key **** -u ubuntu
+[2026-10-27T15:07:16.718Z] 
+[2026-10-27T15:07:16.718Z] PLAY [Configure tools EC2 (over SSH via VPC peering)] **************************
+[2026-10-27T15:07:16.718Z] 
+[2026-10-27T15:07:16.718Z] TASK [Wait for a freshly booted instance] **************************************
+[2026-10-27T15:07:18.061Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:18.062Z] 
+[2026-10-27T15:07:18.062Z] TASK [Gather facts] ************************************************************
+[2026-10-27T15:07:20.544Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:20.544Z] 
+[2026-10-27T15:07:20.544Z] TASK [common : Upgrade packages (security baseline)] ***************************
+[2026-10-27T15:07:22.406Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:22.406Z] 
+[2026-10-27T15:07:22.406Z] TASK [common : Baseline packages] **********************************************
+[2026-10-27T15:07:23.317Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:23.317Z] 
+[2026-10-27T15:07:23.317Z] TASK [common : Timezone] *******************************************************
+[2026-10-27T15:07:23.868Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:23.868Z] 
+[2026-10-27T15:07:23.868Z] TASK [common : Enable unattended security upgrades] ****************************
+[2026-10-27T15:07:24.419Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:24.419Z] 
+[2026-10-27T15:07:24.419Z] TASK [common : Disable SSH password authentication] ****************************
+[2026-10-27T15:07:24.970Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:24.970Z] 
+[2026-10-27T15:07:24.970Z] TASK [docker : Install Docker] *************************************************
+[2026-10-27T15:07:27.453Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:27.453Z] 
+[2026-10-27T15:07:27.453Z] TASK [docker : Docker running at boot] *****************************************
+[2026-10-27T15:07:28.003Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:28.003Z] 
+[2026-10-27T15:07:28.003Z] TASK [docker : Allow users to run Docker] **************************************
+[2026-10-27T15:07:28.554Z] [0;32mok: [10.0.1.108] => (item=ubuntu)[0m
+[2026-10-27T15:07:28.554Z] 
+[2026-10-27T15:07:28.554Z] TASK [cli_tools : Python Kubernetes + AWS clients (for kubernetes.core / amazon.aws modules)] ***
+[2026-10-27T15:07:29.465Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:29.465Z] 
+[2026-10-27T15:07:29.465Z] TASK [cli_tools : AWS CLI v2] **************************************************
+[2026-10-27T15:07:29.715Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:29.716Z] 
+[2026-10-27T15:07:29.716Z] TASK [cli_tools : kubectl matching the cluster minor version] ******************
+[2026-10-27T15:07:29.966Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:29.966Z] 
+[2026-10-27T15:07:29.966Z] TASK [cli_tools : Helm 3] ******************************************************
+[2026-10-27T15:07:30.216Z] [0;36mskipping: [10.0.1.108][0m
+[2026-10-27T15:07:30.216Z] 
+[2026-10-27T15:07:30.216Z] TASK [cli_tools : Terraform] ***************************************************
+[2026-10-27T15:07:30.216Z] [0;36mskipping: [10.0.1.108][0m
+[2026-10-27T15:07:30.216Z] 
+[2026-10-27T15:07:30.217Z] TASK [cli_tools : Trivy (optional)] ********************************************
+[2026-10-27T15:07:30.217Z] [0;36mskipping: [10.0.1.108][0m
+[2026-10-27T15:07:30.217Z] 
+[2026-10-27T15:07:30.217Z] TASK [node_exporter : node_exporter system user] *******************************
+[2026-10-27T15:07:30.467Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:30.467Z] 
+[2026-10-27T15:07:30.467Z] TASK [node_exporter : Download node_exporter 1.9.1] ****************************
+[2026-10-27T15:07:30.717Z] [0;36mskipping: [10.0.1.108][0m
+[2026-10-27T15:07:30.717Z] 
+[2026-10-27T15:07:30.717Z] TASK [node_exporter : Install binary] ******************************************
+[2026-10-27T15:07:30.968Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:30.968Z] 
+[2026-10-27T15:07:30.968Z] TASK [node_exporter : systemd unit] ********************************************
+[2026-10-27T15:07:31.518Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:31.518Z] 
+[2026-10-27T15:07:31.518Z] TASK [node_exporter : Enable node_exporter] ************************************
+[2026-10-27T15:07:32.429Z] [0;32mok: [10.0.1.108][0m
+[2026-10-27T15:07:32.429Z] 
+[2026-10-27T15:07:32.429Z] PLAY [Configure EKS cluster add-ons and monitoring] ****************************
+[2026-10-27T15:07:32.429Z] 
+[2026-10-27T15:07:32.429Z] TASK [k8s_addons : Namespaces] *************************************************
+[2026-10-27T15:07:35.657Z] [0;32mok: [localhost] => (item=shopnow)[0m
+[2026-10-27T15:07:35.657Z] [0;32mok: [localhost] => (item=monitoring)[0m
+[2026-10-27T15:07:35.657Z] 
+[2026-10-27T15:07:35.657Z] TASK [k8s_addons : MongoDB connection secret (value from Jenkins credential mongodb-uri)] ***
+[2026-10-27T15:07:36.208Z] [0;32mok: [localhost][0m
+[2026-10-27T15:07:36.208Z] 
+[2026-10-27T15:07:36.208Z] TASK [k8s_addons : Helm repositories] ******************************************
+[2026-10-27T15:07:36.759Z] [0;32mok: [localhost] => (item={'name': 'metrics-server', 'url': 'https://kubernetes-sigs.github.io/metrics-server/'})[0m
+[2026-10-27T15:07:36.759Z] [0;32mok: [localhost] => (item={'name': 'prometheus-community', 'url': 'https://prometheus-community.github.io/helm-charts'})[0m
+[2026-10-27T15:07:36.759Z] 
+[2026-10-27T15:07:36.759Z] TASK [k8s_addons : metrics-server (needed by the HPA)] *************************
+[2026-10-27T15:07:38.620Z] [1;35m[WARNING]: The default idempotency check can fail to report changes in certain[0m
+[2026-10-27T15:07:38.620Z] [1;35mcases. Install helm diff >= 3.4.1 for better results.[0m
+[2026-10-27T15:07:38.620Z] [0;32mok: [localhost][0m
+[2026-10-27T15:07:38.620Z] 
+[2026-10-27T15:07:38.620Z] TASK [k8s_addons : Render kube-prometheus-stack values (IPs + secrets filled in here, never committed)] ***
+[2026-10-27T15:07:39.171Z] [0;33mchanged: [localhost][0m
+[2026-10-27T15:07:39.171Z] 
+[2026-10-27T15:07:39.171Z] TASK [k8s_addons : Dashboards as ConfigMaps (picked up by the Grafana sidecar)] ***
+[2026-10-27T15:07:40.082Z] [0;32mok: [localhost] => (item=/var/lib/jenkins/workspace/02-config-ansible/monitoring/dashboards/shopnow.json)[0m
+[2026-10-27T15:07:40.082Z] 
+[2026-10-27T15:07:40.082Z] TASK [k8s_addons : kube-prometheus-stack (Prometheus, Alertmanager, Grafana)] ***
+[2026-10-27T15:08:01.880Z] [0;33mchanged: [localhost][0m
+[2026-10-27T15:08:01.880Z] 
+[2026-10-27T15:08:01.880Z] TASK [k8s_addons : Project alert rules (PrometheusRule)] ***********************
+[2026-10-27T15:08:01.880Z] [0;32mok: [localhost][0m
+[2026-10-27T15:08:01.880Z] 
+[2026-10-27T15:08:01.880Z] TASK [k8s_addons : Remove rendered values file (contains the Slack webhook)] ***
+[2026-10-27T15:08:01.880Z] [0;33mchanged: [localhost][0m
+[2026-10-27T15:08:01.880Z] 
+[2026-10-27T15:08:01.881Z] PLAY RECAP *********************************************************************
+[2026-10-27T15:08:01.881Z] [0;32m10.0.1.108[0m                 : [0;32mok=17  [0m changed=0    unreachable=0    failed=0    [0;36mskipped=4   [0m rescued=0    ignored=0   
+[2026-10-27T15:08:01.881Z] [0;33mlocalhost[0m                  : [0;32mok=9   [0m [0;33mchanged=3   [0m unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+[2026-10-27T15:08:01.881Z] 
+[Pipeline] sh
+[2026-10-27T15:08:02.166Z] + ansible role_tools -m command -a docker --version --private-key **** -u ubuntu
+[2026-10-27T15:08:03.509Z] [0;33m10.0.1.108 | CHANGED | rc=0 >>[0m
+[2026-10-27T15:08:03.509Z] [0;33mDocker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2[0m
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Infra check)
+[Pipeline] sh
+[2026-10-27T15:08:03.958Z] + bash tests/infra_check.sh
+[2026-10-27T15:08:05.301Z] PASS cluster shopnow-dev ACTIVE
+[2026-10-27T15:08:05.852Z] PASS 1 nodes Ready
+[2026-10-27T15:08:06.402Z] PASS coredns
+[2026-10-27T15:08:07.313Z] PASS metrics-server (kubectl top works)
+[2026-10-27T15:08:07.864Z] PASS monitoring pods running
+[2026-10-27T15:08:08.415Z] PASS state bucket versioning
+[2026-10-27T15:08:09.328Z] PASS no NAT gateways
+[2026-10-27T15:08:09.879Z] PASS 1 classic load balancer(s)
+[2026-10-27T15:08:09.879Z] INFRA CHECK PASSED
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] build
+[2026-10-27T15:08:09.992Z] Scheduling project: 03-shopnow-cicd
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

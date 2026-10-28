@@ -1,0 +1,1662 @@
+Started by user Kamal Admin
+Obtained jenkins/Jenkinsfile.infra from git https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/01-infra-terraform
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+using credential github-pat
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/01-infra-terraform/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git # timeout=10
+Fetching upstream changes from https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.0'
+using GIT_ASKPASS to set credentials GitHub fine-grained token (shopnow repo)
+ > git fetch --tags --force --progress -- https://github.com/kamalvasvani1989-coder/shopnow-devops-capstone.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 26126930f3103e7524990b6cb3bdaba2447790b5 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 26126930f3103e7524990b6cb3bdaba2447790b5 # timeout=10
+Commit message: "Sprint 4 complete; end of day 2 session"
+ > git rev-list --no-walk 26126930f3103e7524990b6cb3bdaba2447790b5 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-10-27T14:36:51.364Z] Timeout set to expire in 1 hr 0 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Guard)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Init + validate)
+[Pipeline] dir
+[2026-10-27T14:36:51.765Z] Running in /var/lib/jenkins/workspace/01-infra-terraform/infra/platform
+[Pipeline] {
+[Pipeline] sh
+[2026-10-27T14:36:52.085Z] + terraform init -no-color
+[2026-10-27T14:36:52.639Z] Initializing the backend...
+[2026-10-27T14:36:57.836Z] Initializing modules...
+[2026-10-27T14:36:57.837Z] Initializing provider plugins...
+[2026-10-27T14:36:57.837Z] - Reusing previous version of hashicorp/aws from the dependency lock file
+[2026-10-27T14:36:57.837Z] - Reusing previous version of hashicorp/time from the dependency lock file
+[2026-10-27T14:36:57.837Z] - Reusing previous version of hashicorp/tls from the dependency lock file
+[2026-10-27T14:36:58.088Z] - Reusing previous version of hashicorp/cloudinit from the dependency lock file
+[2026-10-27T14:36:58.338Z] - Reusing previous version of hashicorp/null from the dependency lock file
+[2026-10-27T14:36:59.250Z] - Using previously-installed hashicorp/aws v5.100.0
+[2026-10-27T14:36:59.251Z] - Using previously-installed hashicorp/time v0.14.2
+[2026-10-27T14:36:59.251Z] - Using previously-installed hashicorp/tls v4.4.2
+[2026-10-27T14:36:59.251Z] - Using previously-installed hashicorp/cloudinit v2.4.1
+[2026-10-27T14:36:59.251Z] - Using previously-installed hashicorp/null v3.3.2
+[2026-10-27T14:36:59.251Z] 
+[2026-10-27T14:36:59.251Z] Terraform has been successfully initialized!
+[2026-10-27T14:36:59.251Z] + terraform workspace select -or-create dev
+[2026-10-27T14:36:59.802Z] + terraform fmt -check -recursive
+[2026-10-27T14:36:59.802Z] + terraform validate -no-color
+[2026-10-27T14:37:03.032Z] Success! The configuration is valid.
+[2026-10-27T14:37:03.032Z] 
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Plan)
+[Pipeline] dir
+[2026-10-27T14:37:03.304Z] Running in /var/lib/jenkins/workspace/01-infra-terraform/infra/platform
+[Pipeline] {
+[Pipeline] sh
+[2026-10-27T14:37:03.607Z] + terraform plan -no-color -var-file=envs/dev.tfvars -out=tfplan
+[2026-10-27T14:37:06.838Z] module.eks.module.eks_managed_node_group["workers"].data.aws_partition.current: Reading...
+[2026-10-27T14:37:06.838Z] module.eks.data.aws_partition.current[0]: Reading...
+[2026-10-27T14:37:06.839Z] data.aws_vpc.default: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.module.eks_managed_node_group["workers"].data.aws_caller_identity.current: Reading...
+[2026-10-27T14:37:06.839Z] data.aws_ami.ubuntu: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_caller_identity.current[0]: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.module.eks_managed_node_group["workers"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_partition.current[0]: Read complete after 0s [id=aws]
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_caller_identity.current[0]: Read complete after 0s [id=926375049914]
+[2026-10-27T14:37:06.839Z] module.eks.module.eks_managed_node_group["workers"].data.aws_partition.current: Read complete after 0s [id=aws]
+[2026-10-27T14:37:06.839Z] module.eks.module.eks_managed_node_group["workers"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296]
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2830595799]
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_iam_policy_document.custom[0]: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.module.eks_managed_node_group["workers"].data.aws_caller_identity.current: Read complete after 0s [id=926375049914]
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_iam_session_context.current[0]: Reading...
+[2026-10-27T14:37:06.839Z] module.eks.data.aws_iam_policy_document.custom[0]: Read complete after 0s [id=513122117]
+[2026-10-27T14:37:07.090Z] data.aws_ami.ubuntu: Read complete after 0s [id=ami-01e91e94accc42eec]
+[2026-10-27T14:37:07.090Z] data.aws_vpc.default: Read complete after 0s [id=vpc-0a9929739b7ca3a7a]
+[2026-10-27T14:37:07.090Z] data.aws_route_tables.default: Reading...
+[2026-10-27T14:37:07.341Z] data.aws_route_tables.default: Read complete after 0s [id=ap-southeast-2]
+[2026-10-27T14:37:07.892Z] module.eks.data.aws_iam_session_context.current[0]: Read complete after 1s [id=arn:aws:sts::926375049914:assumed-role/shopnow-jenkins-role/i-04366852fb160fb5d]
+[2026-10-27T14:37:08.143Z] 
+[2026-10-27T14:37:08.143Z] Terraform used the selected providers to generate the following execution
+[2026-10-27T14:37:08.143Z] plan. Resource actions are indicated with the following symbols:
+[2026-10-27T14:37:08.143Z]   + create
+[2026-10-27T14:37:08.143Z]  <= read (data resources)
+[2026-10-27T14:37:08.143Z] 
+[2026-10-27T14:37:08.143Z] Terraform will perform the following actions:
+[2026-10-27T14:37:08.143Z] 
+[2026-10-27T14:37:08.143Z]   # aws_eks_pod_identity_association.grafana will be created
+[2026-10-27T14:37:08.143Z]   + resource "aws_eks_pod_identity_association" "grafana" {
+[2026-10-27T14:37:08.143Z]       + association_arn = (known after apply)
+[2026-10-27T14:37:08.143Z]       + association_id  = (known after apply)
+[2026-10-27T14:37:08.143Z]       + cluster_name    = "shopnow-dev"
+[2026-10-27T14:37:08.143Z]       + id              = (known after apply)
+[2026-10-27T14:37:08.143Z]       + namespace       = "monitoring"
+[2026-10-27T14:37:08.143Z]       + role_arn        = (known after apply)
+[2026-10-27T14:37:08.143Z]       + service_account = "kps-grafana"
+[2026-10-27T14:37:08.143Z]       + tags_all        = {
+[2026-10-27T14:37:08.143Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.143Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.143Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.143Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.143Z]         }
+[2026-10-27T14:37:08.143Z]     }
+[2026-10-27T14:37:08.143Z] 
+[2026-10-27T14:37:08.144Z]   # aws_iam_role.grafana will be created
+[2026-10-27T14:37:08.144Z]   + resource "aws_iam_role" "grafana" {
+[2026-10-27T14:37:08.144Z]       + arn                   = (known after apply)
+[2026-10-27T14:37:08.144Z]       + assume_role_policy    = jsonencode(
+[2026-10-27T14:37:08.144Z]             {
+[2026-10-27T14:37:08.144Z]               + Statement = [
+[2026-10-27T14:37:08.144Z]                   + {
+[2026-10-27T14:37:08.144Z]                       + Action    = [
+[2026-10-27T14:37:08.144Z]                           + "sts:AssumeRole",
+[2026-10-27T14:37:08.144Z]                           + "sts:TagSession",
+[2026-10-27T14:37:08.144Z]                         ]
+[2026-10-27T14:37:08.144Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.144Z]                       + Principal = {
+[2026-10-27T14:37:08.144Z]                           + Service = "pods.eks.amazonaws.com"
+[2026-10-27T14:37:08.144Z]                         }
+[2026-10-27T14:37:08.144Z]                     },
+[2026-10-27T14:37:08.144Z]                 ]
+[2026-10-27T14:37:08.144Z]               + Version   = "2012-10-17"
+[2026-10-27T14:37:08.144Z]             }
+[2026-10-27T14:37:08.144Z]         )
+[2026-10-27T14:37:08.144Z]       + create_date           = (known after apply)
+[2026-10-27T14:37:08.144Z]       + force_detach_policies = false
+[2026-10-27T14:37:08.144Z]       + id                    = (known after apply)
+[2026-10-27T14:37:08.144Z]       + managed_policy_arns   = (known after apply)
+[2026-10-27T14:37:08.145Z]       + max_session_duration  = 3600
+[2026-10-27T14:37:08.145Z]       + name                  = "shopnow-dev-grafana"
+[2026-10-27T14:37:08.145Z]       + name_prefix           = (known after apply)
+[2026-10-27T14:37:08.145Z]       + path                  = "/"
+[2026-10-27T14:37:08.145Z]       + tags_all              = {
+[2026-10-27T14:37:08.145Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.145Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.145Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.145Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.145Z]         }
+[2026-10-27T14:37:08.145Z]       + unique_id             = (known after apply)
+[2026-10-27T14:37:08.145Z] 
+[2026-10-27T14:37:08.145Z]       + inline_policy (known after apply)
+[2026-10-27T14:37:08.145Z]     }
+[2026-10-27T14:37:08.145Z] 
+[2026-10-27T14:37:08.145Z]   # aws_iam_role_policy_attachment.grafana will be created
+[2026-10-27T14:37:08.145Z]   + resource "aws_iam_role_policy_attachment" "grafana" {
+[2026-10-27T14:37:08.145Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.145Z]       + policy_arn = "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
+[2026-10-27T14:37:08.145Z]       + role       = "shopnow-dev-grafana"
+[2026-10-27T14:37:08.145Z]     }
+[2026-10-27T14:37:08.145Z] 
+[2026-10-27T14:37:08.145Z]   # aws_instance.tools will be created
+[2026-10-27T14:37:08.145Z]   + resource "aws_instance" "tools" {
+[2026-10-27T14:37:08.145Z]       + ami                                  = "ami-01e91e94accc42eec"
+[2026-10-27T14:37:08.147Z]       + arn                                  = (known after apply)
+[2026-10-27T14:37:08.147Z]       + associate_public_ip_address          = (known after apply)
+[2026-10-27T14:37:08.147Z]       + availability_zone                    = (known after apply)
+[2026-10-27T14:37:08.147Z]       + cpu_core_count                       = (known after apply)
+[2026-10-27T14:37:08.147Z]       + cpu_threads_per_core                 = (known after apply)
+[2026-10-27T14:37:08.147Z]       + disable_api_stop                     = (known after apply)
+[2026-10-27T14:37:08.147Z]       + disable_api_termination              = (known after apply)
+[2026-10-27T14:37:08.147Z]       + ebs_optimized                        = (known after apply)
+[2026-10-27T14:37:08.147Z]       + enable_primary_ipv6                  = (known after apply)
+[2026-10-27T14:37:08.147Z]       + get_password_data                    = false
+[2026-10-27T14:37:08.147Z]       + host_id                              = (known after apply)
+[2026-10-27T14:37:08.147Z]       + host_resource_group_arn              = (known after apply)
+[2026-10-27T14:37:08.147Z]       + iam_instance_profile                 = (known after apply)
+[2026-10-27T14:37:08.147Z]       + id                                   = (known after apply)
+[2026-10-27T14:37:08.147Z]       + instance_initiated_shutdown_behavior = (known after apply)
+[2026-10-27T14:37:08.147Z]       + instance_lifecycle                   = (known after apply)
+[2026-10-27T14:37:08.147Z]       + instance_state                       = (known after apply)
+[2026-10-27T14:37:08.147Z]       + instance_type                        = "t3.micro"
+[2026-10-27T14:37:08.147Z]       + ipv6_address_count                   = (known after apply)
+[2026-10-27T14:37:08.147Z]       + ipv6_addresses                       = (known after apply)
+[2026-10-27T14:37:08.147Z]       + key_name                             = "shopnow-key"
+[2026-10-27T14:37:08.147Z]       + monitoring                           = (known after apply)
+[2026-10-27T14:37:08.147Z]       + outpost_arn                          = (known after apply)
+[2026-10-27T14:37:08.147Z]       + password_data                        = (known after apply)
+[2026-10-27T14:37:08.147Z]       + placement_group                      = (known after apply)
+[2026-10-27T14:37:08.147Z]       + placement_partition_number           = (known after apply)
+[2026-10-27T14:37:08.147Z]       + primary_network_interface_id         = (known after apply)
+[2026-10-27T14:37:08.147Z]       + private_dns                          = (known after apply)
+[2026-10-27T14:37:08.147Z]       + private_ip                           = (known after apply)
+[2026-10-27T14:37:08.147Z]       + public_dns                           = (known after apply)
+[2026-10-27T14:37:08.147Z]       + public_ip                            = (known after apply)
+[2026-10-27T14:37:08.147Z]       + secondary_private_ips                = (known after apply)
+[2026-10-27T14:37:08.147Z]       + security_groups                      = (known after apply)
+[2026-10-27T14:37:08.147Z]       + source_dest_check                    = true
+[2026-10-27T14:37:08.147Z]       + spot_instance_request_id             = (known after apply)
+[2026-10-27T14:37:08.147Z]       + subnet_id                            = (known after apply)
+[2026-10-27T14:37:08.147Z]       + tags                                 = {
+[2026-10-27T14:37:08.147Z]           + "Name" = "shopnow-dev-tools"
+[2026-10-27T14:37:08.147Z]           + "Role" = "tools"
+[2026-10-27T14:37:08.147Z]         }
+[2026-10-27T14:37:08.147Z]       + tags_all                             = {
+[2026-10-27T14:37:08.147Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.147Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.147Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.147Z]           + "Name"      = "shopnow-dev-tools"
+[2026-10-27T14:37:08.147Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.147Z]           + "Role"      = "tools"
+[2026-10-27T14:37:08.147Z]         }
+[2026-10-27T14:37:08.147Z]       + tenancy                              = (known after apply)
+[2026-10-27T14:37:08.147Z]       + user_data                            = (known after apply)
+[2026-10-27T14:37:08.147Z]       + user_data_base64                     = (known after apply)
+[2026-10-27T14:37:08.147Z]       + user_data_replace_on_change          = false
+[2026-10-27T14:37:08.147Z]       + vpc_security_group_ids               = (known after apply)
+[2026-10-27T14:37:08.147Z] 
+[2026-10-27T14:37:08.148Z]       + capacity_reservation_specification (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + cpu_options (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + ebs_block_device (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + enclave_options (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + ephemeral_block_device (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + instance_market_options (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + maintenance_options (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + metadata_options {
+[2026-10-27T14:37:08.148Z]           + http_endpoint               = "enabled"
+[2026-10-27T14:37:08.148Z]           + http_protocol_ipv6          = "disabled"
+[2026-10-27T14:37:08.148Z]           + http_put_response_hop_limit = (known after apply)
+[2026-10-27T14:37:08.148Z]           + http_tokens                 = "required"
+[2026-10-27T14:37:08.148Z]           + instance_metadata_tags      = (known after apply)
+[2026-10-27T14:37:08.148Z]         }
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + network_interface (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + private_dns_name_options (known after apply)
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]       + root_block_device {
+[2026-10-27T14:37:08.148Z]           + delete_on_termination = true
+[2026-10-27T14:37:08.148Z]           + device_name           = (known after apply)
+[2026-10-27T14:37:08.148Z]           + encrypted             = true
+[2026-10-27T14:37:08.148Z]           + iops                  = (known after apply)
+[2026-10-27T14:37:08.148Z]           + kms_key_id            = (known after apply)
+[2026-10-27T14:37:08.148Z]           + tags_all              = (known after apply)
+[2026-10-27T14:37:08.148Z]           + throughput            = (known after apply)
+[2026-10-27T14:37:08.148Z]           + volume_id             = (known after apply)
+[2026-10-27T14:37:08.148Z]           + volume_size           = 8
+[2026-10-27T14:37:08.148Z]           + volume_type           = "gp3"
+[2026-10-27T14:37:08.148Z]         }
+[2026-10-27T14:37:08.148Z]     }
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]   # aws_route.default_to_project["rtb-064b953b18447dab9"] will be created
+[2026-10-27T14:37:08.148Z]   + resource "aws_route" "default_to_project" {
+[2026-10-27T14:37:08.148Z]       + destination_cidr_block    = "10.0.0.0/16"
+[2026-10-27T14:37:08.148Z]       + id                        = (known after apply)
+[2026-10-27T14:37:08.148Z]       + instance_id               = (known after apply)
+[2026-10-27T14:37:08.148Z]       + instance_owner_id         = (known after apply)
+[2026-10-27T14:37:08.148Z]       + network_interface_id      = (known after apply)
+[2026-10-27T14:37:08.148Z]       + origin                    = (known after apply)
+[2026-10-27T14:37:08.148Z]       + route_table_id            = "rtb-064b953b18447dab9"
+[2026-10-27T14:37:08.148Z]       + state                     = (known after apply)
+[2026-10-27T14:37:08.148Z]       + vpc_peering_connection_id = (known after apply)
+[2026-10-27T14:37:08.148Z]     }
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]   # aws_route.project_to_default will be created
+[2026-10-27T14:37:08.148Z]   + resource "aws_route" "project_to_default" {
+[2026-10-27T14:37:08.148Z]       + destination_cidr_block    = "172.31.0.0/16"
+[2026-10-27T14:37:08.148Z]       + id                        = (known after apply)
+[2026-10-27T14:37:08.148Z]       + instance_id               = (known after apply)
+[2026-10-27T14:37:08.148Z]       + instance_owner_id         = (known after apply)
+[2026-10-27T14:37:08.148Z]       + network_interface_id      = (known after apply)
+[2026-10-27T14:37:08.148Z]       + origin                    = (known after apply)
+[2026-10-27T14:37:08.148Z]       + route_table_id            = (known after apply)
+[2026-10-27T14:37:08.148Z]       + state                     = (known after apply)
+[2026-10-27T14:37:08.148Z]       + vpc_peering_connection_id = (known after apply)
+[2026-10-27T14:37:08.148Z]     }
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]   # aws_security_group.tools will be created
+[2026-10-27T14:37:08.148Z]   + resource "aws_security_group" "tools" {
+[2026-10-27T14:37:08.148Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.148Z]       + description            = "Tools EC2"
+[2026-10-27T14:37:08.148Z]       + egress                 = [
+[2026-10-27T14:37:08.148Z]           + {
+[2026-10-27T14:37:08.148Z]               + cidr_blocks      = [
+[2026-10-27T14:37:08.148Z]                   + "0.0.0.0/0",
+[2026-10-27T14:37:08.148Z]                 ]
+[2026-10-27T14:37:08.148Z]               + from_port        = 0
+[2026-10-27T14:37:08.148Z]               + ipv6_cidr_blocks = []
+[2026-10-27T14:37:08.148Z]               + prefix_list_ids  = []
+[2026-10-27T14:37:08.148Z]               + protocol         = "-1"
+[2026-10-27T14:37:08.148Z]               + security_groups  = []
+[2026-10-27T14:37:08.148Z]               + self             = false
+[2026-10-27T14:37:08.148Z]               + to_port          = 0
+[2026-10-27T14:37:08.148Z]                 # (1 unchanged attribute hidden)
+[2026-10-27T14:37:08.148Z]             },
+[2026-10-27T14:37:08.148Z]         ]
+[2026-10-27T14:37:08.148Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.148Z]       + ingress                = [
+[2026-10-27T14:37:08.148Z]           + {
+[2026-10-27T14:37:08.148Z]               + cidr_blocks      = [
+[2026-10-27T14:37:08.148Z]                   + "172.31.0.0/16",
+[2026-10-27T14:37:08.148Z]                 ]
+[2026-10-27T14:37:08.148Z]               + description      = "SSH from Jenkins over peering only"
+[2026-10-27T14:37:08.148Z]               + from_port        = 22
+[2026-10-27T14:37:08.148Z]               + ipv6_cidr_blocks = []
+[2026-10-27T14:37:08.148Z]               + prefix_list_ids  = []
+[2026-10-27T14:37:08.148Z]               + protocol         = "tcp"
+[2026-10-27T14:37:08.148Z]               + security_groups  = []
+[2026-10-27T14:37:08.148Z]               + self             = false
+[2026-10-27T14:37:08.148Z]               + to_port          = 22
+[2026-10-27T14:37:08.148Z]             },
+[2026-10-27T14:37:08.148Z]           + {
+[2026-10-27T14:37:08.148Z]               + cidr_blocks      = []
+[2026-10-27T14:37:08.148Z]               + description      = "node_exporter from EKS nodes/pods (Prometheus)"
+[2026-10-27T14:37:08.148Z]               + from_port        = 9100
+[2026-10-27T14:37:08.148Z]               + ipv6_cidr_blocks = []
+[2026-10-27T14:37:08.148Z]               + prefix_list_ids  = []
+[2026-10-27T14:37:08.148Z]               + protocol         = "tcp"
+[2026-10-27T14:37:08.148Z]               + security_groups  = (known after apply)
+[2026-10-27T14:37:08.148Z]               + self             = false
+[2026-10-27T14:37:08.148Z]               + to_port          = 9100
+[2026-10-27T14:37:08.148Z]             },
+[2026-10-27T14:37:08.148Z]         ]
+[2026-10-27T14:37:08.148Z]       + name                   = "shopnow-dev-tools"
+[2026-10-27T14:37:08.148Z]       + name_prefix            = (known after apply)
+[2026-10-27T14:37:08.148Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.148Z]       + revoke_rules_on_delete = false
+[2026-10-27T14:37:08.148Z]       + tags_all               = {
+[2026-10-27T14:37:08.148Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.148Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.148Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.148Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.148Z]         }
+[2026-10-27T14:37:08.148Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.148Z]     }
+[2026-10-27T14:37:08.148Z] 
+[2026-10-27T14:37:08.148Z]   # aws_vpc_peering_connection.jenkins will be created
+[2026-10-27T14:37:08.148Z]   + resource "aws_vpc_peering_connection" "jenkins" {
+[2026-10-27T14:37:08.148Z]       + accept_status = (known after apply)
+[2026-10-27T14:37:08.148Z]       + auto_accept   = true
+[2026-10-27T14:37:08.148Z]       + id            = (known after apply)
+[2026-10-27T14:37:08.148Z]       + peer_owner_id = (known after apply)
+[2026-10-27T14:37:08.148Z]       + peer_region   = (known after apply)
+[2026-10-27T14:37:08.148Z]       + peer_vpc_id   = "vpc-0a9929739b7ca3a7a"
+[2026-10-27T14:37:08.148Z]       + tags          = {
+[2026-10-27T14:37:08.148Z]           + "Name" = "shopnow-dev-to-default"
+[2026-10-27T14:37:08.148Z]         }
+[2026-10-27T14:37:08.148Z]       + tags_all      = {
+[2026-10-27T14:37:08.148Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.149Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.149Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.149Z]           + "Name"      = "shopnow-dev-to-default"
+[2026-10-27T14:37:08.149Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z]       + vpc_id        = (known after apply)
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]       + accepter (known after apply)
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]       + requester (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.data.aws_eks_addon_version.this["coredns"] will be read during apply
+[2026-10-27T14:37:08.149Z]   # (depends on a resource or a module with changes pending)
+[2026-10-27T14:37:08.149Z]  <= data "aws_eks_addon_version" "this" {
+[2026-10-27T14:37:08.149Z]       + addon_name         = "coredns"
+[2026-10-27T14:37:08.149Z]       + id                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_version = "1.36"
+[2026-10-27T14:37:08.149Z]       + version            = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"] will be read during apply
+[2026-10-27T14:37:08.149Z]   # (depends on a resource or a module with changes pending)
+[2026-10-27T14:37:08.149Z]  <= data "aws_eks_addon_version" "this" {
+[2026-10-27T14:37:08.149Z]       + addon_name         = "eks-pod-identity-agent"
+[2026-10-27T14:37:08.149Z]       + id                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_version = "1.36"
+[2026-10-27T14:37:08.149Z]       + version            = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.data.aws_eks_addon_version.this["kube-proxy"] will be read during apply
+[2026-10-27T14:37:08.149Z]   # (depends on a resource or a module with changes pending)
+[2026-10-27T14:37:08.149Z]  <= data "aws_eks_addon_version" "this" {
+[2026-10-27T14:37:08.149Z]       + addon_name         = "kube-proxy"
+[2026-10-27T14:37:08.149Z]       + id                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_version = "1.36"
+[2026-10-27T14:37:08.149Z]       + version            = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.data.aws_eks_addon_version.this["vpc-cni"] will be read during apply
+[2026-10-27T14:37:08.149Z]   # (depends on a resource or a module with changes pending)
+[2026-10-27T14:37:08.149Z]  <= data "aws_eks_addon_version" "this" {
+[2026-10-27T14:37:08.149Z]       + addon_name         = "vpc-cni"
+[2026-10-27T14:37:08.149Z]       + id                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_version = "1.36"
+[2026-10-27T14:37:08.149Z]       + version            = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_access_entry.this["cluster_creator"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_access_entry" "this" {
+[2026-10-27T14:37:08.149Z]       + access_entry_arn  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name      = (known after apply)
+[2026-10-27T14:37:08.149Z]       + created_at        = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id                = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_groups = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at       = (known after apply)
+[2026-10-27T14:37:08.149Z]       + principal_arn     = "arn:aws:iam::926375049914:role/shopnow-jenkins-role"
+[2026-10-27T14:37:08.149Z]       + tags_all          = {
+[2026-10-27T14:37:08.149Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.149Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.149Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.149Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z]       + type              = "STANDARD"
+[2026-10-27T14:37:08.149Z]       + user_name         = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_access_entry.this["member0"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_access_entry" "this" {
+[2026-10-27T14:37:08.149Z]       + access_entry_arn  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name      = (known after apply)
+[2026-10-27T14:37:08.149Z]       + created_at        = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id                = (known after apply)
+[2026-10-27T14:37:08.149Z]       + kubernetes_groups = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at       = (known after apply)
+[2026-10-27T14:37:08.149Z]       + principal_arn     = "arn:aws:iam::926375049914:user/kamal-admin"
+[2026-10-27T14:37:08.149Z]       + tags_all          = {
+[2026-10-27T14:37:08.149Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.149Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.149Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.149Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z]       + type              = "STANDARD"
+[2026-10-27T14:37:08.149Z]       + user_name         = (known after apply)
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_access_policy_association" "this" {
+[2026-10-27T14:37:08.149Z]       + associated_at = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id            = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at   = (known after apply)
+[2026-10-27T14:37:08.149Z]       + policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+[2026-10-27T14:37:08.149Z]       + principal_arn = "arn:aws:iam::926375049914:role/shopnow-jenkins-role"
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]       + access_scope {
+[2026-10-27T14:37:08.149Z]           + type = "cluster"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_access_policy_association.this["member0_admin"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_access_policy_association" "this" {
+[2026-10-27T14:37:08.149Z]       + associated_at = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id            = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at   = (known after apply)
+[2026-10-27T14:37:08.149Z]       + policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+[2026-10-27T14:37:08.149Z]       + principal_arn = "arn:aws:iam::926375049914:user/kamal-admin"
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]       + access_scope {
+[2026-10-27T14:37:08.149Z]           + type = "cluster"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_addon.before_compute["vpc-cni"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_addon" "before_compute" {
+[2026-10-27T14:37:08.149Z]       + addon_name                  = "vpc-cni"
+[2026-10-27T14:37:08.149Z]       + addon_version               = (known after apply)
+[2026-10-27T14:37:08.149Z]       + arn                         = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name                = (known after apply)
+[2026-10-27T14:37:08.149Z]       + configuration_values        = (known after apply)
+[2026-10-27T14:37:08.149Z]       + created_at                  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id                          = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + preserve                    = true
+[2026-10-27T14:37:08.149Z]       + resolve_conflicts_on_create = "OVERWRITE"
+[2026-10-27T14:37:08.149Z]       + resolve_conflicts_on_update = "OVERWRITE"
+[2026-10-27T14:37:08.149Z]       + tags_all                    = {
+[2026-10-27T14:37:08.149Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.149Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.149Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.149Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.149Z]         }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]       + timeouts {}
+[2026-10-27T14:37:08.149Z]     }
+[2026-10-27T14:37:08.149Z] 
+[2026-10-27T14:37:08.149Z]   # module.eks.aws_eks_addon.this["coredns"] will be created
+[2026-10-27T14:37:08.149Z]   + resource "aws_eks_addon" "this" {
+[2026-10-27T14:37:08.149Z]       + addon_name                  = "coredns"
+[2026-10-27T14:37:08.149Z]       + addon_version               = (known after apply)
+[2026-10-27T14:37:08.149Z]       + arn                         = (known after apply)
+[2026-10-27T14:37:08.149Z]       + cluster_name                = (known after apply)
+[2026-10-27T14:37:08.149Z]       + configuration_values        = (known after apply)
+[2026-10-27T14:37:08.149Z]       + created_at                  = (known after apply)
+[2026-10-27T14:37:08.149Z]       + id                          = (known after apply)
+[2026-10-27T14:37:08.149Z]       + modified_at                 = (known after apply)
+[2026-10-27T14:37:08.149Z]       + preserve                    = true
+[2026-10-27T14:37:08.149Z]       + resolve_conflicts_on_create = "OVERWRITE"
+[2026-10-27T14:37:08.149Z]       + resolve_conflicts_on_update = "OVERWRITE"
+[2026-10-27T14:37:08.149Z]       + tags_all                    = {
+[2026-10-27T14:37:08.149Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.149Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.149Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.149Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + timeouts {}
+[2026-10-27T14:37:08.150Z]     }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]   # module.eks.aws_eks_addon.this["eks-pod-identity-agent"] will be created
+[2026-10-27T14:37:08.150Z]   + resource "aws_eks_addon" "this" {
+[2026-10-27T14:37:08.150Z]       + addon_name                  = "eks-pod-identity-agent"
+[2026-10-27T14:37:08.150Z]       + addon_version               = (known after apply)
+[2026-10-27T14:37:08.150Z]       + arn                         = (known after apply)
+[2026-10-27T14:37:08.150Z]       + cluster_name                = (known after apply)
+[2026-10-27T14:37:08.150Z]       + configuration_values        = (known after apply)
+[2026-10-27T14:37:08.150Z]       + created_at                  = (known after apply)
+[2026-10-27T14:37:08.150Z]       + id                          = (known after apply)
+[2026-10-27T14:37:08.150Z]       + modified_at                 = (known after apply)
+[2026-10-27T14:37:08.150Z]       + preserve                    = true
+[2026-10-27T14:37:08.150Z]       + resolve_conflicts_on_create = "OVERWRITE"
+[2026-10-27T14:37:08.150Z]       + resolve_conflicts_on_update = "OVERWRITE"
+[2026-10-27T14:37:08.150Z]       + tags_all                    = {
+[2026-10-27T14:37:08.150Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.150Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.150Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.150Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + timeouts {}
+[2026-10-27T14:37:08.150Z]     }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]   # module.eks.aws_eks_addon.this["kube-proxy"] will be created
+[2026-10-27T14:37:08.150Z]   + resource "aws_eks_addon" "this" {
+[2026-10-27T14:37:08.150Z]       + addon_name                  = "kube-proxy"
+[2026-10-27T14:37:08.150Z]       + addon_version               = (known after apply)
+[2026-10-27T14:37:08.150Z]       + arn                         = (known after apply)
+[2026-10-27T14:37:08.150Z]       + cluster_name                = (known after apply)
+[2026-10-27T14:37:08.150Z]       + configuration_values        = (known after apply)
+[2026-10-27T14:37:08.150Z]       + created_at                  = (known after apply)
+[2026-10-27T14:37:08.150Z]       + id                          = (known after apply)
+[2026-10-27T14:37:08.150Z]       + modified_at                 = (known after apply)
+[2026-10-27T14:37:08.150Z]       + preserve                    = true
+[2026-10-27T14:37:08.150Z]       + resolve_conflicts_on_create = "OVERWRITE"
+[2026-10-27T14:37:08.150Z]       + resolve_conflicts_on_update = "OVERWRITE"
+[2026-10-27T14:37:08.150Z]       + tags_all                    = {
+[2026-10-27T14:37:08.150Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.150Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.150Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.150Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + timeouts {}
+[2026-10-27T14:37:08.150Z]     }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]   # module.eks.aws_eks_cluster.this[0] will be created
+[2026-10-27T14:37:08.150Z]   + resource "aws_eks_cluster" "this" {
+[2026-10-27T14:37:08.150Z]       + arn                           = (known after apply)
+[2026-10-27T14:37:08.150Z]       + bootstrap_self_managed_addons = true
+[2026-10-27T14:37:08.150Z]       + certificate_authority         = (known after apply)
+[2026-10-27T14:37:08.150Z]       + cluster_id                    = (known after apply)
+[2026-10-27T14:37:08.150Z]       + created_at                    = (known after apply)
+[2026-10-27T14:37:08.150Z]       + endpoint                      = (known after apply)
+[2026-10-27T14:37:08.150Z]       + id                            = (known after apply)
+[2026-10-27T14:37:08.150Z]       + identity                      = (known after apply)
+[2026-10-27T14:37:08.150Z]       + name                          = "shopnow-dev"
+[2026-10-27T14:37:08.150Z]       + platform_version              = (known after apply)
+[2026-10-27T14:37:08.150Z]       + role_arn                      = (known after apply)
+[2026-10-27T14:37:08.150Z]       + status                        = (known after apply)
+[2026-10-27T14:37:08.150Z]       + tags                          = {
+[2026-10-27T14:37:08.150Z]           + "terraform-aws-modules" = "eks"
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z]       + tags_all                      = {
+[2026-10-27T14:37:08.150Z]           + "Env"                   = "dev"
+[2026-10-27T14:37:08.150Z]           + "Layer"                 = "disposable"
+[2026-10-27T14:37:08.150Z]           + "ManagedBy"             = "terraform"
+[2026-10-27T14:37:08.150Z]           + "Project"               = "shopnow"
+[2026-10-27T14:37:08.150Z]           + "terraform-aws-modules" = "eks"
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z]       + version                       = "1.36"
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + access_config {
+[2026-10-27T14:37:08.150Z]           + authentication_mode                         = "API"
+[2026-10-27T14:37:08.150Z]           + bootstrap_cluster_creator_admin_permissions = false
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + kubernetes_network_config {
+[2026-10-27T14:37:08.150Z]           + ip_family         = "ipv4"
+[2026-10-27T14:37:08.150Z]           + service_ipv4_cidr = (known after apply)
+[2026-10-27T14:37:08.150Z]           + service_ipv6_cidr = (known after apply)
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]           + elastic_load_balancing (known after apply)
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + timeouts {}
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + upgrade_policy (known after apply)
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]       + vpc_config {
+[2026-10-27T14:37:08.150Z]           + cluster_security_group_id = (known after apply)
+[2026-10-27T14:37:08.150Z]           + endpoint_private_access   = true
+[2026-10-27T14:37:08.150Z]           + endpoint_public_access    = true
+[2026-10-27T14:37:08.150Z]           + public_access_cidrs       = [
+[2026-10-27T14:37:08.150Z]               + "0.0.0.0/0",
+[2026-10-27T14:37:08.150Z]             ]
+[2026-10-27T14:37:08.150Z]           + security_group_ids        = (known after apply)
+[2026-10-27T14:37:08.150Z]           + subnet_ids                = (known after apply)
+[2026-10-27T14:37:08.150Z]           + vpc_id                    = (known after apply)
+[2026-10-27T14:37:08.150Z]         }
+[2026-10-27T14:37:08.150Z]     }
+[2026-10-27T14:37:08.150Z] 
+[2026-10-27T14:37:08.150Z]   # module.eks.aws_iam_policy.custom[0] will be created
+[2026-10-27T14:37:08.150Z]   + resource "aws_iam_policy" "custom" {
+[2026-10-27T14:37:08.150Z]       + arn              = (known after apply)
+[2026-10-27T14:37:08.150Z]       + attachment_count = (known after apply)
+[2026-10-27T14:37:08.150Z]       + id               = (known after apply)
+[2026-10-27T14:37:08.150Z]       + name             = (known after apply)
+[2026-10-27T14:37:08.150Z]       + name_prefix      = "shopnow-dev-cluster-"
+[2026-10-27T14:37:08.150Z]       + path             = "/"
+[2026-10-27T14:37:08.150Z]       + policy           = jsonencode(
+[2026-10-27T14:37:08.150Z]             {
+[2026-10-27T14:37:08.150Z]               + Statement = [
+[2026-10-27T14:37:08.150Z]                   + {
+[2026-10-27T14:37:08.150Z]                       + Action    = [
+[2026-10-27T14:37:08.150Z]                           + "ec2:RunInstances",
+[2026-10-27T14:37:08.150Z]                           + "ec2:CreateLaunchTemplate",
+[2026-10-27T14:37:08.150Z]                           + "ec2:CreateFleet",
+[2026-10-27T14:37:08.150Z]                         ]
+[2026-10-27T14:37:08.150Z]                       + Condition = {
+[2026-10-27T14:37:08.150Z]                           + StringEquals = {
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.150Z]                             }
+[2026-10-27T14:37:08.150Z]                           + StringLike   = {
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:kubernetes-node-class-name" = "*"
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:kubernetes-node-pool-name"  = "*"
+[2026-10-27T14:37:08.150Z]                             }
+[2026-10-27T14:37:08.150Z]                         }
+[2026-10-27T14:37:08.150Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.150Z]                       + Resource  = "*"
+[2026-10-27T14:37:08.150Z]                       + Sid       = "Compute"
+[2026-10-27T14:37:08.150Z]                     },
+[2026-10-27T14:37:08.150Z]                   + {
+[2026-10-27T14:37:08.150Z]                       + Action    = [
+[2026-10-27T14:37:08.150Z]                           + "ec2:CreateVolume",
+[2026-10-27T14:37:08.150Z]                           + "ec2:CreateSnapshot",
+[2026-10-27T14:37:08.150Z]                         ]
+[2026-10-27T14:37:08.150Z]                       + Condition = {
+[2026-10-27T14:37:08.150Z]                           + StringEquals = {
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.150Z]                             }
+[2026-10-27T14:37:08.150Z]                         }
+[2026-10-27T14:37:08.150Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.150Z]                       + Resource  = [
+[2026-10-27T14:37:08.150Z]                           + "arn:aws:ec2:*:*:volume/*",
+[2026-10-27T14:37:08.150Z]                           + "arn:aws:ec2:*:*:snapshot/*",
+[2026-10-27T14:37:08.150Z]                         ]
+[2026-10-27T14:37:08.150Z]                       + Sid       = "Storage"
+[2026-10-27T14:37:08.150Z]                     },
+[2026-10-27T14:37:08.150Z]                   + {
+[2026-10-27T14:37:08.150Z]                       + Action    = "ec2:CreateNetworkInterface"
+[2026-10-27T14:37:08.150Z]                       + Condition = {
+[2026-10-27T14:37:08.150Z]                           + StringEquals = {
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:eks-cluster-name"         = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.150Z]                               + "aws:RequestTag/eks:kubernetes-cni-node-name" = "*"
+[2026-10-27T14:37:08.151Z]                             }
+[2026-10-27T14:37:08.151Z]                         }
+[2026-10-27T14:37:08.151Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.151Z]                       + Resource  = "*"
+[2026-10-27T14:37:08.151Z]                       + Sid       = "Networking"
+[2026-10-27T14:37:08.151Z]                     },
+[2026-10-27T14:37:08.151Z]                   + {
+[2026-10-27T14:37:08.151Z]                       + Action    = [
+[2026-10-27T14:37:08.151Z]                           + "elasticloadbalancing:CreateTargetGroup",
+[2026-10-27T14:37:08.151Z]                           + "elasticloadbalancing:CreateRule",
+[2026-10-27T14:37:08.151Z]                           + "elasticloadbalancing:CreateLoadBalancer",
+[2026-10-27T14:37:08.151Z]                           + "elasticloadbalancing:CreateListener",
+[2026-10-27T14:37:08.151Z]                           + "ec2:CreateSecurityGroup",
+[2026-10-27T14:37:08.151Z]                         ]
+[2026-10-27T14:37:08.151Z]                       + Condition = {
+[2026-10-27T14:37:08.151Z]                           + StringEquals = {
+[2026-10-27T14:37:08.151Z]                               + "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.151Z]                             }
+[2026-10-27T14:37:08.151Z]                         }
+[2026-10-27T14:37:08.151Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.151Z]                       + Resource  = "*"
+[2026-10-27T14:37:08.151Z]                       + Sid       = "LoadBalancer"
+[2026-10-27T14:37:08.151Z]                     },
+[2026-10-27T14:37:08.151Z]                   + {
+[2026-10-27T14:37:08.151Z]                       + Action    = "shield:CreateProtection"
+[2026-10-27T14:37:08.151Z]                       + Condition = {
+[2026-10-27T14:37:08.151Z]                           + StringEquals = {
+[2026-10-27T14:37:08.151Z]                               + "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.151Z]                             }
+[2026-10-27T14:37:08.151Z]                         }
+[2026-10-27T14:37:08.151Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.151Z]                       + Resource  = "*"
+[2026-10-27T14:37:08.151Z]                       + Sid       = "ShieldProtection"
+[2026-10-27T14:37:08.151Z]                     },
+[2026-10-27T14:37:08.151Z]                   + {
+[2026-10-27T14:37:08.151Z]                       + Action    = "shield:TagResource"
+[2026-10-27T14:37:08.151Z]                       + Condition = {
+[2026-10-27T14:37:08.151Z]                           + StringEquals = {
+[2026-10-27T14:37:08.151Z]                               + "aws:RequestTag/eks:eks-cluster-name" = "${aws:PrincipalTag/eks:eks-cluster-name}"
+[2026-10-27T14:37:08.151Z]                             }
+[2026-10-27T14:37:08.151Z]                         }
+[2026-10-27T14:37:08.151Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.151Z]                       + Resource  = "arn:aws:shield::*:protection/*"
+[2026-10-27T14:37:08.151Z]                       + Sid       = "ShieldTagResource"
+[2026-10-27T14:37:08.151Z]                     },
+[2026-10-27T14:37:08.151Z]                 ]
+[2026-10-27T14:37:08.151Z]               + Version   = "2012-10-17"
+[2026-10-27T14:37:08.151Z]             }
+[2026-10-27T14:37:08.151Z]         )
+[2026-10-27T14:37:08.151Z]       + policy_id        = (known after apply)
+[2026-10-27T14:37:08.151Z]       + tags_all         = {
+[2026-10-27T14:37:08.151Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.151Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.151Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.151Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.151Z]         }
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_iam_role.this[0] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_iam_role" "this" {
+[2026-10-27T14:37:08.151Z]       + arn                   = (known after apply)
+[2026-10-27T14:37:08.151Z]       + assume_role_policy    = jsonencode(
+[2026-10-27T14:37:08.151Z]             {
+[2026-10-27T14:37:08.151Z]               + Statement = [
+[2026-10-27T14:37:08.151Z]                   + {
+[2026-10-27T14:37:08.151Z]                       + Action    = [
+[2026-10-27T14:37:08.151Z]                           + "sts:TagSession",
+[2026-10-27T14:37:08.151Z]                           + "sts:AssumeRole",
+[2026-10-27T14:37:08.151Z]                         ]
+[2026-10-27T14:37:08.151Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.151Z]                       + Principal = {
+[2026-10-27T14:37:08.151Z]                           + Service = "eks.amazonaws.com"
+[2026-10-27T14:37:08.151Z]                         }
+[2026-10-27T14:37:08.151Z]                       + Sid       = "EKSClusterAssumeRole"
+[2026-10-27T14:37:08.151Z]                     },
+[2026-10-27T14:37:08.151Z]                 ]
+[2026-10-27T14:37:08.151Z]               + Version   = "2012-10-17"
+[2026-10-27T14:37:08.151Z]             }
+[2026-10-27T14:37:08.151Z]         )
+[2026-10-27T14:37:08.151Z]       + create_date           = (known after apply)
+[2026-10-27T14:37:08.151Z]       + force_detach_policies = true
+[2026-10-27T14:37:08.151Z]       + id                    = (known after apply)
+[2026-10-27T14:37:08.151Z]       + managed_policy_arns   = (known after apply)
+[2026-10-27T14:37:08.151Z]       + max_session_duration  = 3600
+[2026-10-27T14:37:08.151Z]       + name                  = (known after apply)
+[2026-10-27T14:37:08.151Z]       + name_prefix           = "shopnow-dev-cluster-"
+[2026-10-27T14:37:08.151Z]       + path                  = "/"
+[2026-10-27T14:37:08.151Z]       + tags_all              = {
+[2026-10-27T14:37:08.151Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.151Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.151Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.151Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.151Z]         }
+[2026-10-27T14:37:08.151Z]       + unique_id             = (known after apply)
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]       + inline_policy (known after apply)
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_iam_role_policy_attachment.custom[0] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_iam_role_policy_attachment" "custom" {
+[2026-10-27T14:37:08.151Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.151Z]       + policy_arn = (known after apply)
+[2026-10-27T14:37:08.151Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_iam_role_policy_attachment" "this" {
+[2026-10-27T14:37:08.151Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.151Z]       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+[2026-10-27T14:37:08.151Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_iam_role_policy_attachment" "this" {
+[2026-10-27T14:37:08.151Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.151Z]       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+[2026-10-27T14:37:08.151Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_security_group.cluster[0] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_security_group" "cluster" {
+[2026-10-27T14:37:08.151Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.151Z]       + description            = "EKS cluster security group"
+[2026-10-27T14:37:08.151Z]       + egress                 = (known after apply)
+[2026-10-27T14:37:08.151Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.151Z]       + ingress                = (known after apply)
+[2026-10-27T14:37:08.151Z]       + name                   = (known after apply)
+[2026-10-27T14:37:08.151Z]       + name_prefix            = "shopnow-dev-cluster-"
+[2026-10-27T14:37:08.151Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.151Z]       + revoke_rules_on_delete = false
+[2026-10-27T14:37:08.151Z]       + tags                   = {
+[2026-10-27T14:37:08.151Z]           + "Name" = "shopnow-dev-cluster"
+[2026-10-27T14:37:08.151Z]         }
+[2026-10-27T14:37:08.151Z]       + tags_all               = {
+[2026-10-27T14:37:08.151Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.151Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.151Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.151Z]           + "Name"      = "shopnow-dev-cluster"
+[2026-10-27T14:37:08.151Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.151Z]         }
+[2026-10-27T14:37:08.151Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.151Z]     }
+[2026-10-27T14:37:08.151Z] 
+[2026-10-27T14:37:08.151Z]   # module.eks.aws_security_group.node[0] will be created
+[2026-10-27T14:37:08.151Z]   + resource "aws_security_group" "node" {
+[2026-10-27T14:37:08.152Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.152Z]       + description            = "EKS node shared security group"
+[2026-10-27T14:37:08.152Z]       + egress                 = (known after apply)
+[2026-10-27T14:37:08.152Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.152Z]       + ingress                = (known after apply)
+[2026-10-27T14:37:08.152Z]       + name                   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + name_prefix            = "shopnow-dev-node-"
+[2026-10-27T14:37:08.152Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.152Z]       + revoke_rules_on_delete = false
+[2026-10-27T14:37:08.152Z]       + tags                   = {
+[2026-10-27T14:37:08.152Z]           + "Name"                              = "shopnow-dev-node"
+[2026-10-27T14:37:08.152Z]           + "kubernetes.io/cluster/shopnow-dev" = "owned"
+[2026-10-27T14:37:08.152Z]         }
+[2026-10-27T14:37:08.152Z]       + tags_all               = {
+[2026-10-27T14:37:08.152Z]           + "Env"                               = "dev"
+[2026-10-27T14:37:08.152Z]           + "Layer"                             = "disposable"
+[2026-10-27T14:37:08.152Z]           + "ManagedBy"                         = "terraform"
+[2026-10-27T14:37:08.152Z]           + "Name"                              = "shopnow-dev-node"
+[2026-10-27T14:37:08.152Z]           + "Project"                           = "shopnow"
+[2026-10-27T14:37:08.152Z]           + "kubernetes.io/cluster/shopnow-dev" = "owned"
+[2026-10-27T14:37:08.152Z]         }
+[2026-10-27T14:37:08.152Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.cluster["ingress_nodes_443"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "cluster" {
+[2026-10-27T14:37:08.152Z]       + description              = "Node groups to cluster API"
+[2026-10-27T14:37:08.152Z]       + from_port                = 443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["egress_all"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + cidr_blocks              = [
+[2026-10-27T14:37:08.152Z]           + "0.0.0.0/0",
+[2026-10-27T14:37:08.152Z]         ]
+[2026-10-27T14:37:08.152Z]       + description              = "Allow all egress"
+[2026-10-27T14:37:08.152Z]       + from_port                = 0
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "-1"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 0
+[2026-10-27T14:37:08.152Z]       + type                     = "egress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_443"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node groups"
+[2026-10-27T14:37:08.152Z]       + from_port                = 443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node 4443/tcp webhook"
+[2026-10-27T14:37:08.152Z]       + from_port                = 4443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 4443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node 6443/tcp webhook"
+[2026-10-27T14:37:08.152Z]       + from_port                = 6443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 6443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node 8443/tcp webhook"
+[2026-10-27T14:37:08.152Z]       + from_port                = 8443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 8443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node 9443/tcp webhook"
+[2026-10-27T14:37:08.152Z]       + from_port                = 9443
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 9443
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Cluster API to node kubelets"
+[2026-10-27T14:37:08.152Z]       + from_port                = 10250
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.152Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.152Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.152Z]       + self                     = false
+[2026-10-27T14:37:08.152Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.152Z]       + to_port                  = 10250
+[2026-10-27T14:37:08.152Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.152Z]     }
+[2026-10-27T14:37:08.152Z] 
+[2026-10-27T14:37:08.152Z]   # module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"] will be created
+[2026-10-27T14:37:08.152Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.152Z]       + description              = "Node to node ingress on ephemeral ports"
+[2026-10-27T14:37:08.152Z]       + from_port                = 1025
+[2026-10-27T14:37:08.152Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.152Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.152Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.153Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.153Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.153Z]       + self                     = true
+[2026-10-27T14:37:08.153Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.153Z]       + to_port                  = 65535
+[2026-10-27T14:37:08.153Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"] will be created
+[2026-10-27T14:37:08.153Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.153Z]       + description              = "Node to node CoreDNS"
+[2026-10-27T14:37:08.153Z]       + from_port                = 53
+[2026-10-27T14:37:08.153Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.153Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.153Z]       + protocol                 = "tcp"
+[2026-10-27T14:37:08.153Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.153Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.153Z]       + self                     = true
+[2026-10-27T14:37:08.153Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.153Z]       + to_port                  = 53
+[2026-10-27T14:37:08.153Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"] will be created
+[2026-10-27T14:37:08.153Z]   + resource "aws_security_group_rule" "node" {
+[2026-10-27T14:37:08.153Z]       + description              = "Node to node CoreDNS UDP"
+[2026-10-27T14:37:08.153Z]       + from_port                = 53
+[2026-10-27T14:37:08.153Z]       + id                       = (known after apply)
+[2026-10-27T14:37:08.153Z]       + prefix_list_ids          = []
+[2026-10-27T14:37:08.153Z]       + protocol                 = "udp"
+[2026-10-27T14:37:08.153Z]       + security_group_id        = (known after apply)
+[2026-10-27T14:37:08.153Z]       + security_group_rule_id   = (known after apply)
+[2026-10-27T14:37:08.153Z]       + self                     = true
+[2026-10-27T14:37:08.153Z]       + source_security_group_id = (known after apply)
+[2026-10-27T14:37:08.153Z]       + to_port                  = 53
+[2026-10-27T14:37:08.153Z]       + type                     = "ingress"
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.eks.time_sleep.this[0] will be created
+[2026-10-27T14:37:08.153Z]   + resource "time_sleep" "this" {
+[2026-10-27T14:37:08.153Z]       + create_duration = "30s"
+[2026-10-27T14:37:08.153Z]       + id              = (known after apply)
+[2026-10-27T14:37:08.153Z]       + triggers        = {
+[2026-10-27T14:37:08.153Z]           + "cluster_certificate_authority_data" = (known after apply)
+[2026-10-27T14:37:08.153Z]           + "cluster_endpoint"                   = (known after apply)
+[2026-10-27T14:37:08.153Z]           + "cluster_name"                       = (known after apply)
+[2026-10-27T14:37:08.153Z]           + "cluster_service_cidr"               = (known after apply)
+[2026-10-27T14:37:08.153Z]           + "cluster_version"                    = "1.36"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.vpc.aws_default_network_acl.this[0] will be created
+[2026-10-27T14:37:08.153Z]   + resource "aws_default_network_acl" "this" {
+[2026-10-27T14:37:08.153Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.153Z]       + default_network_acl_id = (known after apply)
+[2026-10-27T14:37:08.153Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.153Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.153Z]       + tags                   = {
+[2026-10-27T14:37:08.153Z]           + "Name" = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + tags_all               = {
+[2026-10-27T14:37:08.153Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.153Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.153Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.153Z]           + "Name"      = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]       + egress {
+[2026-10-27T14:37:08.153Z]           + action          = "allow"
+[2026-10-27T14:37:08.153Z]           + from_port       = 0
+[2026-10-27T14:37:08.153Z]           + ipv6_cidr_block = "::/0"
+[2026-10-27T14:37:08.153Z]           + protocol        = "-1"
+[2026-10-27T14:37:08.153Z]           + rule_no         = 101
+[2026-10-27T14:37:08.153Z]           + to_port         = 0
+[2026-10-27T14:37:08.153Z]             # (1 unchanged attribute hidden)
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + egress {
+[2026-10-27T14:37:08.153Z]           + action          = "allow"
+[2026-10-27T14:37:08.153Z]           + cidr_block      = "0.0.0.0/0"
+[2026-10-27T14:37:08.153Z]           + from_port       = 0
+[2026-10-27T14:37:08.153Z]           + protocol        = "-1"
+[2026-10-27T14:37:08.153Z]           + rule_no         = 100
+[2026-10-27T14:37:08.153Z]           + to_port         = 0
+[2026-10-27T14:37:08.153Z]             # (1 unchanged attribute hidden)
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]       + ingress {
+[2026-10-27T14:37:08.153Z]           + action          = "allow"
+[2026-10-27T14:37:08.153Z]           + from_port       = 0
+[2026-10-27T14:37:08.153Z]           + ipv6_cidr_block = "::/0"
+[2026-10-27T14:37:08.153Z]           + protocol        = "-1"
+[2026-10-27T14:37:08.153Z]           + rule_no         = 101
+[2026-10-27T14:37:08.153Z]           + to_port         = 0
+[2026-10-27T14:37:08.153Z]             # (1 unchanged attribute hidden)
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + ingress {
+[2026-10-27T14:37:08.153Z]           + action          = "allow"
+[2026-10-27T14:37:08.153Z]           + cidr_block      = "0.0.0.0/0"
+[2026-10-27T14:37:08.153Z]           + from_port       = 0
+[2026-10-27T14:37:08.153Z]           + protocol        = "-1"
+[2026-10-27T14:37:08.153Z]           + rule_no         = 100
+[2026-10-27T14:37:08.153Z]           + to_port         = 0
+[2026-10-27T14:37:08.153Z]             # (1 unchanged attribute hidden)
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.vpc.aws_default_route_table.default[0] will be created
+[2026-10-27T14:37:08.153Z]   + resource "aws_default_route_table" "default" {
+[2026-10-27T14:37:08.153Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.153Z]       + default_route_table_id = (known after apply)
+[2026-10-27T14:37:08.153Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.153Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.153Z]       + route                  = (known after apply)
+[2026-10-27T14:37:08.153Z]       + tags                   = {
+[2026-10-27T14:37:08.153Z]           + "Name" = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + tags_all               = {
+[2026-10-27T14:37:08.153Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.153Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.153Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.153Z]           + "Name"      = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]       + timeouts {
+[2026-10-27T14:37:08.153Z]           + create = "5m"
+[2026-10-27T14:37:08.153Z]           + update = "5m"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]     }
+[2026-10-27T14:37:08.153Z] 
+[2026-10-27T14:37:08.153Z]   # module.vpc.aws_default_security_group.this[0] will be created
+[2026-10-27T14:37:08.153Z]   + resource "aws_default_security_group" "this" {
+[2026-10-27T14:37:08.153Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.153Z]       + description            = (known after apply)
+[2026-10-27T14:37:08.153Z]       + egress                 = (known after apply)
+[2026-10-27T14:37:08.153Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.153Z]       + ingress                = (known after apply)
+[2026-10-27T14:37:08.153Z]       + name                   = (known after apply)
+[2026-10-27T14:37:08.153Z]       + name_prefix            = (known after apply)
+[2026-10-27T14:37:08.153Z]       + owner_id               = (known after apply)
+[2026-10-27T14:37:08.153Z]       + revoke_rules_on_delete = false
+[2026-10-27T14:37:08.153Z]       + tags                   = {
+[2026-10-27T14:37:08.153Z]           + "Name" = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + tags_all               = {
+[2026-10-27T14:37:08.153Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.153Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.153Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.153Z]           + "Name"      = "shopnow-dev-default"
+[2026-10-27T14:37:08.153Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.153Z]         }
+[2026-10-27T14:37:08.153Z]       + vpc_id                 = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_internet_gateway.this[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_internet_gateway" "this" {
+[2026-10-27T14:37:08.154Z]       + arn      = (known after apply)
+[2026-10-27T14:37:08.154Z]       + id       = (known after apply)
+[2026-10-27T14:37:08.154Z]       + owner_id = (known after apply)
+[2026-10-27T14:37:08.154Z]       + tags     = {
+[2026-10-27T14:37:08.154Z]           + "Name" = "shopnow-dev"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + tags_all = {
+[2026-10-27T14:37:08.154Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.154Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.154Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.154Z]           + "Name"      = "shopnow-dev"
+[2026-10-27T14:37:08.154Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + vpc_id   = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_route.public_internet_gateway[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_route" "public_internet_gateway" {
+[2026-10-27T14:37:08.154Z]       + destination_cidr_block = "0.0.0.0/0"
+[2026-10-27T14:37:08.154Z]       + gateway_id             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.154Z]       + instance_id            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + instance_owner_id      = (known after apply)
+[2026-10-27T14:37:08.154Z]       + network_interface_id   = (known after apply)
+[2026-10-27T14:37:08.154Z]       + origin                 = (known after apply)
+[2026-10-27T14:37:08.154Z]       + route_table_id         = (known after apply)
+[2026-10-27T14:37:08.154Z]       + state                  = (known after apply)
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]       + timeouts {
+[2026-10-27T14:37:08.154Z]           + create = "5m"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_route_table.public[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_route_table" "public" {
+[2026-10-27T14:37:08.154Z]       + arn              = (known after apply)
+[2026-10-27T14:37:08.154Z]       + id               = (known after apply)
+[2026-10-27T14:37:08.154Z]       + owner_id         = (known after apply)
+[2026-10-27T14:37:08.154Z]       + propagating_vgws = (known after apply)
+[2026-10-27T14:37:08.154Z]       + route            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + tags             = {
+[2026-10-27T14:37:08.154Z]           + "Name" = "shopnow-dev-public"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + tags_all         = {
+[2026-10-27T14:37:08.154Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.154Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.154Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.154Z]           + "Name"      = "shopnow-dev-public"
+[2026-10-27T14:37:08.154Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + vpc_id           = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_route_table_association.public[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_route_table_association" "public" {
+[2026-10-27T14:37:08.154Z]       + id             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + route_table_id = (known after apply)
+[2026-10-27T14:37:08.154Z]       + subnet_id      = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_route_table_association.public[1] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_route_table_association" "public" {
+[2026-10-27T14:37:08.154Z]       + id             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + route_table_id = (known after apply)
+[2026-10-27T14:37:08.154Z]       + subnet_id      = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_subnet.public[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_subnet" "public" {
+[2026-10-27T14:37:08.154Z]       + arn                                            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + assign_ipv6_address_on_creation                = false
+[2026-10-27T14:37:08.154Z]       + availability_zone                              = "ap-southeast-2a"
+[2026-10-27T14:37:08.154Z]       + availability_zone_id                           = (known after apply)
+[2026-10-27T14:37:08.154Z]       + cidr_block                                     = "10.0.1.0/24"
+[2026-10-27T14:37:08.154Z]       + enable_dns64                                   = false
+[2026-10-27T14:37:08.154Z]       + enable_resource_name_dns_a_record_on_launch    = false
+[2026-10-27T14:37:08.154Z]       + enable_resource_name_dns_aaaa_record_on_launch = false
+[2026-10-27T14:37:08.154Z]       + id                                             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_cidr_block_association_id                 = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_native                                    = false
+[2026-10-27T14:37:08.154Z]       + map_public_ip_on_launch                        = true
+[2026-10-27T14:37:08.154Z]       + owner_id                                       = (known after apply)
+[2026-10-27T14:37:08.154Z]       + private_dns_hostname_type_on_launch            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + tags                                           = {
+[2026-10-27T14:37:08.154Z]           + "Name"                              = "shopnow-dev-public-ap-southeast-2a"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/cluster/shopnow-dev" = "shared"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/role/elb"            = "1"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + tags_all                                       = {
+[2026-10-27T14:37:08.154Z]           + "Env"                               = "dev"
+[2026-10-27T14:37:08.154Z]           + "Layer"                             = "disposable"
+[2026-10-27T14:37:08.154Z]           + "ManagedBy"                         = "terraform"
+[2026-10-27T14:37:08.154Z]           + "Name"                              = "shopnow-dev-public-ap-southeast-2a"
+[2026-10-27T14:37:08.154Z]           + "Project"                           = "shopnow"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/cluster/shopnow-dev" = "shared"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/role/elb"            = "1"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + vpc_id                                         = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_subnet.public[1] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_subnet" "public" {
+[2026-10-27T14:37:08.154Z]       + arn                                            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + assign_ipv6_address_on_creation                = false
+[2026-10-27T14:37:08.154Z]       + availability_zone                              = "ap-southeast-2b"
+[2026-10-27T14:37:08.154Z]       + availability_zone_id                           = (known after apply)
+[2026-10-27T14:37:08.154Z]       + cidr_block                                     = "10.0.2.0/24"
+[2026-10-27T14:37:08.154Z]       + enable_dns64                                   = false
+[2026-10-27T14:37:08.154Z]       + enable_resource_name_dns_a_record_on_launch    = false
+[2026-10-27T14:37:08.154Z]       + enable_resource_name_dns_aaaa_record_on_launch = false
+[2026-10-27T14:37:08.154Z]       + id                                             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_cidr_block_association_id                 = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_native                                    = false
+[2026-10-27T14:37:08.154Z]       + map_public_ip_on_launch                        = true
+[2026-10-27T14:37:08.154Z]       + owner_id                                       = (known after apply)
+[2026-10-27T14:37:08.154Z]       + private_dns_hostname_type_on_launch            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + tags                                           = {
+[2026-10-27T14:37:08.154Z]           + "Name"                              = "shopnow-dev-public-ap-southeast-2b"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/cluster/shopnow-dev" = "shared"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/role/elb"            = "1"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + tags_all                                       = {
+[2026-10-27T14:37:08.154Z]           + "Env"                               = "dev"
+[2026-10-27T14:37:08.154Z]           + "Layer"                             = "disposable"
+[2026-10-27T14:37:08.154Z]           + "ManagedBy"                         = "terraform"
+[2026-10-27T14:37:08.154Z]           + "Name"                              = "shopnow-dev-public-ap-southeast-2b"
+[2026-10-27T14:37:08.154Z]           + "Project"                           = "shopnow"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/cluster/shopnow-dev" = "shared"
+[2026-10-27T14:37:08.154Z]           + "kubernetes.io/role/elb"            = "1"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + vpc_id                                         = (known after apply)
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.vpc.aws_vpc.this[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_vpc" "this" {
+[2026-10-27T14:37:08.154Z]       + arn                                  = (known after apply)
+[2026-10-27T14:37:08.154Z]       + cidr_block                           = "10.0.0.0/16"
+[2026-10-27T14:37:08.154Z]       + default_network_acl_id               = (known after apply)
+[2026-10-27T14:37:08.154Z]       + default_route_table_id               = (known after apply)
+[2026-10-27T14:37:08.154Z]       + default_security_group_id            = (known after apply)
+[2026-10-27T14:37:08.154Z]       + dhcp_options_id                      = (known after apply)
+[2026-10-27T14:37:08.154Z]       + enable_dns_hostnames                 = true
+[2026-10-27T14:37:08.154Z]       + enable_dns_support                   = true
+[2026-10-27T14:37:08.154Z]       + enable_network_address_usage_metrics = (known after apply)
+[2026-10-27T14:37:08.154Z]       + id                                   = (known after apply)
+[2026-10-27T14:37:08.154Z]       + instance_tenancy                     = "default"
+[2026-10-27T14:37:08.154Z]       + ipv6_association_id                  = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_cidr_block                      = (known after apply)
+[2026-10-27T14:37:08.154Z]       + ipv6_cidr_block_network_border_group = (known after apply)
+[2026-10-27T14:37:08.154Z]       + main_route_table_id                  = (known after apply)
+[2026-10-27T14:37:08.154Z]       + owner_id                             = (known after apply)
+[2026-10-27T14:37:08.154Z]       + tags                                 = {
+[2026-10-27T14:37:08.154Z]           + "Name" = "shopnow-dev"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]       + tags_all                             = {
+[2026-10-27T14:37:08.154Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.154Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.154Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.154Z]           + "Name"      = "shopnow-dev"
+[2026-10-27T14:37:08.154Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.154Z]         }
+[2026-10-27T14:37:08.154Z]     }
+[2026-10-27T14:37:08.154Z] 
+[2026-10-27T14:37:08.154Z]   # module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0] will be created
+[2026-10-27T14:37:08.154Z]   + resource "aws_eks_node_group" "this" {
+[2026-10-27T14:37:08.154Z]       + ami_type               = (known after apply)
+[2026-10-27T14:37:08.154Z]       + arn                    = (known after apply)
+[2026-10-27T14:37:08.154Z]       + capacity_type          = "ON_DEMAND"
+[2026-10-27T14:37:08.154Z]       + cluster_name           = (known after apply)
+[2026-10-27T14:37:08.154Z]       + disk_size              = 20
+[2026-10-27T14:37:08.154Z]       + id                     = (known after apply)
+[2026-10-27T14:37:08.154Z]       + instance_types         = [
+[2026-10-27T14:37:08.154Z]           + "m7i-flex.large",
+[2026-10-27T14:37:08.155Z]         ]
+[2026-10-27T14:37:08.155Z]       + node_group_name        = (known after apply)
+[2026-10-27T14:37:08.155Z]       + node_group_name_prefix = "workers-"
+[2026-10-27T14:37:08.155Z]       + node_role_arn          = (known after apply)
+[2026-10-27T14:37:08.155Z]       + release_version        = (known after apply)
+[2026-10-27T14:37:08.155Z]       + resources              = (known after apply)
+[2026-10-27T14:37:08.155Z]       + status                 = (known after apply)
+[2026-10-27T14:37:08.155Z]       + subnet_ids             = (known after apply)
+[2026-10-27T14:37:08.155Z]       + tags                   = {
+[2026-10-27T14:37:08.155Z]           + "Name" = "workers"
+[2026-10-27T14:37:08.155Z]         }
+[2026-10-27T14:37:08.155Z]       + tags_all               = {
+[2026-10-27T14:37:08.155Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.155Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.155Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.155Z]           + "Name"      = "workers"
+[2026-10-27T14:37:08.155Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.155Z]         }
+[2026-10-27T14:37:08.155Z]       + version                = "1.36"
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]       + node_repair_config (known after apply)
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]       + scaling_config {
+[2026-10-27T14:37:08.155Z]           + desired_size = 1
+[2026-10-27T14:37:08.155Z]           + max_size     = 2
+[2026-10-27T14:37:08.155Z]           + min_size     = 1
+[2026-10-27T14:37:08.155Z]         }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]       + timeouts {}
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]       + update_config {
+[2026-10-27T14:37:08.155Z]           + max_unavailable_percentage = 33
+[2026-10-27T14:37:08.155Z]         }
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]   # module.eks.module.eks_managed_node_group["workers"].aws_iam_role.this[0] will be created
+[2026-10-27T14:37:08.155Z]   + resource "aws_iam_role" "this" {
+[2026-10-27T14:37:08.155Z]       + arn                   = (known after apply)
+[2026-10-27T14:37:08.155Z]       + assume_role_policy    = jsonencode(
+[2026-10-27T14:37:08.155Z]             {
+[2026-10-27T14:37:08.155Z]               + Statement = [
+[2026-10-27T14:37:08.155Z]                   + {
+[2026-10-27T14:37:08.155Z]                       + Action    = "sts:AssumeRole"
+[2026-10-27T14:37:08.155Z]                       + Effect    = "Allow"
+[2026-10-27T14:37:08.155Z]                       + Principal = {
+[2026-10-27T14:37:08.155Z]                           + Service = "ec2.amazonaws.com"
+[2026-10-27T14:37:08.155Z]                         }
+[2026-10-27T14:37:08.155Z]                       + Sid       = "EKSNodeAssumeRole"
+[2026-10-27T14:37:08.155Z]                     },
+[2026-10-27T14:37:08.155Z]                 ]
+[2026-10-27T14:37:08.155Z]               + Version   = "2012-10-17"
+[2026-10-27T14:37:08.155Z]             }
+[2026-10-27T14:37:08.155Z]         )
+[2026-10-27T14:37:08.155Z]       + create_date           = (known after apply)
+[2026-10-27T14:37:08.155Z]       + description           = "EKS managed node group IAM role"
+[2026-10-27T14:37:08.155Z]       + force_detach_policies = true
+[2026-10-27T14:37:08.155Z]       + id                    = (known after apply)
+[2026-10-27T14:37:08.155Z]       + managed_policy_arns   = (known after apply)
+[2026-10-27T14:37:08.155Z]       + max_session_duration  = 3600
+[2026-10-27T14:37:08.155Z]       + name                  = (known after apply)
+[2026-10-27T14:37:08.155Z]       + name_prefix           = "workers-eks-node-group-"
+[2026-10-27T14:37:08.155Z]       + path                  = "/"
+[2026-10-27T14:37:08.155Z]       + tags_all              = {
+[2026-10-27T14:37:08.155Z]           + "Env"       = "dev"
+[2026-10-27T14:37:08.155Z]           + "Layer"     = "disposable"
+[2026-10-27T14:37:08.155Z]           + "ManagedBy" = "terraform"
+[2026-10-27T14:37:08.155Z]           + "Project"   = "shopnow"
+[2026-10-27T14:37:08.155Z]         }
+[2026-10-27T14:37:08.155Z]       + unique_id             = (known after apply)
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]       + inline_policy (known after apply)
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]   # module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"] will be created
+[2026-10-27T14:37:08.155Z]   + resource "aws_iam_role_policy_attachment" "this" {
+[2026-10-27T14:37:08.155Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.155Z]       + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+[2026-10-27T14:37:08.155Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]   # module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"] will be created
+[2026-10-27T14:37:08.155Z]   + resource "aws_iam_role_policy_attachment" "this" {
+[2026-10-27T14:37:08.155Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.155Z]       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+[2026-10-27T14:37:08.155Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]   # module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"] will be created
+[2026-10-27T14:37:08.155Z]   + resource "aws_iam_role_policy_attachment" "this" {
+[2026-10-27T14:37:08.155Z]       + id         = (known after apply)
+[2026-10-27T14:37:08.155Z]       + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+[2026-10-27T14:37:08.155Z]       + role       = (known after apply)
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z]   # module.eks.module.eks_managed_node_group["workers"].module.user_data.null_resource.validate_cluster_service_cidr will be created
+[2026-10-27T14:37:08.155Z]   + resource "null_resource" "validate_cluster_service_cidr" {
+[2026-10-27T14:37:08.155Z]       + id = (known after apply)
+[2026-10-27T14:37:08.155Z]     }
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z] Plan: 53 to add, 0 to change, 0 to destroy.
+[2026-10-27T14:37:08.155Z] 
+[2026-10-27T14:37:08.155Z] Changes to Outputs:
+[2026-10-27T14:37:08.155Z]   + cluster_name     = "shopnow-dev"
+[2026-10-27T14:37:08.155Z]   + region           = "ap-southeast-2"
+[2026-10-27T14:37:08.155Z]   + tools_private_ip = (known after apply)
+[2026-10-27T14:37:08.155Z]   + vpc_id           = (known after apply)
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Approve)
+Stage "Approve" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Apply)
+[Pipeline] dir
+[2026-10-27T14:37:08.581Z] Running in /var/lib/jenkins/workspace/01-infra-terraform/infra/platform
+[Pipeline] {
+[Pipeline] sh
+[2026-10-27T14:37:08.881Z] + terraform apply -no-color tfplan
+[2026-10-27T14:37:11.368Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role.this[0]: Creating...
+[2026-10-27T14:37:11.368Z] aws_iam_role.grafana: Creating...
+[2026-10-27T14:37:11.368Z] module.eks.aws_iam_role.this[0]: Creating...
+[2026-10-27T14:37:11.368Z] module.vpc.aws_vpc.this[0]: Creating...
+[2026-10-27T14:37:11.368Z] module.eks.aws_iam_policy.custom[0]: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.aws_iam_policy.custom[0]: Creation complete after 2s [id=arn:aws:iam::926375049914:policy/shopnow-dev-cluster-20261027143711340100000003]
+[2026-10-27T14:37:13.231Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role.this[0]: Creation complete after 2s [id=workers-eks-node-group-20261027143711337300000002]
+[2026-10-27T14:37:13.231Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Creating...
+[2026-10-27T14:37:13.231Z] aws_iam_role.grafana: Creation complete after 2s [id=shopnow-dev-grafana]
+[2026-10-27T14:37:13.231Z] aws_iam_role_policy_attachment.grafana: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.aws_iam_role.this[0]: Creation complete after 2s [id=shopnow-dev-cluster-20261027143711336300000001]
+[2026-10-27T14:37:13.231Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.aws_iam_role_policy_attachment.custom[0]: Creating...
+[2026-10-27T14:37:13.231Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creating...
+[2026-10-27T14:37:13.782Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Creation complete after 1s [id=workers-eks-node-group-20261027143711337300000002-20261027143713236100000004]
+[2026-10-27T14:37:13.782Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Creation complete after 1s [id=workers-eks-node-group-20261027143711337300000002-20261027143713247100000005]
+[2026-10-27T14:37:14.033Z] module.eks.module.eks_managed_node_group["workers"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Creation complete after 1s [id=workers-eks-node-group-20261027143711337300000002-20261027143713271500000006]
+[2026-10-27T14:37:14.033Z] aws_iam_role_policy_attachment.grafana: Creation complete after 1s [id=shopnow-dev-grafana-20261027143713397400000007]
+[2026-10-27T14:37:14.033Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creation complete after 1s [id=shopnow-dev-cluster-20261027143711336300000001-20261027143713529100000008]
+[2026-10-27T14:37:14.033Z] module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creation complete after 1s [id=shopnow-dev-cluster-20261027143711336300000001-20261027143713566500000009]
+[2026-10-27T14:37:14.033Z] module.eks.aws_iam_role_policy_attachment.custom[0]: Creation complete after 1s [id=shopnow-dev-cluster-20261027143711336300000001-2026102714371357260000000a]
+[2026-10-27T14:37:22.060Z] module.vpc.aws_vpc.this[0]: Still creating... [00m10s elapsed]
+[2026-10-27T14:37:22.972Z] module.vpc.aws_vpc.this[0]: Creation complete after 12s [id=vpc-016841ed59b463518]
+[2026-10-27T14:37:22.972Z] module.vpc.aws_default_security_group.this[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_default_network_acl.this[0]: Creating...
+[2026-10-27T14:37:22.972Z] aws_vpc_peering_connection.jenkins: Creating...
+[2026-10-27T14:37:22.972Z] module.eks.aws_security_group.node[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_default_route_table.default[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.eks.aws_security_group.cluster[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_subnet.public[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_route_table.public[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_internet_gateway.this[0]: Creating...
+[2026-10-27T14:37:22.972Z] module.vpc.aws_subnet.public[1]: Creating...
+[2026-10-27T14:37:23.223Z] module.vpc.aws_default_route_table.default[0]: Creation complete after 0s [id=rtb-0217b81a69a85d470]
+[2026-10-27T14:37:23.223Z] module.vpc.aws_internet_gateway.this[0]: Creation complete after 0s [id=igw-0c669d0e1a445de7c]
+[2026-10-27T14:37:23.473Z] module.vpc.aws_route_table.public[0]: Creation complete after 0s [id=rtb-0cfc8868090b186c2]
+[2026-10-27T14:37:23.473Z] module.vpc.aws_route.public_internet_gateway[0]: Creating...
+[2026-10-27T14:37:23.724Z] module.vpc.aws_default_network_acl.this[0]: Creation complete after 1s [id=acl-0bcd206171ecdd173]
+[2026-10-27T14:37:23.724Z] aws_vpc_peering_connection.jenkins: Creation complete after 1s [id=pcx-044f6242726fd687d]
+[2026-10-27T14:37:23.724Z] aws_route.default_to_project["rtb-064b953b18447dab9"]: Creating...
+[2026-10-27T14:37:23.724Z] aws_route.project_to_default: Creating...
+[2026-10-27T14:37:23.975Z] module.vpc.aws_route.public_internet_gateway[0]: Creation complete after 1s [id=r-rtb-0cfc8868090b186c21080289494]
+[2026-10-27T14:37:24.226Z] module.vpc.aws_default_security_group.this[0]: Creation complete after 1s [id=sg-0c9138e45888a2675]
+[2026-10-27T14:37:24.226Z] aws_route.project_to_default: Creation complete after 0s [id=r-rtb-0cfc8868090b186c23854007479]
+[2026-10-27T14:37:24.226Z] aws_route.default_to_project["rtb-064b953b18447dab9"]: Creation complete after 0s [id=r-rtb-064b953b18447dab9179966490]
+[2026-10-27T14:37:24.476Z] module.eks.aws_security_group.cluster[0]: Creation complete after 1s [id=sg-00ccfb38098fe1d87]
+[2026-10-27T14:37:24.476Z] module.eks.aws_security_group.node[0]: Creation complete after 1s [id=sg-0cd745fabed9d94e8]
+[2026-10-27T14:37:24.476Z] aws_security_group.tools: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creating...
+[2026-10-27T14:37:24.477Z] module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creating...
+[2026-10-27T14:37:25.028Z] module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creation complete after 1s [id=sgrule-2129954342]
+[2026-10-27T14:37:25.028Z] module.eks.aws_security_group_rule.node["egress_all"]: Creating...
+[2026-10-27T14:37:25.028Z] module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creation complete after 1s [id=sgrule-213652524]
+[2026-10-27T14:37:25.028Z] module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creating...
+[2026-10-27T14:37:25.278Z] module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creation complete after 1s [id=sgrule-3837012966]
+[2026-10-27T14:37:25.278Z] module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creating...
+[2026-10-27T14:37:25.829Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creation complete after 2s [id=sgrule-1362648474]
+[2026-10-27T14:37:25.829Z] module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creating...
+[2026-10-27T14:37:26.382Z] module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creation complete after 2s [id=sgrule-1839774215]
+[2026-10-27T14:37:26.382Z] aws_security_group.tools: Creation complete after 2s [id=sg-07c36b59b25384a79]
+[2026-10-27T14:37:26.933Z] module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creation complete after 3s [id=sgrule-2766855569]
+[2026-10-27T14:37:27.484Z] module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creation complete after 3s [id=sgrule-4117233269]
+[2026-10-27T14:37:27.735Z] module.eks.aws_security_group_rule.node["egress_all"]: Creation complete after 3s [id=sgrule-3579656049]
+[2026-10-27T14:37:28.288Z] module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creation complete after 3s [id=sgrule-441824749]
+[2026-10-27T14:37:28.538Z] module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creation complete after 3s [id=sgrule-4189502748]
+[2026-10-27T14:37:29.090Z] module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creation complete after 3s [id=sgrule-4241851885]
+[2026-10-27T14:37:33.214Z] module.vpc.aws_subnet.public[0]: Still creating... [00m10s elapsed]
+[2026-10-27T14:37:33.214Z] module.vpc.aws_subnet.public[1]: Still creating... [00m10s elapsed]
+[2026-10-27T14:37:33.765Z] module.vpc.aws_subnet.public[1]: Creation complete after 11s [id=subnet-0b0a082911fa19e82]
+[2026-10-27T14:37:35.628Z] module.vpc.aws_subnet.public[0]: Creation complete after 13s [id=subnet-0628ff86f92f74a9b]
+[2026-10-27T14:37:35.628Z] module.vpc.aws_route_table_association.public[0]: Creating...
+[2026-10-27T14:37:35.628Z] module.eks.aws_eks_cluster.this[0]: Creating...
+[2026-10-27T14:37:35.628Z] module.vpc.aws_route_table_association.public[1]: Creating...
+[2026-10-27T14:37:35.628Z] aws_instance.tools: Creating...
+[2026-10-27T14:37:35.879Z] module.vpc.aws_route_table_association.public[1]: Creation complete after 0s [id=rtbassoc-0fabf3f1d3e38e310]
+[2026-10-27T14:37:36.129Z] module.vpc.aws_route_table_association.public[0]: Creation complete after 0s [id=rtbassoc-0c30424fdc8e597d8]
+[2026-10-27T14:37:46.007Z] aws_instance.tools: Still creating... [00m10s elapsed]
+[2026-10-27T14:37:46.007Z] module.eks.aws_eks_cluster.this[0]: Still creating... [00m10s elapsed]
+[2026-10-27T14:37:48.492Z] aws_instance.tools: Creation complete after 12s [id=i-08511241207831c15]
+[2026-10-27T14:37:56.518Z] module.eks.aws_eks_cluster.this[0]: Still creating... [00m20s elapsed]
+[2026-10-27T14:38:06.395Z] module.eks.aws_eks_cluster.this[0]: Still creating... [00m30s elapsed]
+[2026-10-27T14:38:16.272Z] module.eks.aws_eks_cluster.this[0]: Still creating... [00m40s elapsed]
+[2026-10-27T14:38:26.150Z] module.eks.aws_eks_cluster.this[0]: Still creating... [00m50s elapsed]
+[2026-10-27T14:38:36.029Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m00s elapsed]
+[2026-10-27T14:38:45.906Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m10s elapsed]
+[2026-10-27T14:38:55.784Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m20s elapsed]
+[2026-10-27T14:39:05.662Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m30s elapsed]
+[2026-10-27T14:39:15.539Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m40s elapsed]
+[2026-10-27T14:39:27.638Z] module.eks.aws_eks_cluster.this[0]: Still creating... [01m50s elapsed]
+[2026-10-27T14:39:35.664Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m00s elapsed]
+[2026-10-27T14:39:45.541Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m10s elapsed]
+[2026-10-27T14:39:57.640Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m20s elapsed]
+[2026-10-27T14:40:05.666Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m30s elapsed]
+[2026-10-27T14:40:15.542Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m40s elapsed]
+[2026-10-27T14:40:27.641Z] module.eks.aws_eks_cluster.this[0]: Still creating... [02m50s elapsed]
+[2026-10-27T14:40:35.667Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m00s elapsed]
+[2026-10-27T14:40:45.543Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m10s elapsed]
+[2026-10-27T14:40:57.642Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m20s elapsed]
+[2026-10-27T14:41:05.667Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m30s elapsed]
+[2026-10-27T14:41:15.543Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m40s elapsed]
+[2026-10-27T14:41:27.642Z] module.eks.aws_eks_cluster.this[0]: Still creating... [03m50s elapsed]
+[2026-10-27T14:41:35.667Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m00s elapsed]
+[2026-10-27T14:41:45.543Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m10s elapsed]
+[2026-10-27T14:41:57.641Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m20s elapsed]
+[2026-10-27T14:42:05.666Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m30s elapsed]
+[2026-10-27T14:42:15.543Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m40s elapsed]
+[2026-10-27T14:42:27.641Z] module.eks.aws_eks_cluster.this[0]: Still creating... [04m50s elapsed]
+[2026-10-27T14:42:35.666Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m00s elapsed]
+[2026-10-27T14:42:45.543Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m10s elapsed]
+[2026-10-27T14:42:57.640Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m20s elapsed]
+[2026-10-27T14:43:05.665Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m30s elapsed]
+[2026-10-27T14:43:17.763Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m40s elapsed]
+[2026-10-27T14:43:25.788Z] module.eks.aws_eks_cluster.this[0]: Still creating... [05m50s elapsed]
+[2026-10-27T14:43:35.665Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m00s elapsed]
+[2026-10-27T14:43:47.763Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m10s elapsed]
+[2026-10-27T14:43:55.788Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m20s elapsed]
+[2026-10-27T14:44:05.664Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m30s elapsed]
+[2026-10-27T14:44:17.762Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m40s elapsed]
+[2026-10-27T14:44:25.788Z] module.eks.aws_eks_cluster.this[0]: Still creating... [06m50s elapsed]
+[2026-10-27T14:44:35.664Z] module.eks.aws_eks_cluster.this[0]: Still creating... [07m00s elapsed]
+[2026-10-27T14:44:47.761Z] module.eks.aws_eks_cluster.this[0]: Still creating... [07m10s elapsed]
+[2026-10-27T14:44:55.786Z] module.eks.aws_eks_cluster.this[0]: Still creating... [07m20s elapsed]
+[2026-10-27T14:45:05.662Z] module.eks.aws_eks_cluster.this[0]: Still creating... [07m30s elapsed]
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_cluster.this[0]: Still creating... [07m40s elapsed]
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_cluster.this[0]: Creation complete after 7m41s [id=shopnow-dev]
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"]: Reading...
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_entry.this["cluster_creator"]: Creating...
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_entry.this["member0"]: Creating...
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["coredns"]: Reading...
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Reading...
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Reading...
+[2026-10-27T14:45:17.759Z] module.eks.time_sleep.this[0]: Creating...
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Read complete after 0s [id=kube-proxy]
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["eks-pod-identity-agent"]: Read complete after 0s [id=eks-pod-identity-agent]
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Read complete after 0s [id=vpc-cni]
+[2026-10-27T14:45:17.759Z] module.eks.data.aws_eks_addon_version.this["coredns"]: Read complete after 0s [id=coredns]
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_addon.before_compute["vpc-cni"]: Creating...
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_entry.this["cluster_creator"]: Creation complete after 0s [id=shopnow-dev:arn:aws:iam::926375049914:role/shopnow-jenkins-role]
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_entry.this["member0"]: Creation complete after 0s [id=shopnow-dev:arn:aws:iam::926375049914:user/kamal-admin]
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_policy_association.this["member0_admin"]: Creating...
+[2026-10-27T14:45:17.759Z] module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"]: Creating...
+[2026-10-27T14:45:18.010Z] module.eks.aws_eks_access_policy_association.this["member0_admin"]: Creation complete after 1s [id=shopnow-dev#arn:aws:iam::926375049914:user/kamal-admin#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy]
+[2026-10-27T14:45:18.261Z] module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"]: Creation complete after 1s [id=shopnow-dev#arn:aws:iam::926375049914:role/shopnow-jenkins-role#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy]
+[2026-10-27T14:45:18.261Z] aws_eks_pod_identity_association.grafana: Creating...
+[2026-10-27T14:45:19.604Z] aws_eks_pod_identity_association.grafana: Creation complete after 2s [id=a-ltj2yqtvf0ss020ns]
+[2026-10-27T14:45:24.799Z] module.eks.aws_eks_addon.before_compute["vpc-cni"]: Creation complete after 7s [id=shopnow-dev:vpc-cni]
+[2026-10-27T14:45:26.661Z] module.eks.time_sleep.this[0]: Still creating... [00m10s elapsed]
+[2026-10-27T14:45:38.759Z] module.eks.time_sleep.this[0]: Still creating... [00m20s elapsed]
+[2026-10-27T14:45:46.785Z] module.eks.time_sleep.this[0]: Still creating... [00m30s elapsed]
+[2026-10-27T14:45:46.785Z] module.eks.time_sleep.this[0]: Creation complete after 30s [id=2026-10-27T14:45:46Z]
+[2026-10-27T14:45:46.785Z] module.eks.module.eks_managed_node_group["workers"].module.user_data.null_resource.validate_cluster_service_cidr: Creating...
+[2026-10-27T14:45:46.785Z] module.eks.module.eks_managed_node_group["workers"].module.user_data.null_resource.validate_cluster_service_cidr: Creation complete after 0s [id=3822717742581620183]
+[2026-10-27T14:45:46.785Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Creating...
+[2026-10-27T14:45:58.883Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [00m10s elapsed]
+[2026-10-27T14:46:06.908Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [00m20s elapsed]
+[2026-10-27T14:46:16.785Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [00m30s elapsed]
+[2026-10-27T14:46:28.883Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [00m40s elapsed]
+[2026-10-27T14:46:36.907Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [00m50s elapsed]
+[2026-10-27T14:46:46.784Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [01m00s elapsed]
+[2026-10-27T14:46:58.882Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Still creating... [01m10s elapsed]
+[2026-10-27T14:47:04.077Z] module.eks.module.eks_managed_node_group["workers"].aws_eks_node_group.this[0]: Creation complete after 1m17s [id=shopnow-dev:workers-20261027144546687800000011]
+[2026-10-27T14:47:04.077Z] module.eks.aws_eks_addon.this["coredns"]: Creating...
+[2026-10-27T14:47:04.077Z] module.eks.aws_eks_addon.this["kube-proxy"]: Creating...
+[2026-10-27T14:47:04.077Z] module.eks.aws_eks_addon.this["eks-pod-identity-agent"]: Creating...
+[2026-10-27T14:47:13.954Z] module.eks.aws_eks_addon.this["coredns"]: Still creating... [00m10s elapsed]
+[2026-10-27T14:47:13.954Z] module.eks.aws_eks_addon.this["kube-proxy"]: Still creating... [00m10s elapsed]
+[2026-10-27T14:47:13.954Z] module.eks.aws_eks_addon.this["eks-pod-identity-agent"]: Still creating... [00m10s elapsed]
+[2026-10-27T14:47:23.831Z] module.eks.aws_eks_addon.this["coredns"]: Still creating... [00m20s elapsed]
+[2026-10-27T14:47:23.831Z] module.eks.aws_eks_addon.this["kube-proxy"]: Still creating... [00m20s elapsed]
+[2026-10-27T14:47:23.831Z] module.eks.aws_eks_addon.this["eks-pod-identity-agent"]: Still creating... [00m20s elapsed]
+[2026-10-27T14:47:27.954Z] module.eks.aws_eks_addon.this["eks-pod-identity-agent"]: Creation complete after 24s [id=shopnow-dev:eks-pod-identity-agent]
+[2026-10-27T14:47:27.954Z] module.eks.aws_eks_addon.this["coredns"]: Creation complete after 24s [id=shopnow-dev:coredns]
+[2026-10-27T14:47:27.954Z] module.eks.aws_eks_addon.this["kube-proxy"]: Creation complete after 24s [id=shopnow-dev:kube-proxy]
+[2026-10-27T14:47:27.954Z] 
+[2026-10-27T14:47:27.954Z] Apply complete! Resources: 53 added, 0 changed, 0 destroyed.
+[2026-10-27T14:47:27.954Z] 
+[2026-10-27T14:47:27.954Z] Outputs:
+[2026-10-27T14:47:27.954Z] 
+[2026-10-27T14:47:27.954Z] cluster_name = "shopnow-dev"
+[2026-10-27T14:47:27.954Z] region = "ap-southeast-2"
+[2026-10-27T14:47:27.954Z] tools_private_ip = "10.0.1.108"
+[2026-10-27T14:47:27.954Z] vpc_id = "vpc-016841ed59b463518"
+[2026-10-27T14:47:27.954Z] + terraform output -json
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Destroy)
+Stage "Destroy" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+[2026-10-27T14:47:29.257Z] Archiving artifacts
+[Pipeline] script
+[Pipeline] {
+[Pipeline] build
+[2026-10-27T14:47:29.353Z] Scheduling project: 02-config-ansible
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
