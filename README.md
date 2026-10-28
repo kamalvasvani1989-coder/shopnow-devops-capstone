@@ -19,6 +19,10 @@ Repository forked from `suhailm67-sys/End-to-End-DevOps-Pipeline-for-a-Web-Appli
 | Test cases and results (T01–T14, all passed) | [docs/07-testing.md](docs/07-testing.md) |
 | Cost optimisation and actual spend | [docs/08-cost.md](docs/08-cost.md) |
 
+## Scope
+
+The brief's deliverables list mentions a dashboard across AWS, Azure and GCP, while all six sprints specify AWS only. This project implements the AWS scope: Grafana for resource and application monitoring, AWS Cost Explorer and budget alerts for cost. Azure or GCP would be added to the same Grafana as further data sources (Azure Monitor, Google Cloud Monitoring); this is not implemented.
+
 ## Architecture in one picture
 
 See [docs/architecture.md](docs/architecture.md) for the full diagram, design decisions and account constraints.
